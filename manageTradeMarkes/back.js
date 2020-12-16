@@ -471,6 +471,7 @@ function logout(){
 }        
 
 
+/* ---Moved to tradeMarkInfo.js to better structure---
 function nextTradeMarkInfo(){
 
   var trademarkName=document.getElementById("name").value;
@@ -548,8 +549,38 @@ return;
     return;
   }
   console.log(accountsnap);
-  
+
+
+//id trademarkType 
+var trademark_Type=document.getElementById("trademarkType").value;
+if(trademark_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
+{
+  alert(" الرجاء اختيار نوع نشاط العلامه التجارية");
+  return;
+}
+console.log(trademark_Type);
+
+
+//id categoryType 
+var category_Type=document.getElementById("categoryType").value;
+if(category_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
+{
+  alert(" الرجاء اختيار الفئه");
+  return;
+}
+console.log(category_Type);
+
+//id isFeatured
+var isـFeatured=document.getElementById("isFeatured").checked;
+console.log(isـFeatured); 
+
+
+
+
+
+
 }// end function 
+*/
 
 
 
