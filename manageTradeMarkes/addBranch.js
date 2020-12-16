@@ -33,14 +33,10 @@ const firebaseConfig = {
                     region:selectRegionText
                 });
     alert(nameOfBranch+DescOfBranch+selectRegionText+lat+lng);
-    //DUBLICATE DATA IN
-  // var ref=firebase.database().ref('Regions');
+  //id of key of the trademark.
+    firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/-MHFk6d50tMb_wYSXVnx').set("true");
+      alert("hi");
 
-  //     console.log(snapshot.val());
-  //     snapshot.forEach(function(data) {
-  //         console.log(data.key);
-  //     });
-  // });
 }//IF VALDITE
 }//END FUNCTION
 
