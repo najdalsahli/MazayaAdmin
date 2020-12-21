@@ -32,10 +32,18 @@ const firebaseConfig = {
                     longitude:lng.toString(),
                     region:selectRegionText
                 });
-    alert(nameOfBranch+DescOfBranch+selectRegionText+lat+lng);
+    alert('تم إضافة الفرع بنجاح');
   //id of key of the trademark.
     firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/-MHFk6d50tMb_wYSXVnx').set("true");
-      alert("hi");
+    setTimeout(function() {
+      change_page();
+    }, 2000);
+
+
+
+function change_page(){
+window.location.href = "AddOffers.html";
+}
 
 }//IF VALDITE
 }//END FUNCTION
@@ -101,12 +109,16 @@ function Validation2(nameOfBranch,DescOfBranch,selectRegionValue){
           zoom: 4,
           center: myLatlng
         });
+        var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+        '<p> انقر لتحديد الموقع'+'</p></div>';
         // Create the initial InfoWindow.
         let infoWindow = new google.maps.InfoWindow({
-          content: "انقر لتحديد الموقع ",
+          content: content,
           position: myLatlng,
         });
         infoWindow.open(map);
+        //marker
+      
         // Configure the click listener.
         map.addListener("click", (mapsMouseEvent) => {
           // Close the current InfoWindow.
@@ -115,14 +127,18 @@ function Validation2(nameOfBranch,DescOfBranch,selectRegionValue){
           infoWindow = new google.maps.InfoWindow({
             position: mapsMouseEvent.latLng,
           });
+                 //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
           lat=mapsMouseEvent.latLng.toJSON().lat;
           lng=mapsMouseEvent.latLng.toJSON().lng;
-          infoWindow.setContent(
-            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+          infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+          '<p> تم التحديد بنجاح'+'</p></div>'
           );
+  
           lat=mapsMouseEvent.latLng.toJSON().lat;
           lng=mapsMouseEvent.latLng.toJSON().lng
-          infoWindow.open(map);
+         infoWindow.open(map);
+         // marker.setMap(map);
+
         });
       }
 
@@ -146,7 +162,8 @@ function Validation2(nameOfBranch,DescOfBranch,selectRegionValue){
                     longitude:lng.toString(),
                     region:selectRegionText
                 });
-    alert(nameOfBranch+DescOfBranch+selectRegionText+lat+lng);}
+                alert('تم إضافة الفرع بنجاح');
+              }
       clear();   
        }  
     }

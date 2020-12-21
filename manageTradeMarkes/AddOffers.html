@@ -2,6 +2,11 @@
 <html>
 
 <head>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
@@ -19,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/untitled.css">
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="uploadPage()">
     <div id="wrapper" style="background: #38a089;">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#38a089, #00524d);margin-top: 70px;">
             <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: -23px;">
@@ -146,23 +151,36 @@
                             </div><img src="assets/img/offers.png" style="height: 98px;margin: 35px;margin-top: 33px;margin-bottom: 28px;margin-left: 280px;"></div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 259px;">
+             
+                <div id="div1"class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 259px;">
                     <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 60px;">
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;height: 55px;margin-top: 0px;">
                             <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;margin-left: 552px;">العروض</h6>
                         </div>
                         <div class="card-body">
+                            <label style="margin-right: -231px;color: #38a089;font-family: Frutiger LT Arabic ;">نوع العرض<br></label>
+                            <select id="offer"class="form-control" style="font-family: Frutiger LT Arabic;height: 48px;margin-top: -4px;">
+                                <option value="10"selected="">عرض</option>
+                                <option value="12">قسيمة</option>
+                                <option value="13">صفقة</option></select>
+    
                             <form>
                                 <div class="form-row">
-                                    <div class="col" style="margin-top: 4px;"><label style="margin-right: -224px;font-family: Frutiger LT Arabic;color: #38a089;">وصف العرض</label><input class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">
+                                    
+                                    <div class="col" style="margin-top: 4px;"><label style="margin-right: -224px;font-family: Frutiger LT Arabic;color: #38a089;">وصف العرض</label>
+                                        <input id="Desc" class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">
                                         <div
                                             class="form-row">
                                             <div class="col"><label class="col-form-label" style="font-family: Frutiger LT Arabic ;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;color: #38a089;">الفروع</label></div>
-                                    </div><select class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;"><option value="10" selected="">يرجى اختيار الفرع</option></select></div>
+                                    </div>
+                                    <select id="branch"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;">
+                                        <option value="10" selected="">يرجى اختيار الفرع</option></select></div>
                                 <div class="col">
-                                    <div class="form-group"><label for="email" style="margin-left: 225px;font-family: Frutiger LT Arabic ;color: #38a089;"><strong>عنوان العرض</strong><br></label><input class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname"
+                                    <div class="form-group"><label for="email" style="margin-left: 225px;font-family: Frutiger LT Arabic ;color: #38a089;"><strong>عنوان العرض</strong><br></label>
+                                        <input class="form-control" id="offerName" type="text" placeholder="مثال: تخفيض" name="brandname"
                                             style="text-align: right;font-family: Frutiger LT Arabic;font-weight: 55;height: 46px;"></div>
-                                    <div class="form-group"><label for="last_name" style="margin-left: 237px;color: #38a089;font-family: Frutiger LT Arabic ;"><strong>كود الخصم</strong><br></label><input class="form-control" type="text" placeholder="Mazaya123" name="last_name"
+                                    <div class="form-group"><label for="last_name" style="margin-left: 237px;color: #38a089;font-family: Frutiger LT Arabic ;"><strong>كود الخصم</strong><br></label>
+                                        <input class="form-control" id="code" type="text" placeholder="Mazaya123" name="last_name"
                                             style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;"></div>
                                 </div>
                         </div>
@@ -179,32 +197,44 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div class="form-group" style="width: 111px;text-align: center;margin-left: 48px;">
-                                                    <div class="form-check" style="margin-left: -43px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-13" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">موظف</label></div>
-                                                    <div
-                                                        class="form-check" style="margin-left: -46px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-14" style="margin-left: 46px;"><label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">عائلة</label></div>
-                                                <div
-                                                    class="form-check" style="margin-left: -46px;"><input class="form-check-input" type="radio" id="formCheck-12" style="margin-left: 44px;"><label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
+                                                <div id="userType" class="form-group" style="width: 111px;text-align: center;margin-left: 48px;">
+                                                    <div class="form-check" style="margin-left: -43px;margin-bottom: 10px;">
+                                                        <input class="form-check-input" type="radio" id="empRB" style="margin-left: 50px;" name="userType" value="موظف">
+                                                        <label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">موظف</label></div>
+                                                    <div class="form-check" style="margin-left: -46px;margin-bottom: 10px;">
+                                                        <input class="form-check-input" type="radio" id="famRB" style="margin-left: 46px;" name="userType" value="عائلة">
+                                                        <label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">عائلة</label></div>
+                                                <div class="form-check" style="margin-left: -46px;">
+                                                    <input class="form-check-input" type="radio" id="allRB" style="margin-left: 44px;" name="userType" value="الكل">
+                                                    <label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
                         </div>
                         </td>
                         <td>
                             <div class="form-group" style="width: 111px;margin-top: 0px;">
-                                <div class="form-check" style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-8" style="margin-left: 102px;"><label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">بطاقة عمل&nbsp;</label></div>
-                                <div class="form-check"
-                                    style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-9" style="margin-left: 116px;"><label class="form-check-label" for="formCheck-9" style="font-family: Frutiger LT Arabic ;">المسح الضوئي</label></div>
-                                <div class="form-check"
-                                    style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-10" style="margin-left: 119px;"><label class="form-check-label" for="formCheck-10" style="font-family: Frutiger LT Arabic ;">البريد الالكتروني</label></div>
-                                <div
-                                    class="form-check" style="margin-left: -98px;margin-right: -182px;"><input class="form-check-input" type="radio" id="formCheck-11" style="margin-left: 102px;"><label class="form-check-label" for="formCheck-11" style="font-family: Frutiger LT Arabic ;">كود الخصم</label></div>
+                                <div class="form-check" style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;">
+                                    <input name="usageType" class="form-check-input" type="radio" id="crad" style="margin-left: 102px;"value="بطاقة عمل">
+                                    <label class="form-check-label" for="formCheck-8" style="font-family: Frutiger LT Arabic ;">بطاقة عمل&nbsp;</label></div>
+                                <div class="form-check" style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;">
+                                    <input name="usageType" class="form-check-input" type="radio" id="QR" style="margin-left: 116px;"value="المسح الضوئي">
+                                    <label class="form-check-label" for="formCheck-9" style="font-family: Frutiger LT Arabic ;">المسح الضوئي</label></div>
+                                <div class="form-check"style="margin-left: -98px;margin-right: -182px;margin-bottom: 10px;">
+                                    <input name="usageType" class="form-check-input" type="radio" id="EMRB" style="margin-left: 119px;" value="البريد الالكتروني">
+                                    <label class="form-check-label" for="formCheck-10" style="font-family: Frutiger LT Arabic ;">البريد الالكتروني</label></div>
+                                <div class="form-check" style="margin-left: -98px;margin-right: -182px;">
+                                    <input name="usageType" class="form-check-input" type="radio" id="codeRB" style="margin-left: 102px;" value="كود الخصم">
+                                    <label class="form-check-label" for="formCheck-11" style="font-family: Frutiger LT Arabic ;">كود الخصم</label></div>
                     </div>
                     </td>
                     <td>
                         <div class="form-group" style="margin-top: 2px;">
-                            <div class="form-check" style="text-align: left;padding-left: 27px;margin-left: -3px;margin-right: 12px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-1" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">محلي</label></div>
+                            <div class="form-check" style="text-align: left;padding-left: 27px;margin-left: -3px;margin-right: 12px;margin-bottom: 10px;">
+                                <input name ="serviceType"class="form-check-input" type="radio" id="locRB" style="margin-left: 50px;"value="محلي"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">محلي</label></div>
                             <div class="form-check"
-                                style="margin-left: 3px;text-align: left;margin-right: 12px;margin-bottom: 10px;"><input class="form-check-input" type="radio" id="formCheck-2" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-2" style="margin-left: -3px;font-family: Frutiger LT Arabic ;">أونلاين<br></label></div>
+                                style="margin-left: 3px;text-align: left;margin-right: 12px;margin-bottom: 10px;">
+                                <input name ="serviceType"class="form-check-input" type="radio" id="onlineRB" style="margin-left: 50px;"value="أونلاين"><label class="form-check-label" for="formCheck-2" style="margin-left: -3px;font-family: Frutiger LT Arabic ;">أونلاين<br></label></div>
                             <div
-                                class="form-check" style="text-align: left;margin-left: 4px;margin-right: 12px;"><input class="form-check-input" type="radio" id="formCheck-4" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-2" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
+                                class="form-check" style="text-align: left;margin-left: 4px;margin-right: 12px;">
+                                <input name ="serviceType"class="form-check-input" type="radio" id="allStRB" style="margin-left: 50px;"value="الكل"><label class="form-check-label" for="formCheck-2" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
                 </div>
                 </td>
                 </tr>
@@ -217,15 +247,13 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th><label style="margin-right: -244px;color: #38a089;font-family: Frutiger LT Arabic;margin-bottom: -33px;margin-left: -5px;margin-top: 7px;">نوع العرض<br></label></th>
-                            <th><input class="form-control" type="date" style="margin-left: -2px;width: 176px;margin-right: -78px;"></th>
+                            <th><input id="srartDate"class="form-control" type="date" style="margin-left: -2px;width: 176px;margin-right: -78px;" min="2020-12-31"></th>
                             <th style="font-weight: bold;width: 95px;color: #38a089;font-family: Frutiger LT Arabic;">تاريخ البدء</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><select class="form-control" style="font-family: Frutiger LT Arabic;height: 48px;margin-top: -4px;"><option value="10" selected="">يرجى اختيار نوع العرض</option><option value="11">عرض</option><option value="12">قسيمة</option><option value="13">صفقة</option></select></td>
-                            <td><input class="form-control" type="date" style="width: 175px;margin-left: -2px;margin-right: -113px;"></td>
+                            <td><input id ="endDate" class="form-control" type="date" style="width: 175px;margin-left: -2px;margin-right: -113px;" min="2020-12-31"></td>
                             <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-right: -1px;">تاريخ الانتهاء</td>
                         </tr>
                         <tr></tr>
@@ -235,85 +263,98 @@
             </div>
         </div>
         </form>
-        <div class="form-group" style="margin-right: 288px;"><button class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: -25px;margin-top: -55px;font-family: Frutiger LT Arabic;margin-bottom: -44px;margin-left: -12px;">إضافة العرض</button></div>
+        <div class="form-group" ><button class="btn btn-primary" id="addOntherOffer" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: -25px;margin-top: -55px;font-family: Frutiger LT Arabic;margin-bottom: -44px;margin-left: -12px;">إضافة العرض</button></div>
     </div>
-    <div class="card-body"><button class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
+    <div class="card-body"><button onclick="nextOffersAndDeals('')" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
     </div>
     </div>
-    <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 254px;">
+    <div id="div2"class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 254px;">
         <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 30px;">
             <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;">
                 <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;margin-left: 552px;">القسائم</h6>
             </div>
             <div class="card-body">
+                <!-- <label style="margin-right: -231px;color: #38a089;font-family: Frutiger LT Arabic ;">نوع العرض<br></label>
+                <select id="offer"class="form-control" style="font-family: Frutiger LT Arabic;height: 48px;margin-top: -4px;">
+                    <option value="10">عرض</option>
+                    <option value="12"selected="">قسيمة</option>
+                    <option value="13">صفقة</option></select> -->
+
                 <form>
                     <div class="form-row">
-                        <div class="col" style="margin-top: 4px;"><label style="margin-right: -232px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">عدد النقاط</label><input class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;">
+                        <div class="col" style="margin-top: 4px;"><label style="margin-right: -232px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">عدد النقاط</label>
+                            <input id="pointNum"class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;">
                             <div
                                 class="form-row">
-                                <div class="col"><label class="col-form-label" style="font-family: Frutiger LT Arabic;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;font-weight: 55;color: #38a089;">الفروع</label></div>
-                        </div><select class="form-control" style="font-family: Frutiger LT Arabic;height: 44px;margin-top: 3px;"><option value="12" selected="">يرجى اختيار الفرع</option><option value="13"></option><option value="14"></option></select></div>
-                    <div
-                        class="col">
-                        <div class="form-group"><label for="email" style="margin-left: 225px;font-family: Frutiger LT Arabic;color: #38a089;font-weight: 55;"><strong>عنوان العرض</strong><br></label><input class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname"
+                                <div class="col" style="margin-top: 11px;"><label class="col-form-label" style="margin-right: -221px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">وصف العرض</label></div>
+                        </div><input id="DescV" class="form-control" type="text" placeholder="مثال: قسيمة شرائية" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"></div>
+                    <div class="col">
+                        <div class="form-group"><label for="email" style="margin-left: 225px;font-family: Frutiger LT Arabic;color: #38a089;font-weight: 55;"><strong>عنوان العرض</strong><br></label>
+                            <input id="titleV"class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname"
                                 style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;margin-top: 4px;"></div>
-                        <div class="form-group"><label for="last_name" style="margin-left: 228px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;"><strong>عدد القسائم</strong><br></label><input class="form-control" type="text" placeholder="Mazaya123" name="last_name"
+                        <div class="form-group"><label for="last_name" style="margin-left: 228px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;"><strong>عدد القسائم</strong><br></label>
+                            <input id="vourchesNum" class="form-control" type="text" placeholder="100" name="last_name"
                                 style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"></div>
+                                <div class="form-group"><label for="last_name" style="margin-left: 234px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;">كود الخصم&nbsp;<br></label>
+                                    <input id="code2"class="form-control" type="text" placeholder="MC123" name="last_name" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"></div>
+
+                    </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="table-responsive table-borderless">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th style="font-family: Frutiger LT Arabic;text-align: right;color: #38a089;font-weight: 55;">نوع العرض</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input class="form-check-input" type="radio" id="formCheck-6" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
-                            </td>
-                            <td>
-                                <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input class="form-check-input" type="radio" id="formCheck-5" style="margin-left: 66px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">أونلاين</label></div><br></td>
-                            <td>
-                                <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input class="form-check-input" type="radio" id="formCheck-3" style="margin-left: 50px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">محلي</label></div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <div class="table-responsive table-borderless">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th style="font-family: Frutiger LT Arabic;text-align: right;color: #38a089;font-weight: 55;">نوع العرض</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input name="typeV"class="form-check-input" type="radio" id="allV" style="margin-left: 50px;" value="الكل"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
+                                </td>
+                                <td>
+                                    <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input  name="typeV" class="form-check-input" type="radio" id="onlineV" style="margin-left: 66px;"value="أونلاين"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">أونلاين</label></div><br></td>
+                                <td>
+                                    <div class="form-check text-center" style="text-align: left;padding-left: 27px;margin-left: -3px;"><input name="typeV" class="form-check-input" type="radio" id="locV" style="margin-left: 50px;"value="محلي"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic ;">محلي</label></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="table-responsive table-borderless">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th><label style="margin-right: -231px;color: #38a089;font-family: Frutiger LT Arabic ;">نوع العرض<br></label></th>
-                            <th><input class="form-control" type="date" style="margin-left: -2px;width: 176px;margin-right: -78px;"></th>
-                            <th style="font-weight: bold;width: 95px;color: #38a089;font-family: Frutiger LT Arabic ;">تاريخ البدء</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><select class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;"><option value="10" selected="">يرجى اختيار نوع العرض</option><option value="11">عرض</option><option value="12">قسيمة</option><option value="13">صفقة</option><option value="14">عرض موسمي</option><option value="15">عروض المثبتة</option></select></td>
-                            <td><input class="form-control" type="date" style="width: 175px;margin-left: -2px;margin-right: -113px;"></td>
-                            <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-right: 3px;">تاريخ الانتهاء</td>
-                        </tr>
-                        <tr></tr>
-                        <tr></tr>
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <div class="table-responsive table-borderless">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th><label style="font-family: Frutiger LT Arabic;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;font-weight: 55;color: #38a089;">الفروع</label></th>
+                                <th><input  min="2020-12-31" id="startV"class="form-control" type="date" style="margin-left: -2px;width: 176px;margin-right: -78px;"></th>
+                                <th style="font-weight: bold;width: 95px;color: #38a089;font-family: Frutiger LT Arabic ;">تاريخ البدء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="branch2"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;">
+                                        <option value="10" selected="">يرجى اختيار الفرع</option></select></td>
+                                <td><input  min="2020-12-31" id="endV" class="form-control" type="date" style="width: 175px;margin-left: -2px;margin-right: -113px;"></td>
+                                <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-right: 3px;">تاريخ الانتهاء</td>
+                            </tr>
+                            <tr></tr>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            </form>
+            <div class="form-group"><button id="addOntherV"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: 3px;margin-top: -33px;font-family: Frutiger LT Arabic;">إضافة العرض</button></div>
         </div>
-        </form>
-        <div class="form-group" style="margin-right: 288px;"><button class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: 3px;margin-top: -33px;font-family: Frutiger LT Arabic;">إضافة العرض</button></div>
+        <div class="card-body"><button onclick="nextVouchers('')" id ="nextV" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
     </div>
-    <div class="card-body"><button class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
-    </div>
-    </div>
+</div>
     </div>
     </div>
     </div>
@@ -323,6 +364,8 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="addOffer.js"></script>
+
 </body>
 
 </html>

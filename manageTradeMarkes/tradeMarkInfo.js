@@ -112,7 +112,7 @@ const firebaseConfig = {
   //id categoryType 
   var category_Type=document.getElementById("categoryType").value;
 
-  var  category_Type0= document.getElementById("trademarkType");
+  var  category_Type0= document.getElementById("categoryType");
   var category_Type1 = category_Type0.options[category_Type0.selectedIndex].text;
 
   if(category_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
