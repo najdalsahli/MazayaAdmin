@@ -41,7 +41,7 @@ const firebaseConfig = {
     var tradecontactnum=document.getElementById("contactnum").value;
     if(tradecontactnum=='')
     {
-      alert("الرجاء ادخال رقم الجوال الخاص  بالعلامة التجارية");
+      alert("الرجاء ادخال رقم التواصل الخاص  بالعلامة التجارية");
       return;
     }
     
@@ -71,7 +71,7 @@ const firebaseConfig = {
     var accountinst=document.getElementById("inst").value;
     if(accountinst=='')
     {
-  alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
+  //alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
   return;
     }
     console.log(accountinst);
@@ -80,7 +80,7 @@ const firebaseConfig = {
     var accounttwi=document.getElementById("twi").value;
     if(accounttwi=='')
     {
-  alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
+  //alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
   return;
     }
     console.log(accounttwi);
@@ -89,7 +89,7 @@ const firebaseConfig = {
     var accountsnap=document.getElementById("snap").value;
     if(accountsnap=='')
     {
-      alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
+      //alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
       return;
     }
     console.log(accountsnap);
