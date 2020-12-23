@@ -15,7 +15,6 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
- 
 
 
 
@@ -314,7 +313,7 @@ if(categoryName=='الكل'){
       var imgtradesmark=snapshot1.child('imgURL').val();
  
 
-      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark);
+      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key);
 
     })
   });
@@ -335,13 +334,13 @@ if(categoryName=='الكل'){
         var imgtradesmark=snapshot1.child('imgURL').val();
    
   
-        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark);
+        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key);
 })
 })
 });
 }
-  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark){
-     
+  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid){
+    
     var deletecel = document.createElement('td');
     deletecel.className='btncel';
   
@@ -353,6 +352,12 @@ if(categoryName=='الكل'){
     deleteIcon.className='far fa-trash-alt deleteIcon';
     deletebtn.appendChild(deleteIcon);
     deletecel.appendChild(deletebtn);
+    deletebtn.onclick= function ()
+    { 
+      deleteTM(uid);
+    }
+    
+    
   
   // for editting 
    var editcel = document.createElement('td');
@@ -366,6 +371,15 @@ if(categoryName=='الكل'){
     editbtn.textContent='تعديل';
     editbtn.appendChild(editIcon);
     editcel.appendChild(editbtn);
+    editbtn.onclick=function(){
+      setTimeout(function() {
+        change_page();
+      }, 1000);
+function change_page(){
+  localStorage.setItem("tradmarkID",uid);
+window.location.href = "EditTrademark.html";
+     };
+    }
     //for viewing 
   
     var showcel= document.createElement('td');
@@ -380,7 +394,15 @@ if(categoryName=='الكل'){
     showbtn.className='btn viewbtn ';
     showbtn.appendChild(showIcon);
     showcel.appendChild(showbtn);
-  
+    showbtn.onclick=function(){
+      setTimeout(function() {
+        change_page();
+      }, 1000);
+function change_page(){
+  localStorage.setItem("tradmarkID",uid);
+   window.location.href = "ViewTradeMark.html";
+     };
+    }
   
     //var showIcon= document.createElement('i');
     //showIcon.className='';
@@ -425,8 +447,57 @@ if(categoryName=='الكل'){
 
   }  
      
-        
+  function deleteTM(uid){
+    var region;
+      var conf =confirm("هل أنت متأكد من حذف العلامة التجاية بملحقاتها؟");
+      if (conf==true){//true
+        //delete region 
+        var ref=firebase.database().ref('Trademarks/'+uid+'/Branches');
+        ref.on("value",function(snapshot){
+          snapshot.forEach(function(snapshot1){
+           region =snapshot1.child('region').val(); 
+           alert(region);      
+  firebase.database().ref('Regions/'+region+'/Trademarks/'+uid).remove();
+      });
+    });
+    //delete vouchres
+var ref3=firebase.database().ref('Vouchers');
+ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
+  snapshot1.forEach(function(data) {
+    firebase.database().ref('Vouchers/'+data.key).remove();
+  });
+});
+//delete deals
+var ref3=firebase.database().ref('Deals');
+ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
+  snapshot1.forEach(function(data) {
+    firebase.database().ref('Deals/'+data.key).remove();
+  });
+});
+
+//delete offers
+var ref3=firebase.database().ref('Offers');
+ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
+  snapshot1.forEach(function(data) {
+    firebase.database().ref('Offers/'+data.key).remove();
+  });
+});
+
+
+
+  //delete trademark 
+ firebase.database().ref('Trademarks/'+uid).remove();
+
+      alert('تم حذف العلامة التجارية');
+        reload_page();
      
+      }//if
+}//end
+        
+    
+     
+
+
 function login() {
 
   var userEmail = document.getElementById("email_field").value;
@@ -607,15 +678,7 @@ function suggestion ()
       deleteSugg(snapshot1.key);
     };
 
-//contact sugg
-// var  contactcel = document.createElement('td');
-// contactcel.className='contactcel';
-// var contactbtn = document.createElement('button');
-// contactbtn.className='buttons btn btn-primary';
-// contactbtn.textContent="تواصل";
-// contactbtn.onclick=function(){
-//   contactSugg(snapshot1,snapshot1.key);
-// };
+
 //view sugg
 var  viewcel = document.createElement('td');
 viewcel.className='viewcel';
@@ -650,8 +713,7 @@ viewbtn.onclick=function(){
     
     deletecel.appendChild(deletebtn);
     newrow.appendChild(deletecel);
-    // contactcel.appendChild(contactbtn);
-    // newrow.appendChild(contactbtn);
+    
     viewcel.appendChild(viewbtn);
     newrow.appendChild(viewcel);
 
@@ -678,10 +740,12 @@ document.getElementById("dataTable").deleteRow(1);
       reload_page();
       }
       
-      function reload_page() { 
+     
+    }
+
+    function reload_page() { 
       window.location.reload();     
       }
-    }
   function contactSugg(email){
     window.location.href='mailto:'+email;
     
