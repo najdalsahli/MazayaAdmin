@@ -69,29 +69,29 @@ const firebaseConfig = {
   
     // id inst
     var accountinst=document.getElementById("inst").value;
-    if(accountinst=='')
+  /*  if(accountinst=='')
     {
-  //alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
+  alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
   return;
-    }
+    }*/
     console.log(accountinst);
   
     //id twi
     var accounttwi=document.getElementById("twi").value;
-    if(accounttwi=='')
+   /* if(accounttwi=='')
     {
-  //alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
+  alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
   return;
-    }
+    }*/
     console.log(accounttwi);
   
     //id snap 
     var accountsnap=document.getElementById("snap").value;
-    if(accountsnap=='')
+   /* if(accountsnap=='')
     {
-      //alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
+      alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
       return;
-    }
+    }*/
     console.log(accountsnap);
   
   
@@ -131,13 +131,51 @@ const firebaseConfig = {
 
   try{
 
-    firebase.database().ref('Trademarks').push(
+    firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/contactNum').set(tradecontactnum);
+
+    firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/email').set(trademarkmail);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/instagram').set(accountinst);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/isFeatured').set(isـFeatured);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/serviceType').set(trademark_Type1);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
+
+    firebase.database().ref('Trademarks/'+savedtrademark+'/views').set('');
+    firebase.database().ref('Trademarks/'+savedtrademark+'/website').set(trademarkmaillink);
+  
+
+
+
+          
+
+ 
+    /*firebase.database().ref('Trademarks/'+savedtrademark).set(
+      {
+        backgroundImg:'',
+        category:category_Type1,
+        contactNum:tradecontactnum,
+        description:trademarkDescription,
+        email:trademarkmail,
+        imgURL:'',
+        instagram:accountinst,
+        isFeatured:isـFeatured,
+        serviceType:trademark_Type1,
+        snapchat:accountsnap,
+        trademarkName:trademarkName,
+        twitter:accounttwi,
+        views:'',
+        website:trademarkmaillink   
+      }
+
+      
+    );*/
+
+   /* firebase.database().ref('Trademarks').push(
         {
-            /*branchName:nameOfBranch,
-            description:DescOfBranch,
-            latitude:lat,
-            longitude:lng,
-            region:selectRegionText*/
+ 
             backgroundImg:'',
             category:category_Type1,
             contactNum:tradecontactnum,
@@ -153,16 +191,264 @@ const firebaseConfig = {
             views:'',
             website:trademarkmaillink     
 
-        });
+        });*/
 
         alert(" added successfully, yay! ");
+        
+       
+
 
   }catch{
     alert(" something went wrong" );
-  }
+  } 
+
+
+
+
   
   
-  
-  
+
+  setTimeout(function() {
+    change_page();
+  }, 5000);
   
   }// end function 
+
+
+
+  function Empty_insert(){
+
+    firebase.database().ref('Trademarks').push(
+      {
+
+          backgroundImg:'',
+          category:'',
+          contactNum:'',
+          description:'',
+          email:'',
+          imgURL:'',
+          instagram:'',
+          isFeatured:'',
+          serviceType:'',
+          snapchat:'',
+          trademarkName:'',
+          twitter:'',
+          views:'',
+          website:''     
+
+      });
+
+
+
+
+      var refTrademarks=firebase.database().ref('Trademarks');
+      //var refOffer=firebase.database().ref('Offers');
+      refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
+          snapshot.forEach(function(data) {
+              savedtrademark= data.key;
+              console.log('saved trademark key',savedtrademark);
+              //alret
+
+             });  
+         }); 
+
+  }
+
+
+  
+  
+  function change_page(){
+  window.location.href = "AddBranch.html";
+} 
+
+
+
+
+
+var fbBucketName = 'images';
+
+//alert(" code 1 ");
+// get elements
+var uploader = document.getElementById('uploader');
+var fileButton = document.getElementById('fileButton');
+
+// listen for file selection
+fileButton.addEventListener('change', function (e) {
+
+  // what happened
+  console.log('file upload event', e);
+
+  // get file
+  var file = e.target.files[0];
+
+  // create a storage ref
+  var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+
+  // upload file
+  var uploadTask = storageRef.put(file);
+
+  // The part below is largely copy-pasted from the 'Full Example' section from
+  // https://firebase.google.com/docs/storage/web/upload-files
+
+  // update progress bar
+  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+    function (snapshot) {
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      uploader.value = progress;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+      }
+    }, function (error) {
+
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case 'storage/unauthorized':
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          // User canceled the upload
+          break;
+
+        case 'storage/unknown':
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    }, function () {
+      // Upload completed successfully, now we can get the download URL
+      // save this link somewhere, e.g. put it in an input field
+      //var downloadURL = uploadTask.snapshot.downloadURL;
+            //Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+             
+      /*---*///var downloadURL = uploadTask.snapshot.ref.getDownloadURL();
+
+      const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+        imgURL = url;
+        firebase.database().ref('Trademarks/'+savedtrademark+'/imgURL').set(url);
+      /*  firebase.database().ref('Trademarks/'+savedtrademark).set({
+          backgroundImg:'',
+          category:category_Type1,
+          contactNum:tradecontactnum,
+          description:trademarkDescription,
+          email:trademarkmail,
+          imgURL:url,
+          instagram:accountinst,
+          isFeatured:isـFeatured,
+          serviceType:trademark_Type1,
+          snapchat:accountsnap,
+          trademarkName:trademarkName,
+          twitter:accounttwi,
+          views:'',
+          website:trademarkmaillink   
+        });*/
+
+        //return url;
+        console.log('imgURL', imgURL);
+      });
+      //console.log('imgURL', imgURL);
+      //console.log('downloadURL', img_url);
+
+      //generatedFilePath = downloadURL.toString();//.PromiseResult
+      /*---*///console.log('downloadURL', downloadURL);//Promise object
+      //console.log('downloadURL', imgURL);
+      
+  /*-----------    const pritIMGurl = async() =>{
+        const a = await img_url; 
+        console.log('downloadURL', img_url);//Promise object
+      };
+      pritIMGurl(); -----------*/
+
+ 
+
+      //alert(generatedFilePath);
+    });
+
+    });
+    
+
+
+
+    //---------- file2
+
+    var fbBucketName1 = 'images';
+
+// get elements
+var uploader1 = document.getElementById('uploader1');
+var fileButton1 = document.getElementById('fileButton1');
+
+// listen for file selection
+fileButton1.addEventListener('change', function (e) {
+
+  // what happened
+  console.log('file upload event', e);
+
+  // get file
+  var file1 = e.target.files[0];
+
+  // create a storage ref
+  var storageRef1 = firebase.storage().ref(`${fbBucketName1}/${file1.name}`);
+
+  // upload file
+  var uploadTask1 = storageRef1.put(file1);
+
+  // The part below is largely copy-pasted from the 'Full Example' section from
+  // https://firebase.google.com/docs/storage/web/upload-files
+
+  // update progress bar
+  uploadTask1.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+    function (snapshot) {
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      uploader1.value = progress;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+      }
+    }, function (error) {
+
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case 'storage/unauthorized':
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          // User canceled the upload
+          break;
+
+        case 'storage/unknown':
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    }, function () {
+      // Upload completed successfully, now we can get the download URL
+      // save this link somewhere, e.g. put it in an input field
+      //var downloadURL1 = uploadTask1.snapshot.downloadURL;
+      //console.log('downloadURL', downloadURL1);
+      const backgroundImg_url = uploadTask1.snapshot.ref.getDownloadURL().then(function(url){
+        backgroundImg = url;
+        firebase.database().ref('Trademarks/'+savedtrademark+'/backgroundImg').set(url);
+        //return url;
+        console.log('backgroundImg url', backgroundImg);
+      });
+    });
+
+});
+
+
+
+

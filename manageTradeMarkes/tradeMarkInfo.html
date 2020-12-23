@@ -6,6 +6,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>معلومات التاجر</title>
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/format.css">
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="Empty_insert()">
     <div id="wrapper" style="background: #00524d;">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#38a089, #00524d);margin-top: 0px;filter: grayscale(0%) sepia(0%);">
             <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: 9px;">
@@ -113,7 +114,7 @@
                                             <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
                                                 <div class="bg-warning status-indicator"></div>
                                             </div>
-                                            <div class="font-weight-bold">
+                                            <div class="font-weight-bold"> 
                                                 <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
                                                 <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
                                             </div>
@@ -223,9 +224,22 @@
                                                 <div class="form-group" style="text-align: center;">
                                                     <div class="form-check" style="text-align: right;margin-right: 29px;margin-top: 18px;">
                                                         <input class="form-check-input" type="radio" id="isFeatured" style="margin-left: 186px;margin-top: 7px;"><label class="form-check-label" for="formCheck-5" style="font-weight: bold;color: rgb(179,17,46);font-size: 20px;font-family: Frutiger LT Arabic;">العلامة التجارية مميزة&nbsp;</label></div>
-                                                </div><button class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الخلفية<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
-                                                <button
-                                                    class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الصورة<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
+
+
+                                                </div>
+                                                <!---->
+                                                <progress value="0" max="100" id="uploader">0%</progress>
+                                                <input type="file" value="upload" id="fileButton"> 
+                                                <br>
+                                                
+                                                <progress value="0" max="100" id="uploader1">0%</progress>
+                                                <input type="file" value="upload" id="fileButton1"> 
+                                      
+
+                                                <!---->
+        
+                                                <button class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الخلفية<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
+                                                <button class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الصورة<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
                                             </div>
                                         </div>
                                     </div>

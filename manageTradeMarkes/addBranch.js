@@ -35,6 +35,7 @@ const firebaseConfig = {
     alert('تم إضافة الفرع بنجاح');
   //id of key of the trademark.
     firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/-MHFk6d50tMb_wYSXVnx').set("true");
+
     setTimeout(function() {
       change_page();
     }, 2000);
@@ -46,7 +47,19 @@ window.location.href = "AddOffers.html";
 }
 
 }//IF VALDITE
+
+
+/*setTimeout(function() {
+  change_page();
+}, 5000);*/
+
+
 }//END FUNCTION
+
+
+function change_page(){
+  window.location.href = "AddOffers.html";
+}
 
 
 function Validation(nameOfBranch,DescOfBranch,selectRegionValue){
