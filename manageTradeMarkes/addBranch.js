@@ -36,9 +36,20 @@ const firebaseConfig = {
   //id of key of the trademark.
     firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/-MHFk6d50tMb_wYSXVnx').set("true");
       alert("hi");
-
 }//IF VALDITE
+
+
+/*setTimeout(function() {
+  change_page();
+}, 5000);*/
+
+
 }//END FUNCTION
+
+
+function change_page(){
+  window.location.href = "AddOffers.html";
+}
 
 
 function Validation(nameOfBranch,DescOfBranch,selectRegionValue){
