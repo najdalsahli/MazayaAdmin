@@ -15,7 +15,7 @@ const firebaseConfig = {
   const auth=firebase.auth();
 
 
-
+var savedtrademark='';
   function nextTradeMarkInfo(){
 
     var trademarkName=document.getElementById("name").value;
@@ -69,29 +69,18 @@ const firebaseConfig = {
   
     // id inst
     var accountinst=document.getElementById("inst").value;
-  /*  if(accountinst=='')
-    {
-  alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
-  return;
-    }*/
+
     console.log(accountinst);
   
     //id twi
     var accounttwi=document.getElementById("twi").value;
-   /* if(accounttwi=='')
-    {
-  alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
-  return;
-    }*/
+  
     console.log(accounttwi);
   
     //id snap 
     var accountsnap=document.getElementById("snap").value;
-   /* if(accountsnap=='')
-    {
-      alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
-      return;
-    }*/
+
+    
     console.log(accountsnap);
   
   
@@ -130,10 +119,9 @@ const firebaseConfig = {
 
 
   try{
-
+//add in trademark tabel
     firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
     firebase.database().ref('Trademarks/'+savedtrademark+'/contactNum').set(tradecontactnum);
-
     firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
     firebase.database().ref('Trademarks/'+savedtrademark+'/email').set(trademarkmail);
     firebase.database().ref('Trademarks/'+savedtrademark+'/instagram').set(accountinst);
@@ -142,58 +130,19 @@ const firebaseConfig = {
     firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
     firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
     firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
-
-    firebase.database().ref('Trademarks/'+savedtrademark+'/views').set('');
+    firebase.database().ref('Trademarks/'+savedtrademark+'/views').set(0);
     firebase.database().ref('Trademarks/'+savedtrademark+'/website').set(trademarkmaillink);
-  
+
+    //add in catogry tabel
+    firebase.database().ref('Categories/'+category_Type1+'/Trademarks/'+savedtrademark).set(true);
+
+
 
 
 
           
 
- 
-    /*firebase.database().ref('Trademarks/'+savedtrademark).set(
-      {
-        backgroundImg:'',
-        category:category_Type1,
-        contactNum:tradecontactnum,
-        description:trademarkDescription,
-        email:trademarkmail,
-        imgURL:'',
-        instagram:accountinst,
-        isFeatured:isـFeatured,
-        serviceType:trademark_Type1,
-        snapchat:accountsnap,
-        trademarkName:trademarkName,
-        twitter:accounttwi,
-        views:'',
-        website:trademarkmaillink   
-      }
-
-      
-    );*/
-
-   /* firebase.database().ref('Trademarks').push(
-        {
- 
-            backgroundImg:'',
-            category:category_Type1,
-            contactNum:tradecontactnum,
-            description:trademarkDescription,
-            email:trademarkmail,
-            imgURL:'',
-            instagram:accountinst,
-            isFeatured:isـFeatured,
-            serviceType:trademark_Type1,
-            snapchat:accountsnap,
-            trademarkName:trademarkName,
-            twitter:accounttwi,
-            views:'',
-            website:trademarkmaillink     
-
-        });*/
-
-        alert(" added successfully, yay! ");
+        alert("تم إضافة العلامة التجارية بنجاح");
         
        
 
@@ -210,7 +159,9 @@ const firebaseConfig = {
 
   setTimeout(function() {
     change_page();
-  }, 5000);// make it less it will work 
+
+  }, 1000);
+
   
   }// end function 
 
@@ -239,18 +190,17 @@ const firebaseConfig = {
       });
 
 
-
-
+//get the trademark key
       var refTrademarks=firebase.database().ref('Trademarks');
-      //var refOffer=firebase.database().ref('Offers');
       refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
               console.log('saved trademark key',savedtrademark);
-              //alret
 
              });  
          }); 
+
+
 
   }
 
@@ -258,6 +208,7 @@ const firebaseConfig = {
   
   
   function change_page(){
+    localStorage.setItem("tradmarkID_branch",savedtrademark);
   window.location.href = "AddBranch.html";
 } 
 
@@ -294,7 +245,7 @@ fileButton.addEventListener('change', function (e) {
   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
     function (snapshot) {
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       uploader.value = progress;
       console.log('Upload is ' + progress + '% done');
       switch (snapshot.state) {

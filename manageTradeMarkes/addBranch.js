@@ -15,7 +15,8 @@ const firebaseConfig = {
     var lat='';
   var lng='';
   const auth=firebase.auth();
-  
+  var tid= localStorage.getItem("tradmarkID_branch");
+  localStorage.setItem("tradmarkID_branch",'');
   function nextTradeMarkInfoOffer(){
     var nameOfBranch = document.getElementById("branchName").value;
     var DescOfBranch = document.getElementById("Desc").value;
@@ -24,7 +25,7 @@ const firebaseConfig = {
     var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
     if(Validation(nameOfBranch,DescOfBranch,selectRegion.value)){
         //id of key of the trademark.
-    firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches').push(
+    firebase.database().ref('Trademarks/'+tid+'/Branches').push(
                 {
                     branchName:nameOfBranch,
                     description:DescOfBranch,
@@ -34,7 +35,7 @@ const firebaseConfig = {
                 });
     alert('تم إضافة الفرع بنجاح');
   //id of key of the trademark.
-    firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/-MHFk6d50tMb_wYSXVnx').set("true");
+    firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/'+tid).set("true");
 
     setTimeout(function() {
       change_page();
@@ -43,21 +44,19 @@ const firebaseConfig = {
 
 
 function change_page(){
+  localStorage.setItem("tradmarkID_offer",tid);
 window.location.href = "AddOffers.html";
 }
 
 }//IF VALDITE
 
 
-/*setTimeout(function() {
-  change_page();
-}, 5000);*/
-
 
 }//END FUNCTION
 
 
 function change_page(){
+  localStorage.setItem("tradmarkID_offer",tid);
   window.location.href = "AddOffers.html";
 }
 
@@ -167,7 +166,7 @@ function Validation2(nameOfBranch,DescOfBranch,selectRegionValue){
     var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
     if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
         //id of key of the trademark.
-    firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches').push(
+    firebase.database().ref('Trademarks/'+tid+'/Branches').push(
                 {
                     branchName:nameOfBranch,
                     description:DescOfBranch,

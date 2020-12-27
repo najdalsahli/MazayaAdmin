@@ -3,4 +3,13 @@
   background-image: linear-gradient(to bottom, #38a089, var(--dark-blue-green));
   background-size: cover;
 }
+#popup {
+  display:none;
+  position:absolute;
+  margin:0 auto;
+  top: 100%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px 2px #000;
+}
 
