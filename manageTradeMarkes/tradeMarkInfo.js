@@ -209,7 +209,13 @@ var savedtrademark='';
   
   function change_page(){
     localStorage.setItem("tradmarkID_branch",savedtrademark);
-  window.location.href = "AddBranch.html";
+    var trademark_Type=document.getElementById("trademarkType").value;
+    if(trademark_Type=="13"){//online
+      window.location.href = "AddOffers.html";
+
+    }else{
+      window.location.href = "AddBranch.html";}
+  
 } 
 
 
