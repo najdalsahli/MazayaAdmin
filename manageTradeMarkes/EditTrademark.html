@@ -140,7 +140,7 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
+                <div  class="container-fluid">
                     <div class="row">
                         <div class="col">
                             <div class="row">
@@ -155,9 +155,9 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th><button class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 13px;margin-right: -95px;">تعديل العروض</button></th>
-                                <th><button class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 145px;margin-right: -209px;">تعديل الفروع</button></th>
-                                <th><button class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 212px;">تعديل العلامة التجارية</button></th>
+                                <th><button id="editOffer"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 13px;margin-right: -95px;">تعديل العروض</button></th>
+                                <th><button id="editBranch"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 145px;margin-right: -209px;">تعديل الفروع</button></th>
+                                <th><button id="editTM"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 212px;">تعديل العلامة التجارية</button></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,38 +166,61 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 171px;">
+                <div id ="myDIV" class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 171px; display:none">
                     <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 21px;">
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;">
                             <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;margin-left: 380px;">معلومات العلامة التجارية</h6>
                         </div>
+                   
                         <div class="card-body">
                             <form>
                                 <div class="form-row">
                                     <div class="col" style="margin-top: -3px;"><label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">مواقع التواصل الاجتماعي</label>
                                         <div class="form-row">
-                                            <div class="col" style="margin-top: 0px;"><label style="margin-right: -271px;margin-left: -10px;font-family: Frutiger LT Arabic;">تويتر</label><input class="form-control" type="text" style="margin-top: -8px;"></div>
+                                            <div class="col" style="margin-top: 0px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;" >انستقرام</label></div>
+                                                <input
+                                                id="inst" class="form-control" type="text"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col" style="margin-top: 19px;"><label style="margin-right: -228px;margin-left: -10px;font-family: Frutiger LT Arabic;">سناب تشات</label><input class="form-control" type="text" style="margin-top: -3px;margin-bottom: -8px;"></div>
+                                            <div class="col" style="margin-top: 19px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">تويتر</label></div>
+                                                <input
+                                                id="twi" class="form-control" type="text" style="margin-top: 7px;"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col" style="margin-top: 21px;"><label style="margin-right: -248px;margin-left: -10px;font-family: Frutiger LT Arabic;">انستقرام</label><input class="form-control" type="text" style="margin-top: 4px;"></div>
-                                        </div><label style="margin-top: 18px;margin-right: -212px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">نوع التاجر</label><select class="form-control d-table d-xl-flex" style="margin-top: -1px;font-family: Frutiger LT Arabic;padding-top: 0px;text-align: right;"><option value="12" selected="">يرجى اختيار</option><option value="13" selected="">أون لاين</option><option value="14">محلي</option><option value="15">الكل</option></select>
+                                            <div class="col" style="margin-top: 21px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">سناب تشات</label></div>
+                                                <input
+                                                id="snap" class="form-control" type="text"></div>
+                                        </div><label style="margin-top: 18px;margin-right: -110px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">نوع نشاط العلامة التجارية</label><select id="trademarkType" class="form-control d-table d-xl-flex" style="margin-top: -1px;font-family: Frutiger LT Arabic;padding-top: 0px;text-align: right;">
+                                            <option value="12" selected="">يرجى اختيار</option>
+                                            <option value="13" >أون لاين</option>
+                                            <option value="14">محلي</option>
+                                            <option value="15">الكل</option></select>
                                         <label
-                                            style="margin-top: 18px;margin-right: -199px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">&nbsp;<i class="fas fa-star-of-life" style="font-size: 9px;margin-left: -13px;margin-right: 10px;color: #aa262e;"></i>اختيار الفئة</label><select class="form-control" style="font-family: Frutiger LT Arabic;padding-top: 0px;"><option value="12" selected="">يرجى اختيار الفئة</option><option value="13" selected="">الأغذية</option><option value="14" selected="">الإلكترونيات</option><option value="15">التسوق</option><option value="16">الخدمات</option><option value="17">السفر</option><option value="18">السيارات</option><option value="19">الصحة واللياقة</option><option value="20">المدارس</option><option value="21">المنزل</option></select></div>
+                                            style="margin-top: 18px;margin-right: -212px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">اختيار الفئة</label><select id="categoryType" class="form-control" style="font-family: Frutiger LT Arabic;padding-top: 0px;">
+                                                <option value="12" selected="">يرجى اختيار الفئة</option>
+                                                <option value="13" >الأغذية</option>
+                                                <option value="14" >الإلكترونيات</option>
+                                                <option value="15">التسوق</option>
+                                                <option value="16">الخدمات</option>
+                                                <option value="17">السفر</option>
+                                                <option value="18">السيارات</option>
+                                                <option value="19">الصحة واللياقة</option>
+                                                <option value="20">المدارس</option>
+                                                <option value="21">المنزل</option></select></div>
                                     <div
-                                        class="col" style="margin-bottom: -8px;">
-                                        <div class="form-group"><label for="email" style="font-family: Frutiger LT Arabic;margin-left: 218px;color: #38a089;margin-right: -9px;"><strong>&nbsp;</strong><i class="fas fa-star-of-life" style="margin-right: 5px;margin-left: -38px;color: #aa262e;font-size: 9px;"></i><strong>الاسم التجاري</strong><br></label>
-                                            <input
-                                                class="form-control" type="email" placeholder="مثال : باتشي" name="brandname" style="text-align: right;margin-top: 21px;font-family: Frutiger LT Arabic;"></div>
-                                        <div class="form-group"><label for="last_name" style="font-family: Frutiger LT Arabic;color: #38a089;margin-left: 260px;"><strong>الوصف&nbsp;</strong><br></label><input class="form-control" type="text" placeholder="مثال : شركة شوكلاته"
+                                        class="col">
+                                        <div class="form-group"><label for="email" style="font-family: Frutiger LT Arabic;margin-left: 218px;color: #38a089;"><strong>الاسم التجاري</strong><br></label><input class="form-control" id="name" placeholder="مثال : باتشي" name="brandname"
+                                                style="text-align: right;margin-top: 21px;font-family: Frutiger LT Arabic;"></div>
+                                        <div class="form-group"><label for="last_name" style="margin-left: 260px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>الوصف&nbsp;</strong><br></label><input class="form-control" type="text"  id="description" placeholder="مثال : شركة شوكلاته"
                                                 name="last_name" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
-                                        <div class="form-group"><label for="last_name" style="margin-left: 218px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>رقم التواصل</strong></label><input class="form-control" type="text" placeholder="05xxxxxxxx" name="PhoneNumber"
-                                                style="text-align: right;font-family: Frutiger LT Arabic;"></div>
-                                        <div class="form-group"><label for="last_name" style="margin-right: -208px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>البريد الالكتروني</strong></label><input class="form-control" type="text" placeholder="example@example.com"
+                                        <div class="form-group"><label  style="margin-left: 218px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>رقم التواصل</strong></label><input class="form-control" type="tel"  id="contactnum" placeholder="05xxxxxxxx" name="PhoneNumber"
+                                                style="text-align: right;"></div>
+                                        <div class="form-group"><label  style="margin-right: -208px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>البريد الالكتروني</strong></label><input class="form-control" type="email"  id="mail" placeholder="example@example.com"
                                                 name="email" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
-                                        <div class="form-group"><label for="last_name" style="margin-right: -175px;color: #38a089;font-family: Frutiger LT Arabic;margin-left: -24px;"><strong>رابط الموقع الالكتروني</strong><br></label><input class="form-control" type="text" placeholder="Batchi.com"
+                                        <div class="form-group"><label  style="margin-right: -175px;color: #38a089;font-family: Frutiger LT Arabic;margin-left: -24px;"><strong>رابط الموقع الالكتروني</strong><br></label><input class="form-control" type="url" id="maillink" placeholder="Batchi.com"
                                                 name="URL" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
                                 </div>
                         </div>
@@ -208,11 +231,41 @@
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group" style="text-align: center;">
-                                                    <div class="form-check" style="text-align: right;margin-right: 29px;margin-top: 18px;"><input class="form-check-input" type="radio" id="formCheck-5" style="margin-left: 186px;margin-top: 7px;width: 15px;height: 15px;"><label class="form-check-label" for="formCheck-5" style="font-weight: bold;color: rgb(179,17,46);font-size: 20px;font-family: Frutiger LT Arabic;">العلامة التجارية مميزة&nbsp;</label></div>
-                                                </div><button class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الخلفية<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
-                                                <button
-                                                    class="btn btn-primary" type="button" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;">اختيار الصورة<i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"></i></button>
-                                            </div>
+                                                    <div class="form-check" style="text-align: right;margin-right: 29px;margin-top: 18px;">
+                                                        <input class="form-check-input" type="checkbox" id="isFeatured" style="margin-left: 186px;margin-top: 7px;"><label class="form-check-label" for="formCheck-5" style="font-weight: bold;color: rgb(179,17,46);font-size: 20px;font-family: Frutiger LT Arabic;">العلامة التجارية مميزة&nbsp;</label></div>
+
+
+                                                </div>
+                                                <!---->
+                                                <!-- <progress value="0" max="100" id="uploader">0%</progress> -->
+                                                <input type="file" value="upload" id="fileButton">  
+                                               <!-- <img id="img"class="infocel"   src="assets/img/avatars/avatar1.jpeg" > -->
+
+                                               <label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">: تغيير الصورة</label>
+                                               <button id ="open" class="btn btn-primary" type="button" style="width: 130px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 212px;"> عرض الصورة </button>
+
+                                               <br>
+                                                
+                                                <!-- <progress value="0" max="100" id="uploader1">0%</progress> -->
+                                                <input type="file" value="upload" id="fileButton1" placeholder="تغيير الصورة"> 
+                                                <!-- <img id="background" class="rounded-circle mr-2 imageTrade"   src="assets/img/avatars/avatar1.jpeg" > -->
+                                                <label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;"> : تغيير الخلفية</label>
+                                                <button id ="open2"class="btn btn-primary" type="button" style="width: 130px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;margin-left: 212px;"> عرض الخلفية </button>
+
+                                                <!---->
+            <!-- let's call the following div as the  FRAME -->
+             <div id="popup" class="popup panel panel-primary">
+        
+                   <!-- and here comes the image -->
+                    <img id="img" alt="popup">
+            
+            <!-- Now this is the button which closes the popup-->
+                 <div class="panel-footer">
+                   <button id="close" class="btn btn-lg btn-primary">إغلاق</button>
+                      </div>
+                          </div>
+                          <!--  -->
+                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +273,8 @@
                         </div>
                         </form>
                     </div>
-                    <div class="card-body" style="margin-top: 52px;"><button class="btn btn-primary btn-sm" type="submit" style="margin-right: -4px;margin-left: 35px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;">التالي</button></div>
+                    <div class="card-body" style="margin-top: 52px;">
+                        <button id="Save" class="btn btn-primary btn-sm" type="submit" style="margin-right: -4px;margin-left: 35px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;">حفظ</button></div>
                 </div>
             </div>
         </div>
@@ -234,6 +288,7 @@
     <script src="assets/js/theme.js"></script>
     <script src="EditTrademark.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkmHUzp0xtObv2OCqiSaG7mn3IW37ee6s&callback=initMap"></script>
 </body>

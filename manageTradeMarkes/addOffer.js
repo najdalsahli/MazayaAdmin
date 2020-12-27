@@ -11,6 +11,8 @@ const firebaseConfig = {
   //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
   firebase.initializeApp(firebaseConfig);
   const auth=firebase.auth();
+  var tid=localStorage.getItem( "tradmarkID_offer");
+  localStorage.setItem("tradmarkID_offer",'');
 
   function nextOffersAndDeals(msg){
     var nameOfOffer = document.getElementById("offerName").value;
@@ -46,7 +48,7 @@ const firebaseConfig = {
 function uploadPage(){
     //fill frist branch
     var  selectBranch= document.getElementById("branch");
-    var ref=firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches');
+    var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
         snapshot.forEach(function(snapshot1) {
         var option = document.createElement( 'option' );
@@ -78,7 +80,7 @@ function uploadPage(){
 
 function branchMenu2(){
     var  selectBranch= document.getElementById("branch2");
-    var ref=firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches');
+    var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
         snapshot.forEach(function(snapshot1) {
         var option = document.createElement( 'option' );
@@ -214,7 +216,7 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
         offerTitle:nameOfOffer,
         serviceType:ServiceType,
         startDate:startDate,
-        trademarkID:'-MHFk6d50tMb_wYSXVnx',
+        trademarkID:tid,
         usageType:useageType,
         userType:userType,
     });
@@ -223,14 +225,14 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
          var n = selectBranchText.search("/");
          var s=Number(n);
          var res = selectBranchText.slice(0, s);
-         var refBranches=firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches');
+         var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
          var refOffer=firebase.database().ref('Offers');
          refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
              snapshot.forEach(function(data) {
                  savingBranch= data.key;
                 });  
             }); 
-            refOffer.orderByChild('trademarkID').equalTo('-MHFk6d50tMb_wYSXVnx').on("value", function(snapshot1) {
+            refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
                     snapshot1.forEach(function(data) {
                  firebase.database().ref('Offers/'+data.key+'/Branches/'+savingBranch).set(true);
                  //add in tradeMarks
@@ -238,7 +240,7 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
                  if(data.child("offerTitle").val()==nameOfOffer){
                   if(data.child("discountCode").val()==code){
 
-                 firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Offers/'+data.key).set(true);
+                 firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
                 }}}
                     });
                 });
@@ -263,7 +265,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
          offerTitle:nameOfOffer,
          serviceType:ServiceType,
          startDate:startDate,
-         trademarkID:'-MHFk6d50tMb_wYSXVnx',
+         trademarkID:tid,
          usageType:useageType,
          userType:userType,
      });
@@ -272,14 +274,14 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
           var n = selectBranchText.search("/");
           var s=Number(n);
           var res = selectBranchText.slice(0, s);
-          var refBranches=firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches');
+          var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
           var refOffer=firebase.database().ref('Deals');
           refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
               snapshot.forEach(function(data) {
                   savingBranch= data.key;
                  });  
              }); 
-             refOffer.orderByChild('trademarkID').equalTo('-MHFk6d50tMb_wYSXVnx').on("value", function(snapshot1) {
+             refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
                      snapshot1.forEach(function(data) {
                   firebase.database().ref('Deals/'+data.key+'/Branches/'+savingBranch).set(true);
                   //add in tradeMarks
@@ -287,7 +289,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
                   if(data.child("offerTitle").val()==nameOfOffer){
                    if(data.child("discountCode").val()==code){
  
-                  firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Deals/'+data.key).set(true);
+                  firebase.database().ref('Trademarks/'+tid+'/Deals/'+data.key).set(true);
                  }}}
                      });
                  });
@@ -313,7 +315,7 @@ window.location.href = "manageTradeMarksHome.html";
         offerTitle:offerTitle,
         serviceType:serviceType,
         startDate:startDate,
-        trademarkID:'-MHFk6d50tMb_wYSXVnx',
+        trademarkID:tid,
         voucherCode:voucherCode
     });
    //saving branch
@@ -321,14 +323,14 @@ window.location.href = "manageTradeMarksHome.html";
    var n = selectBranchText.search("/");
    var s=Number(n);
    var res = selectBranchText.slice(0, s);
-   var refBranches=firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Branches');
+   var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
    var refOffer=firebase.database().ref('Vouchers');
    refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
        snapshot.forEach(function(data) {
            savingBranch= data.key;
           });  
       }); 
-      refOffer.orderByChild('trademarkID').equalTo('-MHFk6d50tMb_wYSXVnx').on("value", function(snapshot1) {
+      refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
            firebase.database().ref('Vouchers/'+data.key+'/Branches/'+savingBranch).set(true);
            //add in tradeMarks
@@ -336,7 +338,7 @@ window.location.href = "manageTradeMarksHome.html";
            if(data.child("offerTitle").val()==offerTitle){
             if(data.child("voucherCode").val()==voucherCode){
 
-           firebase.database().ref('Trademarks/-MHFk6d50tMb_wYSXVnx/Vouchers/'+data.key).set(true);
+           firebase.database().ref('Trademarks/'+tid+'/Vouchers/'+data.key).set(true);
           }}}
               });
           });

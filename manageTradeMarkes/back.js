@@ -376,7 +376,7 @@ if(categoryName=='الكل'){
         change_page();
       }, 1000);
 function change_page(){
-  localStorage.setItem("tradmarkID",uid);
+  localStorage.setItem("tradmarkID_E",uid);
 window.location.href = "EditTrademark.html";
      };
     }
@@ -542,116 +542,6 @@ function logout(){
 }        
 
 
-/* ---Moved to tradeMarkInfo.js to better structure---
-function nextTradeMarkInfo(){
-
-  var trademarkName=document.getElementById("name").value;
-  if(trademarkName==''){
-    alert("الرجاء ادخال اسم العلامة التجارية");
-    return;
-  }
-  console.log(trademarkName);
-
-
-  //  id  description;
-  var trademarkDescription =document.getElementById("description").value;
-  if(trademarkDescription=='')
-  {
-alert("الرجاء ادخال وصف للعلامة التجارية");
-return;
-  }
-  console.log(trademarkDescription);
-  
-
-  
-  //id contactnum
-  var tradecontactnum=document.getElementById("contactnum").value;
-  if(tradecontactnum=='')
-  {
-    alert("الرجاء ادخال رقم الجوال الخاص  بالعلامة التجارية");
-    return;
-  }
-  
-  console.log(tradecontactnum);
-
-  //id mail 
-  var trademarkmail=document.getElementById("mail").value;
-  if(trademarkmail=='')
-  {
-alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية");
-return;
-  }
-  console.log(trademarkmail);
-
-
-  //id maillink
-  var trademarkmaillink=document.getElementById("maillink").value;
-  if(trademarkmaillink=='')
-  {
-alert("الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية")
-return;
-  }
-  console.log(trademarkmaillink);
-
-
-  // id inst
-  var accountinst=document.getElementById("inst").value;
-  if(accountinst=='')
-  {
-alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
-return;
-  }
-  console.log(accountinst);
-
-  //id twi
-  var accounttwi=document.getElementById("twi").value;
-  if(accounttwi=='')
-  {
-alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
-return;
-  }
-  console.log(accounttwi);
-
-  //id snap 
-  var accountsnap=document.getElementById("snap").value;
-  if(accountsnap=='')
-  {
-    alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
-    return;
-  }
-  console.log(accountsnap);
-
-
-//id trademarkType 
-var trademark_Type=document.getElementById("trademarkType").value;
-if(trademark_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
-{
-  alert(" الرجاء اختيار نوع نشاط العلامه التجارية");
-  return;
-}
-console.log(trademark_Type);
-
-
-//id categoryType 
-var category_Type=document.getElementById("categoryType").value;
-if(category_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
-{
-  alert(" الرجاء اختيار الفئه");
-  return;
-}
-console.log(category_Type);
-
-//id isFeatured
-var isـFeatured=document.getElementById("isFeatured").checked;
-console.log(isـFeatured); 
-
-
-
-
-
-
-}// end function 
-*/
 
 
 
