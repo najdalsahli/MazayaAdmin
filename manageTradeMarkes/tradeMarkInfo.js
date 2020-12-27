@@ -210,7 +210,7 @@ const firebaseConfig = {
 
   setTimeout(function() {
     change_page();
-  }, 5000);
+  }, 5000);// make it less it will work 
   
   }// end function 
 
