@@ -16,11 +16,54 @@ const firebaseConfig = {
   
   const auth=firebase.auth();
 
+
+
+  function visit_twitter(){
+   // var tmID= localStorage.getItem("tradmarkID");
+    console.log("tmID");
+    firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot){
+      var trademarkTwi=snapshot.child("twitter").val();
+      //var Full_link="https://twitter.com/"+ trademarkTwi;
+      //window.location=trademarkTwi;
+      //location.href=trademarkTwi;
+      console.log('twitter acc '+snapshot.child("twitter").val());
+      console.log('twitter acc var'+snapshot.child("trademarkTwi").val());
+    });
+
+  }
+
+  function visit_snapchat(){
+    var tmID= localStorage.getItem("tradmarkID");
+    firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot){
+      var trademarkSnap = snapshot.child("snapchat").val();
+      window.location=trademarkSnap;
+      console.log('snapchat acc '+snapshot.child("snapchat").val());
+    });
+
+  }
+
+  function visit_instagram(){
+    var tmID= localStorage.getItem("tradmarkID");
+    firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot){
+      var trademarkInst = snapshot.child("instagram").val();
+      window.location=trademarkInst;
+      console.log('instagram acc '+snapshot.child("instagram").val());
+    });
+
+  }
+
+
+
+
+
+
+
 function load(){
   var tmID= localStorage.getItem("tradmarkID");
-    alert(tmID);
+    //alert(tmID);
     //Write your code here darling 
     //firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
+
     firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot){
 
 
@@ -34,20 +77,58 @@ function load(){
       console.log('trademark name '+snapshot.child("trademarkName").val());
 
 
-   /*   //#3
-      var trademarkTwi = document.createElement('td');
-      trademarkTwi.className='cells';
-      trademarkTwi.textContent=snapshot.child("twitter").val();
+      //#3
+      var trademarkTwi=snapshot.child("twitter").val();
+      console.log('twitter acc '+snapshot.child("twitter").val());
+  
+      document.getElementById("twitterbtn").addEventListener("click", function(){ 
+
+        if(trademarkTwi!=''){
+        if(trademarkTwi.startsWith("https")){
+          location.href=trademarkTwi;
+
+        }else{
+        //https://twitter.com/Ruba_AlSmail
+        var Full_link="https://twitter.com/"+ trademarkTwi;
+        location.href=Full_link; }}
+      });
+
+
 
       //#4
-      var trademarkSnap = document.createElement('td');
-      trademarkSnap.className='cells';
-      trademarkSnap.textContent=snapshot.child("snapchat").val();
+      var trademarkSnap = snapshot.child("snapchat").val();
+      console.log('snapchat acc '+snapshot.child("snapchat").val());
+
+      document.getElementById("snapchatbtn").addEventListener("click", function(){ 
+
+
+        if(trademarkSnap!=''){
+        if(trademarkSnap.startsWith("https")){
+          location.href=trademarkSnap;
+
+        }else{
+        //https://www.snapchat.com/add/ruba_alsmail
+        var Full_link="https://www.snapchat.com/add/"+ trademarkSnap;
+        location.href=Full_link; }}
+      });
+      
 
       //#5
-      var trademarkInst = document.createElement('td');
-      trademarkInst.className='cells';
-      trademarkInst.textContent=snapshot.child("instagram").val();*/
+      var trademarkInst = snapshot.child("instagram").val();
+      console.log('instagram acc '+snapshot.child("instagram").val());
+
+      document.getElementById("instagrambtn").addEventListener("click", function(){ 
+
+        if(trademarkInst!=''){
+        if(trademarkInst.startsWith("https")){
+          location.href=trademarkInst; 
+
+        }else{
+        //https://www.instagram.com/saudi.weddings/
+        var Full_link="https://www.instagram.com/"+ trademarkInst+"/";
+        location.href=Full_link; }}
+
+      });
 
       //#6 -trademark_Description
       document.getElementById('trademark_Description').innerHTML = snapshot.child("description").val();
@@ -141,7 +222,7 @@ refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot
 
 function branchTable(){
 
-   firebase.database().ref('Trademarks/'+tmID+'/Branches').once('value').then(function(snapshot){
+   firebase.database().ref('Trademarks/'+tmID+'/Branches/').once('value').then(function(snapshot){
     snapshot.forEach(function(snapshot1) {
 
       console.log('branch table ',);
@@ -188,88 +269,6 @@ function branchTable(){
 
    // });
     
-//----
-/*
-//  var trademarkCategory=document.getElementById("Category").value;
-//  var trademarkEmail=document.getElementById("Email").value;
- // var trademarkContactNum=document.getElementById("ContactNum").value;
- // var trademarkName=document.getElementById("TrademarkNmae").value;
-
-    firebase.database().ref('Suggestion').once('value').then(function(snapshot) {
-        
-
-
-         
-  var newrow = document.createElement('tr');
-//delete sugg
- // var  deletecel = document.createElement('td');
- //   deletecel.className='deletecel';
- //  var deletebtn = document.createElement('button');
- //   deletebtn.className='btn btn-danger';
-  //  deletebtn.textContent="حذف";
-  //  deletebtn.onclick=function(){
-  //    deleteSugg(snapshot1.key);
-   // };
-
-
-//view sugg
-var  viewcel = document.createElement('td');
-viewcel.className='viewcel';
-
-//var viewbtn = document.createElement('button');
-//viewbtn.className='buttons btn btn-primary';
-//viewbtn.textContent="عرض ";
-//viewbtn.onclick=function(){
- //viewSugg(snapshot1.child("employeeNotes").val());
-//};
-
-
-   var trademarkCategory = document.createElement('td');
-   trademarkCategory.className='cells';
-   trademarkCategory.textContent=snapshot1.child("categoryName").val();
-
-   var trademarkEmail = document.createElement('td');
-   trademarkEmail.className='cells';
-   trademarkEmail.textContent=snapshot1.child("contactEmailAddress").val();
-   trademarkEmail.onclick=function(){
-     contactSugg(snapshot1.child("contactEmailAddress").val());
-   }
-
-   var trademarkContactNum = document.createElement('td');
-   trademarkContactNum.className='cells';
-   trademarkContactNum.textContent=snapshot1.child("contactNumber").val();
-
-   var trademarkName = document.createElement('td');
-   trademarkName.className='cells';
-   trademarkName.textContent=snapshot1.child("trademarkName").val();
-
-
-    
-    deletecel.appendChild(deletebtn);
-    newrow.appendChild(deletecel);
-    
-    viewcel.appendChild(viewbtn);
-    newrow.appendChild(viewcel);
-
-    newrow.appendChild(trademarkEmail);
-    newrow.appendChild(trademarkContactNum);
-    newrow.appendChild(trademarkCategory);
-    newrow.appendChild(trademarkName);
-
-    document.getElementById('tableBody').appendChild(newrow);
-
-   });
-  
-});
-document.getElementById("dataTable").deleteRow(1);
-
-  
-
-
-
-
-*/
-//----
 
 
     localStorage.setItem("tradmarkID",'');
