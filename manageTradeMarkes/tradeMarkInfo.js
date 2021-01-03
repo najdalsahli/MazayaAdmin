@@ -114,13 +114,71 @@ var savedtrademark='';
   //id isFeatured
   var isـFeatured=document.getElementById("isFeatured").checked;
   console.log(isـFeatured); 
+
+
+  //---for the images
+  //id fileButton
+  //var file_Button = document.getElementById("fileButton").required;
+  
+  if( document.getElementById("fileButton").files.length == 0 ){
+    console.log("no files selected- img");
+    alert(" الرجاء اختيار صورة للعلامة التجارية");
+    return;
+}
+  //id fileButton1
+  //var file_Button1 = document.getElementById("fileButton").required;
+
+  if( document.getElementById("fileButton1").files.length == 0 ){
+    console.log("no files selected- background");
+    alert("الرجاء اختيار خلفية للعلامة التجارية ");
+    return;
+}
+
   
 
 
 
   try{
-//add in trademark tabel
-    firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
+
+
+       var flag=false;
+
+
+       firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
+        
+        snapshot.forEach(function(snapshot1) {
+
+        var existTrademarkName= snapshot1.child("trademarkName").val();
+        console.log('trademark Name: '+existTrademarkName);
+        var compareResult= trademarkName.localeCompare(existTrademarkName);
+        console.log('compare Result= : '+compareResult);
+        
+        
+
+        if(compareResult==0){
+          flag=true;
+          //alert("Trademark name already exist");
+          console.log('inside the if');
+          //return;
+
+        }
+
+        });
+
+
+        console.log('flag = '+flag);
+        after_theLoop();
+       });
+
+
+  
+function after_theLoop(){
+
+  console.log('after the loop st = '+flag);
+      if(flag!=true){
+        
+      //add in trademark tabel
+  firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
     firebase.database().ref('Trademarks/'+savedtrademark+'/contactNum').set(tradecontactnum);
     firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
     firebase.database().ref('Trademarks/'+savedtrademark+'/email').set(trademarkmail);
@@ -130,7 +188,6 @@ var savedtrademark='';
     firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
     firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
     firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
-
     firebase.database().ref('Trademarks/'+savedtrademark+'/views').set(0);
     firebase.database().ref('Trademarks/'+savedtrademark+'/website').set(trademarkmaillink);
 
@@ -143,12 +200,26 @@ var savedtrademark='';
 
           
 
-        alert("تم إضافة العلامة التجارية بنجاح");
+        alert("تم إضافة العلامة التجارية بنجاح"); 
+      
+        setTimeout(function() {
+          change_page();
+      
+        }, 1000);
+      
+
+      }else{
+        //alert("Trademark name already exist");
+        alert("الاسم التجاري موجود بالفعل ");
+        return;
         
-       
+        }
+        
+      }
 
 
-  }catch{
+  }catch(error){
+    console.log('error message '+error.message);
     alert(" something went wrong" );
   } 
 
@@ -156,11 +227,8 @@ var savedtrademark='';
 
 
   
-  
 
-  setTimeout(function() {
-    change_page();
-  }, 1000);
+
   
   }// end function 
 
@@ -183,7 +251,7 @@ var savedtrademark='';
           snapchat:'',
           trademarkName:'',
           twitter:'',
-          views:'',
+          views:0,
           website:''     
 
       });
@@ -194,7 +262,6 @@ var savedtrademark='';
       refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
-              localStorage.setItem("tradmarkID_branch",savedtrademark);
               console.log('saved trademark key',savedtrademark);
 
              });  
@@ -208,7 +275,14 @@ var savedtrademark='';
   
   
   function change_page(){
-  window.location.href = "AddBranch.html";
+    localStorage.setItem("tradmarkID_branch",savedtrademark);
+    var trademark_Type=document.getElementById("trademarkType").value;
+    if(trademark_Type=="13"){//online
+      window.location.href = "AddOffers.html";
+
+    }else{
+      window.location.href = "AddBranch.html";}
+  
 } 
 
 
