@@ -16,7 +16,7 @@ const firebaseConfig = {
   
   const auth=firebase.auth();
   var tmID= localStorage.getItem("tradmarkID_E");
-  localStorage.setItem("tradmarkID_E",'');
+  //localStorage.setItem("tradmarkID_E",'');
 
 function s(){
     var ref=firebase.database().ref('Trademarks/'+tmID);
@@ -100,6 +100,16 @@ $("#close").on("click",function(event){
 
 });//end call firebase ref
 
+ //div hide and show with js
+ var x = document.getElementById("myDIV");
+ var editTM=document.getElementById("editTM");
+ editTM.onclick= function (){   
+   if (x.style.display == 'none') {
+  x.style.display = 'block';
+} else {
+  x.style.display = 'none';
+}
+ }; 
 
 //buttons of editing
   var editOffer=document.getElementById("editOffer");
@@ -112,16 +122,7 @@ localStorage.setItem("tradmarkID_E_O",tmID);
 window.location.href = "EditOffers.html";
  };}
 
- //div hide and show with js
- var x = document.getElementById("myDIV");
- var editTM=document.getElementById("editTM");
- editTM.onclick= function (){   
-   if (x.style.display == 'none') {
-  x.style.display = 'block';
-} else {
-  x.style.display = 'none';
-}
- };
+
 
 var editBranches=document.getElementById("editBranch");
 editBranches.onclick=function(){

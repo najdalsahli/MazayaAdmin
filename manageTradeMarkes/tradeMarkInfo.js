@@ -130,6 +130,7 @@ var savedtrademark='';
     firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
     firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
     firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
+
     firebase.database().ref('Trademarks/'+savedtrademark+'/views').set(0);
     firebase.database().ref('Trademarks/'+savedtrademark+'/website').set(trademarkmaillink);
 
@@ -193,6 +194,7 @@ var savedtrademark='';
       refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
+              localStorage.setItem("tradmarkID_branch",savedtrademark);
               console.log('saved trademark key',savedtrademark);
 
              });  
@@ -206,7 +208,6 @@ var savedtrademark='';
   
   
   function change_page(){
-    localStorage.setItem("tradmarkID_branch",savedtrademark);
   window.location.href = "AddBranch.html";
 } 
 
