@@ -262,6 +262,7 @@ function after_theLoop(){
       refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
+              localStorage.setItem("tradmarkID_branch",savedtrademark);
               console.log('saved trademark key',savedtrademark);
 
              });  

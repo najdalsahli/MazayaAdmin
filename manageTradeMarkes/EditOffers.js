@@ -14,7 +14,6 @@ const firebaseConfig = {
   
   const auth=firebase.auth();
   var tmID= localStorage.getItem("tradmarkID_E_O");
-  //localStorage.setItem("trad
   var flagOnline=false;
    function load(){
   
