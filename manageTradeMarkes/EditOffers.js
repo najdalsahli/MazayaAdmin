@@ -13,8 +13,7 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
-  var tmID= '-MHe98dVGw2PFgO1T14j';
-  //localStorage.getItem("tradmarkID_E_O");
+  var tmID= localStorage.getItem("tradmarkID_E_O");
   //localStorage.setItem("trad
   var flagOnline=false;
    function load(){
