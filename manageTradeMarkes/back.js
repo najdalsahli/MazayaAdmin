@@ -403,6 +403,17 @@ function change_page(){
    window.location.href = "ViewTradeMark.html";
      };
     }
+
+    //add
+    var addTM=document.getElementById("add");
+    addTM.onclick=function(){
+      setTimeout(function() {
+        change_page();
+      }, 1000);
+function change_page(){
+  window.location.href = "tradeMarkInfo.html";
+};
+    };
   
     //var showIcon= document.createElement('i');
     //showIcon.className='';
@@ -625,7 +636,7 @@ document.getElementById("dataTable").deleteRow(1);
   function deleteSugg(uid){
     var conf =confirm("هل أنت متأكد من حذف الاقتراح؟");
     if (conf==true){//true
-     firebase.database.ref('Suggestion').child(uid).remove();
+     firebase.database().ref('Suggestion/'+uid).remove();
       alert('تم حذف الاقتراح');
       reload_page();
       }

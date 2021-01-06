@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>إضافة العروض</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
@@ -157,7 +157,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;height: 55px;margin-top: 0px;">
                             <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;margin-left: 552px;">العروض</h6>
                         </div>
-                        <div class="card-body">
+                       <div class="card-body">
                             <label style="margin-right: -231px;color: #38a089;font-family: Frutiger LT Arabic ;">نوع العرض<br></label>
                             <select id="offer"class="form-control" style="font-family: Frutiger LT Arabic;height: 48px;margin-top: -4px;">
                                 <option value="10"selected="">عرض</option>
@@ -171,7 +171,7 @@
                                         <input id="Desc" class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">
                                         <div
                                             class="form-row">
-                                            <div class="col"><label class="col-form-label" style="font-family: Frutiger LT Arabic ;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;color: #38a089;">الفروع</label></div>
+                                            <div class="col"><label  id='label'class="col-form-label" style="font-family: Frutiger LT Arabic ;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;color: #38a089;">الفروع</label></div>
                                     </div>
                                     <select id="branch"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;">
                                         <option value="10" selected="">يرجى اختيار الفرع</option></select></div>
@@ -235,7 +235,7 @@
                             <div
                                 class="form-check" style="text-align: left;margin-left: 4px;margin-right: 12px;">
                                 <input name ="serviceType"class="form-check-input" type="radio" id="allStRB" style="margin-left: 50px;"value="الكل"><label class="form-check-label" for="formCheck-2" style="font-family: Frutiger LT Arabic ;">الكل</label></div>
-                </div>
+                </div> 
                 </td>
                 </tr>
                 </tbody>
@@ -263,9 +263,10 @@
             </div>
         </div>
         </form>
-        <div class="form-group" ><button class="btn btn-primary" id="addOntherOffer" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: -25px;margin-top: -55px;font-family: Frutiger LT Arabic;margin-bottom: -44px;margin-left: -12px;">إضافة العرض</button></div>
+        <!-- <div class="form-group" ><button class="btn btn-primary" id="addOntherOffer" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: -25px;margin-top: -55px;font-family: Frutiger LT Arabic;margin-bottom: -44px;margin-left: -12px;">إضافة العرض</button></div> -->
     </div>
-    <div class="card-body"><button onclick="nextOffersAndDeals('')" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
+    <div class="card-body"><button id='next'onclick="nextOffersAndDeals('')" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">حفظ</button>
+        <button id="final"  onclick="goHome()" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px; display: none;">التالي</button></div>
     </div>
     </div>
     <div id="div2"class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 254px;">
@@ -350,9 +351,11 @@
                 </div>
             </div>
             </form>
-            <div class="form-group"><button id="addOntherV"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: 3px;margin-top: -33px;font-family: Frutiger LT Arabic;">إضافة العرض</button></div>
+            <!-- <div class="form-group"><button id="addOntherV"class="btn btn-primary" type="button" style="width: 215px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-right: 3px;margin-top: -33px;font-family: Frutiger LT Arabic;">إضافة العرض</button></div> -->
         </div>
-        <div class="card-body"><button onclick="nextVouchers('')" id ="nextV" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
+        <div class="card-body"><button onclick="nextVouchers('')" id ="nextV" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">حفظ</button>
+            <button id="final2"  onclick="goHome2()" class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px; display: none;">التالي</button>
+        </div>
     </div>
 </div>
     </div>
