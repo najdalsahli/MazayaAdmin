@@ -15,7 +15,7 @@ const firebaseConfig = {
   const auth=firebase.auth();
 
 
-var savedtrademark='';
+
   function nextTradeMarkInfo(){
 
     var trademarkName=document.getElementById("name").value;
@@ -69,18 +69,29 @@ var savedtrademark='';
   
     // id inst
     var accountinst=document.getElementById("inst").value;
-
+  /*  if(accountinst=='')
+    {
+  alert("الرجاء ادخال رابط حساب الانستقرام الخاص بالعلامة التجارية");
+  return;
+    }*/
     console.log(accountinst);
   
     //id twi
     var accounttwi=document.getElementById("twi").value;
-  
+   /* if(accounttwi=='')
+    {
+  alert("الرجاء ادخال رابط حساب التويتر الخاص بالعلامة التجارية");
+  return;
+    }*/
     console.log(accounttwi);
   
     //id snap 
     var accountsnap=document.getElementById("snap").value;
-
-    
+   /* if(accountsnap=='')
+    {
+      alert(" الرجاء ادخال رابط حساب السناب تشات الخاص بالعلامة التجارية");
+      return;
+    }*/
     console.log(accountsnap);
   
   
@@ -114,73 +125,15 @@ var savedtrademark='';
   //id isFeatured
   var isـFeatured=document.getElementById("isFeatured").checked;
   console.log(isـFeatured); 
-
-
-  //---for the images
-  //id fileButton
-  //var file_Button = document.getElementById("fileButton").required;
-  
-  if( document.getElementById("fileButton").files.length == 0 ){
-    console.log("no files selected- img");
-    alert(" الرجاء اختيار صورة للعلامة التجارية");
-    return;
-}
-  //id fileButton1
-  //var file_Button1 = document.getElementById("fileButton").required;
-
-  if( document.getElementById("fileButton1").files.length == 0 ){
-    console.log("no files selected- background");
-    alert("الرجاء اختيار خلفية للعلامة التجارية ");
-    return;
-}
-
   
 
 
 
   try{
 
-
-       var flag=false;
-
-
-       firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
-        
-        snapshot.forEach(function(snapshot1) {
-
-        var existTrademarkName= snapshot1.child("trademarkName").val();
-        console.log('trademark Name: '+existTrademarkName);
-        var compareResult= trademarkName.localeCompare(existTrademarkName);
-        console.log('compare Result= : '+compareResult);
-        
-        
-
-        if(compareResult==0){
-          flag=true;
-          //alert("Trademark name already exist");
-          console.log('inside the if');
-          //return;
-
-        }
-
-        });
-
-
-        console.log('flag = '+flag);
-        Empty_insert();
-        after_theLoop();
-       });
-
-
-  
-function after_theLoop(){
-
-  console.log('after the loop st = '+flag);
-      if(flag!=true){
-        
-      //add in trademark tabel
-  firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/category').set(category_Type1);
     firebase.database().ref('Trademarks/'+savedtrademark+'/contactNum').set(tradecontactnum);
+
     firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
     firebase.database().ref('Trademarks/'+savedtrademark+'/email').set(trademarkmail);
     firebase.database().ref('Trademarks/'+savedtrademark+'/instagram').set(accountinst);
@@ -189,38 +142,63 @@ function after_theLoop(){
     firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
     firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
     firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
-    firebase.database().ref('Trademarks/'+savedtrademark+'/views').set(0);
+
+    firebase.database().ref('Trademarks/'+savedtrademark+'/views').set('');
     firebase.database().ref('Trademarks/'+savedtrademark+'/website').set(trademarkmaillink);
-
-    //add in catogry tabel
-    firebase.database().ref('Categories/'+category_Type1+'/Trademarks/'+savedtrademark).set(true);
-
-
+  
 
 
 
           
 
-        alert("تم إضافة العلامة التجارية بنجاح"); 
-      
-        setTimeout(function() {
-          change_page();
-      
-        }, 1000);
-      
-
-      }else{
-        //alert("Trademark name already exist");
-        alert("الاسم التجاري موجود بالفعل ");
-        return;
-        
-        }
-        
+ 
+    /*firebase.database().ref('Trademarks/'+savedtrademark).set(
+      {
+        backgroundImg:'',
+        category:category_Type1,
+        contactNum:tradecontactnum,
+        description:trademarkDescription,
+        email:trademarkmail,
+        imgURL:'',
+        instagram:accountinst,
+        isFeatured:isـFeatured,
+        serviceType:trademark_Type1,
+        snapchat:accountsnap,
+        trademarkName:trademarkName,
+        twitter:accounttwi,
+        views:'',
+        website:trademarkmaillink   
       }
 
+      
+    );*/
 
-  }catch(error){
-    console.log('error message '+error.message);
+   /* firebase.database().ref('Trademarks').push(
+        {
+ 
+            backgroundImg:'',
+            category:category_Type1,
+            contactNum:tradecontactnum,
+            description:trademarkDescription,
+            email:trademarkmail,
+            imgURL:'',
+            instagram:accountinst,
+            isFeatured:isـFeatured,
+            serviceType:trademark_Type1,
+            snapchat:accountsnap,
+            trademarkName:trademarkName,
+            twitter:accounttwi,
+            views:'',
+            website:trademarkmaillink     
+
+        });*/
+
+        alert(" added successfully, yay! ");
+        
+       
+
+
+  }catch{
     alert(" something went wrong" );
   } 
 
@@ -228,8 +206,11 @@ function after_theLoop(){
 
 
   
+  
 
-
+  setTimeout(function() {
+    change_page();
+  }, 5000);// make it less it will work 
   
   }// end function 
 
@@ -252,24 +233,24 @@ function after_theLoop(){
           snapchat:'',
           trademarkName:'',
           twitter:'',
-          views:0,
+          views:'',
           website:''     
 
       });
 
 
-//get the trademark key
+
+
       var refTrademarks=firebase.database().ref('Trademarks');
+      //var refOffer=firebase.database().ref('Offers');
       refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
-              localStorage.setItem("tradmarkID_branch",savedtrademark);
               console.log('saved trademark key',savedtrademark);
+              //alret
 
              });  
          }); 
-
-
 
   }
 
@@ -277,14 +258,7 @@ function after_theLoop(){
   
   
   function change_page(){
-    localStorage.setItem("tradmarkID_branch",savedtrademark);
-    var trademark_Type=document.getElementById("trademarkType").value;
-    if(trademark_Type=="13"){//online
-      window.location.href = "AddOffers.html";
-
-    }else{
-      window.location.href = "AddBranch.html";}
-  
+  window.location.href = "AddBranch.html";
 } 
 
 
@@ -320,7 +294,7 @@ fileButton.addEventListener('change', function (e) {
   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
     function (snapshot) {
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       uploader.value = progress;
       console.log('Upload is ' + progress + '% done');
       switch (snapshot.state) {
