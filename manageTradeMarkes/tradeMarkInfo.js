@@ -167,7 +167,7 @@ var savedtrademark='';
 
 
         console.log('flag = '+flag);
-        Empty_insert();
+        //Empty_insert();
         after_theLoop();
        });
 
