@@ -26,8 +26,9 @@ var lng='';
   var flag=false;
   var regionDB;
   var numOfB=0;
-function load(tm){
-  
+function load(){
+  console.log(tmID);
+
     tm=tmID;
     
 //alert(tmID);

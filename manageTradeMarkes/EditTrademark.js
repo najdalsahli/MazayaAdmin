@@ -19,6 +19,7 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_E",'');
 
 function s(){
+  console.log(tmID);
     var ref=firebase.database().ref('Trademarks/'+tmID);
     ref.once("value", function(snapshot) {
     document.getElementById("name").value=snapshot.child("trademarkName").val();
