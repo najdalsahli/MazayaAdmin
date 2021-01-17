@@ -16,7 +16,7 @@ const firebaseConfig = {
 
   var lat='';
   var lng='';
-  localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
+  //localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
 
   var tmBranchID=localStorage.getItem("tradmarkID_branch");
 

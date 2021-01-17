@@ -16,7 +16,8 @@ const firebaseConfig = {
   var tmID= localStorage.getItem("tradmarkID_E_O");
   var flagOnline=false;
    function load(){
-  
+    console.log(tmID);
+
     tm=tmID;
     
     firebase.database().ref('Trademarks/'+tmID+'/Offers').once('value').then(function(snapshot) {
@@ -342,7 +343,6 @@ if(valditeFialdesVourches(name,des,point,Vnum,sDate,eDate,selectValue,code2)){
 
        
         //saving branch
-        var same=false;
    var n = selectRegionText.search("/");
    var s=Number(n);
    var res = selectRegionText.slice(0, s);
