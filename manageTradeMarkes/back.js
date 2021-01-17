@@ -18,9 +18,7 @@ const firebaseConfig = {
 
 
 
-  if(window.location.href=="http://127.0.0.1:5500/manageEmployees.html"){
-    displayusers();
-  }
+
 
 function viewTradeMarks(){
 
@@ -67,77 +65,7 @@ function viewTradeMarks(){
  
   }
 
-  function displayusers(){
 
-
-    firebase.database().ref('Users').once('value').then(function(snapshot) {
-        
-      snapshot.forEach(function(snapshot1) {
-
-         
-   var newrow = document.createElement('tr');
-
-
-  var  deletecel = document.createElement('td');
-    deletecel.className='deletecel';
-   var deletebtn = document.createElement('button');
-    deletebtn.className='buttons btn btn-primary';
-    deletebtn.textContent="تعطيل";
-    deletebtn.onclick=function(){
-      deleteEmp(snapshot1.key);
-    };
-
-
-  var addcel = document.createElement('td');
-    addcel.className='deletecel';
-    var addbtn = document.createElement('button');
-    addbtn.className='buttons btn btn-primary';
-    addbtn.textContent="إضافة";
-    addbtn.onclick=function(){
-      addtion(snapshot1.key);
-    };
-    //addbtn.addEventListener("click", addtion, false);
-
-   var noPointcel = document.createElement('td');
-    noPointcel.className='cells';
-    noPointcel.textContent=snapshot1.child("points").val();
-
-   var gendercel = document.createElement('td');
-    gendercel.className='cells';
-    gendercel.textContent=snapshot1.child("gender").val();
-   var phonecel = document.createElement('td');
-    phonecel.className='cells';
-    phonecel.textContent=snapshot1.child("email").val();
-   var namecel = document.createElement('td');
-    namecel.className='cells';
-    namecel.textContent=snapshot1.child("name").val();
-
-   
-
-
-    
-    
-    deletecel.appendChild(deletebtn);
-    newrow.appendChild(deletecel);
-
-    addcel.appendChild(addbtn);
-    newrow.appendChild(addcel);
-
-    newrow.appendChild(noPointcel);
-    newrow.appendChild(gendercel);
-    newrow.appendChild(phonecel);
-    newrow.appendChild(namecel);
-    document.getElementById('bodytable').appendChild(newrow);
-
-
-   
-
-   })
-  
-});
-
-  
-  }
   var flag=false;
 
   function search(searchtxt){
