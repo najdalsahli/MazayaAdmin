@@ -97,49 +97,52 @@ function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
 
 
       function initMap() {
-      
-       // alert("map"+tmBranchID);
-      //     //button otherPage
-      //     var ontherpage=document.getElementById("addOntherBranch");
-      //     ontherpage.onclick=function(){
-      //  addOntherBranch();
-      // }
-        const myLatlng = { lat: 24.078270707663386, lng: 47.06658913675267};
-        const map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 4,
-          center: myLatlng
-        });
-        var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-        '<p> انقر لتحديد الموقع'+'</p></div>';
-        // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
-          content: content,
-          position: myLatlng,
-        });
-        infoWindow.open(map);
-        //marker
-      
-        // Configure the click listener.
-        map.addListener("click", (mapsMouseEvent) => {
-          // Close the current InfoWindow.
-          infoWindow.close();
-          // Create a new InfoWindow.
-          infoWindow = new google.maps.InfoWindow({
-            position: mapsMouseEvent.latLng,
-          });
-                 //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-          lat=mapsMouseEvent.latLng.toJSON().lat;
-          lng=mapsMouseEvent.latLng.toJSON().lng;
-          infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-          '<p> تم التحديد بنجاح'+'</p></div>'
-          );
-  
-          lat=mapsMouseEvent.latLng.toJSON().lat;
-          lng=mapsMouseEvent.latLng.toJSON().lng
-         infoWindow.open(map);
-         // marker.setMap(map);
+    
 
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -33.8688, lng: 151.2195 },
+          zoom: 13,
         });
+        const input = document.getElementById("pac-input");
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo("bounds", map);
+        // Specify just the place data fields that you need.
+        autocomplete.setFields(["place_id", "geometry", "name"]);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        const infowindow = new google.maps.InfoWindow();
+        const infowindowContent = document.getElementById("infowindow-content");
+        infowindow.setContent(infowindowContent);
+        const marker = new google.maps.Marker({ map: map });
+        marker.addListener("click", () => {
+          infowindow.open(map, marker);
+        });
+        autocomplete.addListener("place_changed", () => {
+          infowindow.close();
+          const place = autocomplete.getPlace();
+      
+          if (!place.geometry) {
+            return;
+          }
+      
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+          // Set the position of the marker using the place ID and location.
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location,
+          });
+          marker.setVisible(true);
+        infowindow.setContent('تم التحديد');
+        lng=place.geometry.location.lng();
+        lat=place.geometry.location.lat();
+
+          infowindow.open(map, marker);
+
+        });      
       }
 
       

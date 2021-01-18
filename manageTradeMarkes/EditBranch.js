@@ -230,83 +230,137 @@ update.onclick=function(){
 }
 
 function initMap() {
- 
-  const myLatlng = { lat: 24.078270707663386, lng: 47.06658913675267};
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: myLatlng
+    center: { lat: -33.8688, lng: 151.2195 },
+    zoom: 13,
   });
-  var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-  '<p>  الموقع المحدد'+'</p></div>';
-  // Create the initial InfoWindow.
-  let infoWindow = new google.maps.InfoWindow({
-    content: content,
-    position: myLatlng,
+  const input = document.getElementById("pac-input");
+  const autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo("bounds", map);
+  // Specify just the place data fields that you need.
+  autocomplete.setFields(["place_id", "geometry", "name"]);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  const infowindow = new google.maps.InfoWindow();
+  const infowindowContent = document.getElementById("infowindow-content");
+  infowindow.setContent(infowindowContent);
+  const marker = new google.maps.Marker({ map: map });
+  marker.addListener("click", () => {
+    infowindow.open(map, marker);
   });
-  infoWindow.open(map);
-  //marker
+  autocomplete.addListener("place_changed", () => {
+    infowindow.close();
+    const place = autocomplete.getPlace();
 
-  // Configure the click listener.
-  map.addListener("click", (mapsMouseEvent) => {
-    // Close the current InfoWindow.
-    infoWindow.close();
-    // Create a new InfoWindow.
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng,
+    if (!place.geometry) {
+      return;
+    }
+
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+    // Set the position of the marker using the place ID and location.
+    marker.setPlace({
+      placeId: place.place_id,
+      location: place.geometry.location,
     });
-           //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-    lat=mapsMouseEvent.latLng.toJSON().lat;
-    lng=mapsMouseEvent.latLng.toJSON().lng;
-    infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-    '<p> تم تعديل الموقع بنجاح'+'</p></div>'
-    );
+    marker.setVisible(true);
+  infowindow.setContent('تم التحديد');
+  lngB=place.geometry.location.lng();
+  latB=place.geometry.location.lat();
 
-    latB=mapsMouseEvent.latLng.toJSON().lat;
-    lngB=mapsMouseEvent.latLng.toJSON().lng
-   infoWindow.open(map);
-  });
+    infowindow.open(map, marker);
+
+  });      
 
 
 }
 
 function initMap(latB,lngB){
 
-   // alert(latB+ ",,,,"+ lngB);
+  //  // alert(latB+ ",,,,"+ lngB);
     
-      const myLatlng = { lat: Number(latB) , lng:Number(lngB) };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
-        center: myLatlng
-      });
-      var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-      '<p>  الموقع المحدد'+'</p></div>';
-      // Create the initial InfoWindow.
-      let infoWindow = new google.maps.InfoWindow({
-        content: content,
-        position: myLatlng,
-      });
-      infoWindow.open(map);
-      //marker
+  //     const myLatlng = { lat: Number(latB) , lng:Number(lngB) };
+  //     const map = new google.maps.Map(document.getElementById("map"), {
+  //       zoom: 4,
+  //       center: myLatlng
+  //     });
+  //     var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+  //     '<p>  الموقع المحدد'+'</p></div>';
+  //     // Create the initial InfoWindow.
+  //     let infoWindow = new google.maps.InfoWindow({
+  //       content: content,
+  //       position: myLatlng,
+  //     });
+  //     infoWindow.open(map);
+  //     //marker
     
-      // Configure the click listener.
-      map.addListener("click", (mapsMouseEvent) => {
-        // Close the current InfoWindow.
-        infoWindow.close();
-        // Create a new InfoWindow.
-        infoWindow = new google.maps.InfoWindow({
-          position: mapsMouseEvent.latLng,
-        });
-               //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-        lat=mapsMouseEvent.latLng.toJSON().lat;
-        lng=mapsMouseEvent.latLng.toJSON().lng;
-        infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-        '<p> تم تعديل الموقع بنجاح'+'</p></div>'
-        );
+  //     // Configure the click listener.
+  //     map.addListener("click", (mapsMouseEvent) => {
+  //       // Close the current InfoWindow.
+  //       infoWindow.close();
+  //       // Create a new InfoWindow.
+  //       infoWindow = new google.maps.InfoWindow({
+  //         position: mapsMouseEvent.latLng,
+  //       });
+  //              //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+  //       lat=mapsMouseEvent.latLng.toJSON().lat;
+  //       lng=mapsMouseEvent.latLng.toJSON().lng;
+  //       infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+  //       '<p> تم تعديل الموقع بنجاح'+'</p></div>'
+  //       );
     
-        latB=mapsMouseEvent.latLng.toJSON().lat;
-        lngB=mapsMouseEvent.latLng.toJSON().lng
-       infoWindow.open(map);
-      });
+  //       latB=mapsMouseEvent.latLng.toJSON().lat;
+  //       lngB=mapsMouseEvent.latLng.toJSON().lng;
+  //      infoWindow.open(map);
+  //     });
+
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: latB, lng: lngB},
+    zoom: 13,
+  });
+  const input = document.getElementById("pac-input");
+  const autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo("bounds", map);
+  // Specify just the place data fields that you need.
+  autocomplete.setFields(["place_id", "geometry", "name"]);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  const infowindow = new google.maps.InfoWindow();
+  const infowindowContent = document.getElementById("infowindow-content");
+  infowindow.setContent(infowindowContent);
+  const marker = new google.maps.Marker({ map: map });
+  marker.addListener("click", () => {
+    infowindow.open(map, marker);
+  });
+  autocomplete.addListener("place_changed", () => {
+    infowindow.close();
+    const place = autocomplete.getPlace();
+
+    if (!place.geometry) {
+      return;
+    }
+
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+    // Set the position of the marker using the place ID and location.
+    marker.setPlace({
+      placeId: place.place_id,
+      location: place.geometry.location,
+    });
+    marker.setVisible(true);
+  infowindow.setContent('تم التحديد');
+  lng=place.geometry.location.lng();
+  lat=place.geometry.location.lat();
+
+    infowindow.open(map, marker);
+
+  });      
 }
 
 
@@ -339,7 +393,7 @@ initMap(24,24);
                  longitude:lng.toString(),
                  region:selectRegionText
              });
-             console.log(selectRegionText +'---'+tmID);
+             console.log(lat+'---'+lng);
              firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/'+tmID).set("true");
              alert('تم إضافة الفرع بنجاح');
             clear();
