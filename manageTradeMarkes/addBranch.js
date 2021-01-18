@@ -141,6 +141,8 @@ function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
 
         });
       }
+
+      
       function goOffer(){
         setTimeout(function() {
           console.log('iam here');
