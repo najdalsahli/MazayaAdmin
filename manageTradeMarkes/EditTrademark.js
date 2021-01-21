@@ -42,26 +42,50 @@ function s(){
   if (textType=="الكل")
   document.getElementById("trademarkType").value='15';
 
+  /*
+                                                  <option value="13" >مطاعم</option>
+                                                <option value="14" >مقاهي</option>
+                                                <option value="15">حلويات</option>
+                                                <option value="16">أغذية صحية</option>
+                                                <option value="17">تسوق</option>
+                                                <option value="18">خدمات</option>
+                                                <option value="19">تعليم</option>
+                                                <option value="20">صحة ولياقة</option>
+                                                <option value="21">سفر وسياحة</option>
+                                                <option value="22">جمال وسبا</option>
+                                                <option value="23">ترفيه</option>
+                                                <option value="24">إلكترونيات</option>
+                                                <option value="25">سيارات</option>
+                                                */
   //id categoryType 
   var textCatogory=snapshot.child("category").val();
-if(textCatogory=="الأغذية")
+if(textCatogory=="مطاعم")
 document.getElementById("categoryType").value="13";
-if(textCatogory=="الإلكترونيات")
+if(textCatogory=="مقاهي")
 document.getElementById("categoryType").value="14";
-if(textCatogory=="التسوق")
+if(textCatogory=="حلويات")
 document.getElementById("categoryType").value="15";
-if(textCatogory=="الخدمات")
+if(textCatogory=="أغذية صحية")
 document.getElementById("categoryType").value="16";
-if(textCatogory=="السفر")
+if(textCatogory=="تسوق")
 document.getElementById("categoryType").value="17";
-if(textCatogory=="السيارات")
+if(textCatogory=="خدمات")
 document.getElementById("categoryType").value="18";
-if(textCatogory=="الصحة واللياقة")
+if(textCatogory=="تعليم")
 document.getElementById("categoryType").value="19";
-if(textCatogory=="المدارس")
+if(textCatogory=="صحة ولياقة")
 document.getElementById("categoryType").value="20";
-if(textCatogory=="المنزل")
+if(textCatogory=="سفر وسياحة")
 document.getElementById("categoryType").value="21";
+if(textCatogory=="جمال وسبا")
+document.getElementById("categoryType").value="22";
+if(textCatogory=="ترفيه")
+document.getElementById("categoryType").value="23";
+if(textCatogory=="إلكترونيات")
+document.getElementById("categoryType").value="24";
+if(textCatogory=="سيارات")
+document.getElementById("categoryType").value="25";
+
 
 
 
