@@ -139,8 +139,18 @@
                                             class="form-row">
                                             <div class="col"><label id='brLabel'class="col-form-label" style="font-family: Frutiger LT Arabic ;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;color: #38a089;">الفروع</label></div>
                                     </div>
-                                    <select id="branch"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;">
-                                        <option value="10" selected="">يرجى اختيار الفرع</option></select></div>
+                                    <div id="branch" class="dropdown-check-list" tabindex="100">
+                                        <span class="anchor"style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">يرجى اختيار الفرع</span>
+                                        <ul id='list1'class="items">
+                                          <!-- <li><input type="checkbox" />Apple </li>
+                                          <li><input type="checkbox" />Orange</li>
+                                          <li><input type="checkbox" />Grapes </li>
+                                          <li><input type="checkbox" />Berry </li>
+                                          <li><input type="checkbox" />Banana </li>
+                                          <li><input type="checkbox" />Tomato</li> -->
+                                        </ul>
+                                    </div>
+                                    </div>
                                 <div class="col">
                                     <div class="form-group"><label for="email" style="margin-left: 225px;font-family: Frutiger LT Arabic ;color: #38a089;"><strong>عنوان العرض</strong><br></label>
                                         <input class="form-control" id="offerName" type="text" placeholder="مثال: تخفيض" name="brandname"
@@ -299,14 +309,25 @@
                             <tr>
                                 <th><label id='br' style="font-family: Frutiger LT Arabic;margin-bottom: 8px;margin-right: -224px;margin-left: 36px;font-weight: 55;color: #38a089;">الفروع</label></th>
                                 <th><input  min="2020-12-31" id="startV"class="form-control" type="date" style="margin-left: -2px;width: 176px;margin-right: -78px;"></th>
-                                <th style="font-weight: bold;width: 95px;color: #38a089;font-family: Frutiger LT Arabic ;">تاريخ البدء</th>
+                                <th style="font-weight: bold;width: 55px;color: #38a089;font-family: Frutiger LT Arabic ;">تاريخ البدء</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <select id="branch2"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;">
-                                        <option value="10" selected="">يرجى اختيار الفرع</option></select></td>
+                                    <div id="branch2" class="dropdown-check-list" tabindex="100">
+                                        <span class="anchor"style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">يرجى اختيار الفرع</span>
+                                        <ul id='list2' class="items">
+                                          <!-- <li><input type="checkbox" />Apple </li>
+                                          <li><input type="checkbox" />Orange</li>
+                                          <li><input type="checkbox" />Grapes </li>
+                                          <li><input type="checkbox" />Berry </li>
+                                          <li><input type="checkbox" />Mango </li>
+                                          <li><input type="checkbox" />Banana </li>
+                                          <li><input type="checkbox" />Tomato</li> -->
+                                        </ul>
+                                    </div>
+                                    </td>
                                 <td><input  min="2020-12-31" id="endV" class="form-control" type="date" style="width: 175px;margin-left: -2px;margin-right: -113px;"></td>
                                 <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-right: 3px;">تاريخ الانتهاء</td>
                             </tr>

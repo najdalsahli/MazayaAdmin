@@ -17,7 +17,6 @@ const firebaseConfig = {
     var nameOfOffer = document.getElementById("offerName").value;
     var DescOfOffer = document.getElementById("Desc").value;
     var  code= document.getElementById("code").value;
-    var  selectBranch= document.getElementById("branch");
     var  startDate= document.getElementById("srartDate").value;
     var  endDate= document.getElementById("endDate").value;
     var  selectOffer= document.getElementById("offer");
@@ -28,14 +27,11 @@ const firebaseConfig = {
     firebase.database().ref('Trademarks/'+tid).once("value",function(snapshot){
         if(snapshot.child('serviceType').val()=='أونلاين'){
             console.log(snapshot.child('serviceType').val());
-        flagOnline=true;
-        console.log(flagOnline);
-       selectValue="27";//to pass the validate 
+       selectValue=27;//to pass the validate 
     }
     else
-    selectValue=selectBranch.value;
+    selectValue=checkB();
 });
-console.log(selectValue);
 
     if(valditeFialdes(nameOfOffer,DescOfOffer,code,selectValue,startDate,endDate,msg)){
      userType=validiteRdUserType(msg); 
@@ -45,9 +41,9 @@ console.log(selectValue);
      ServiceType=validiteRdServiceType(msg); 
       if(ServiceType) {
         if(selectOffer.value=="10"){
-      savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate,useageType,userType,selectBranch,msg);}
+      savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate,useageType,userType,selectValue,msg);}
          else if(selectOffer.value=="13"){
-            savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate,useageType,userType,selectBranch,msg);}
+            savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate,useageType,userType,selectValue,msg);}
             return true;
                }//servise type
             }//big valdite
@@ -58,17 +54,39 @@ console.log(selectValue);
 
 
 function uploadPage(){
-    //fill frist branch
-    var  selectBranch= document.getElementById("branch");
+  //  fill frist branch
+    // var  selectBranch= document.getElementById("branch");
+    // var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
+    // ref.once('value',function(snapshot) {
+    //     snapshot.forEach(function(snapshot1) {
+    //     var option = document.createElement( 'option' );
+    //      option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
+    //      selectBranch.add( option );
+
+    //     });
+    // });
     var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
-        snapshot.forEach(function(snapshot1) {
-        var option = document.createElement( 'option' );
-         option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
-         selectBranch.add( option );
-
-        });
+     snapshot.forEach(function(snapshot1) {
+var checkList = document.getElementById('branch');
+checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+  if (checkList.classList.contains('visible'))
+    checkList.classList.remove('visible');
+  else
+    checkList.classList.add('visible');
+}
+var ul=document.getElementById('list1');
+var inp=document.createElement("input");
+inp.type='checkbox';
+var li=document.createElement("li");
+var t = document.createTextNode(snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val());
+li.appendChild(t);
+inp.value=t;
+li.appendChild(inp);
+ul.appendChild(li);
+     });
     });
+
 
 
     //fill seconed branch
@@ -95,15 +113,36 @@ function uploadPage(){
 
 
 function branchMenu2(){
-    var  selectBranch= document.getElementById("branch2");
+    // var  selectBranch= document.getElementById("branch2");
+    // var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
+    // ref.once('value',function(snapshot) {
+    //     snapshot.forEach(function(snapshot1) {
+    //     var option = document.createElement( 'option' );
+    //      option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
+    //      selectBranch.add( option );
+
+    //     });
+    // });
     var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
-        snapshot.forEach(function(snapshot1) {
-        var option = document.createElement( 'option' );
-         option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
-         selectBranch.add( option );
-
-        });
+     snapshot.forEach(function(snapshot1) {
+var checkList = document.getElementById('branch2');
+checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+  if (checkList.classList.contains('visible'))
+    checkList.classList.remove('visible');
+  else
+    checkList.classList.add('visible');
+}
+var ul=document.getElementById('list2');
+var inp=document.createElement("input");
+inp.type='checkbox';
+var li=document.createElement("li");
+var t = document.createTextNode(snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val());
+li.appendChild(t);
+inp.value=t;
+li.appendChild(inp);
+ul.appendChild(li);
+     });
     });
 }
 function valditeFialdes(nameOfOffer,DescOfOffer,code,selectBranch,start,end,msg){
@@ -121,7 +160,7 @@ if(code=='')
                        alert("الرجاء اختيار كود الخصم "+msg);      
                       return false;
                          }  
-if(selectBranch=="10")
+if(selectBranch==0)
                         {
                        alert("الرجاء اختيار الفرع "+msg);      
                       return false;
@@ -239,35 +278,53 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
     });
 
          //saving branch
-         var selectBranchText = selectBranch.options[selectBranch.selectedIndex].text;
-         var n = selectBranchText.search("/");
-         var s=Number(n);
-         var res = selectBranchText.slice(0, s);
-         var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
-         var refOffer=firebase.database().ref('Offers');
-         refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
-             snapshot.forEach(function(data) {
-                 savingBranch= data.key;
-                });  
-            }); 
-            refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
-                    snapshot1.forEach(function(data) {
-                        //saving branch
-                        if(!flagOnline){
-                 firebase.database().ref('Offers/'+data.key+'/Branches/'+savingBranch).set(true);
-                }
-                 //saving the offer key in trademarks
-                 if(data.child("offerDetails").val()==DescOfOffer){
-                 if(data.child("offerTitle").val()==nameOfOffer){
-                  if(data.child("discountCode").val()==code){
+   var lnx = document.querySelectorAll("#list1 li input");
+   var lnx2 = document.querySelectorAll("#list1 li");
+   var array=[];
+   var arraySavingBranchKey=[];
+   var savingBranch='';
 
-                 firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
+       for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+   var selectBranchText = lnx2[i].textContent;//,,,,,/,,,,,
+   var n = selectBranchText.search("/");
+   var s=Number(n);
+   var res = selectBranchText.slice(0, s);
+   array.push(res);
+        }}
+
+   var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
+   var refOffer=firebase.database().ref('Offers');
+
+   for (var i = 0; i < array.length; i++) {
+   refBranches.orderByChild('branchName').equalTo(array[i]).on("value", function(snapshot) {
+       snapshot.forEach(function(data) {
+           savingBranch= data.key;
+           arraySavingBranchKey.push(data.key);
+          });  
+      }); 
+        }//for array
+      refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
+              snapshot1.forEach(function(data) {
+                if(selectBranch!=27){        
+                    for (var i = 0; i < arraySavingBranchKey.length; i++) {
+                        console.log(arraySavingBranchKey[i]);
+                        firebase.database().ref('Offers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
+                 } }
+              //add in tradeMarks
+                  if(data.child("offerDetails").val()==DescOfOffer){
+                    if(data.child("offerTitle").val()==nameOfOffer){
+                        if(data.child("discountCode").val()==code){
+                            var ref = firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key);
+                    ref.once("value")
+                        .then(function(sc) {
+                    if(!sc.exists())//to dont duplicate with voucher tm id
+                  firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
+                        });
                 }}}
-                    });
-                });
+                     });
+                 });
              
-       
-
  alert('تم إضافة العرض بنجاح');
  document.getElementById('next').style.display='none'
  document.getElementById('final').style.display='block'
@@ -287,29 +344,51 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
          usageType:useageType,
          userType:userType,
      });
-          //saving branch
-          var selectBranchText = selectBranch.options[selectBranch.selectedIndex].text;
-          var n = selectBranchText.search("/");
-          var s=Number(n);
-          var res = selectBranchText.slice(0, s);
-          var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
-          var refOffer=firebase.database().ref('Deals');
-          refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
-              snapshot.forEach(function(data) {
-                  savingBranch= data.key;
-                 });  
-             }); 
-             refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
-                     snapshot1.forEach(function(data) {
-                        if(!flagOnline){
-                  firebase.database().ref('Deals/'+data.key+'/Branches/'+savingBranch).set(true);}
-                  //add in tradeMarks
+         
+   //saving branch
+   var lnx = document.querySelectorAll("#list1 li input");
+   var lnx2 = document.querySelectorAll("#list1 li");
+   var array=[];
+   var arraySavingBranchKey=[];
+   var savingBranch='';
+
+       for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+   var selectBranchText = lnx2[i].textContent;//,,,,,/,,,,,
+   var n = selectBranchText.search("/");
+   var s=Number(n);
+   var res = selectBranchText.slice(0, s);
+   array.push(res);
+        }}
+
+   var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
+   var refOffer=firebase.database().ref('Deals');
+
+   for (var i = 0; i < array.length; i++) {
+   refBranches.orderByChild('branchName').equalTo(array[i]).on("value", function(snapshot) {
+       snapshot.forEach(function(data) {
+           savingBranch= data.key;
+           arraySavingBranchKey.push(data.key);
+          });  
+      }); 
+        }//for array
+      refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
+              snapshot1.forEach(function(data) {
+                if(selectBranch!=27){        
+                    for (var i = 0; i < arraySavingBranchKey.length; i++) {
+                        console.log(arraySavingBranchKey[i]);
+                        firebase.database().ref('Deals/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
+                 } }
+              //add in tradeMarks
                   if(data.child("offerDetails").val()==DescOfOffer){
-                  if(data.child("offerTitle").val()==nameOfOffer){
-                   if(data.child("discountCode").val()==code){
- 
+                    if(data.child("offerTitle").val()==nameOfOffer){
+                    var ref = firebase.database().ref('Trademarks/'+tid+'/Deals/'+data.key);
+                    ref.once("value")
+                        .then(function(sc) {
+                    if(!sc.exists())//to dont duplicate with voucher tm id
                   firebase.database().ref('Trademarks/'+tid+'/Deals/'+data.key).set(true);
-                 }}}
+                        });
+                }}
                      });
                  });
              
@@ -318,8 +397,8 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
  document.getElementById('final').style.display='block'
  
  }
- function savingVourches(endDate,numberOfCoupons,numberOfPoints,offerDetails,offerTitle,serviceType,startDate,voucherCode,selectBranch2){
-   //saving vouchres
+ function savingVourches(endDate,numberOfCoupons,numberOfPoints,offerDetails,offerTitle,serviceType,startDate,voucherCode,selectBranch2,msg){
+    //saving vouchres
    firebase.database().ref('Vouchers').push(
     {
         endDate:endDate,
@@ -332,31 +411,59 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
         trademarkID:tid,
         voucherCode:voucherCode
     });
+
    //saving branch
-   var selectBranchText = selectBranch2.options[selectBranch2.selectedIndex].text;//,,,,,/,,,,,
+   var lnx = document.querySelectorAll("#list2 li input");
+   var lnx2 = document.querySelectorAll("#list2 li");
+   var array=[];
+   var arraySavingBranchKey=[];
+   var savingBranch='';
+
+       for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+   var selectBranchText = lnx2[i].textContent;//,,,,,/,,,,,
    var n = selectBranchText.search("/");
    var s=Number(n);
    var res = selectBranchText.slice(0, s);
+   array.push(res);
+        }}
+
    var refBranches=firebase.database().ref('Trademarks/'+tid+'/Branches');
    var refOffer=firebase.database().ref('Vouchers');
-   refBranches.orderByChild('branchName').equalTo(res).on("value", function(snapshot) {
+
+   for (var i = 0; i < array.length; i++) {
+   refBranches.orderByChild('branchName').equalTo(array[i]).on("value", function(snapshot) {
        snapshot.forEach(function(data) {
            savingBranch= data.key;
+           arraySavingBranchKey.push(data.key);
           });  
       }); 
+        }//for array
       refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(!flagOnline){
-           firebase.database().ref('Vouchers/'+data.key+'/Branches/'+savingBranch).set(true);}
-           //add in tradeMarks
-           if(data.child("offerDetails").val()==offerDetails){
-           if(data.child("offerTitle").val()==offerTitle){
-            if(data.child("voucherCode").val()==voucherCode){
+                if(selectBranch2!=27){        
+                    for (var i = 0; i < arraySavingBranchKey.length; i++) {
+                        console.log(arraySavingBranchKey[i]);
+                        firebase.database().ref('Vouchers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
+                 } }
 
+          //add in tradeMarks
+           if(data.child("offerDetails").val()==offerDetails){
+           if(data.child("offerTitle").val()==offerTitle)
+            if(data.child("voucherCode").val()==voucherCode)
+            var ref = firebase.database().ref('Trademarks/'+tid+'/Vouchers/'+data.key);
+            ref.once("value")
+                .then(function(sc) {
+            if(!sc.exists())//to dont duplicate with voucher tm id
            firebase.database().ref('Trademarks/'+tid+'/Vouchers/'+data.key).set(true);
-          }}}
+
+        });
+    }
               });
+              
           });
+
+
     alert('تم إضافة القسيمة بنجاح');
     
     document.getElementById('nextV').style.display='none'
@@ -370,7 +477,6 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
     var voucherCode = document.getElementById("code2").value;
     var  pointNum= document.getElementById("pointNum").value;
     var  vNum= document.getElementById("vourchesNum").value;
-    var  selectBranch= document.getElementById("branch2");
     var  startDate= document.getElementById("startV").value;
     var  endDate= document.getElementById("endV").value;
     var VType;
@@ -378,19 +484,16 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
     firebase.database().ref('Trademarks/'+tid).once("value",function(snapshot){
         if(snapshot.child('serviceType').val()=='أونلاين'){
             console.log(snapshot.child('serviceType').val());
-        flagOnline=true;
-        console.log(flagOnline);
-       selectValue="27";//to pass the validate 
+       selectValue=27;//to pass the validate 
     }
     else
-    selectValue=selectBranch.value;
+    selectValue=checkB2();
 });
-console.log(selectValue);
 
     if(valditeFialdesVourches(nameOfV,DescV,pointNum,vNum,startDate,endDate,selectValue,voucherCode,msg)){
         VType=dealsType(msg);  
         if(VType){
-            savingVourches(endDate,vNum,pointNum,DescV,nameOfV,VType,startDate,voucherCode,selectBranch,msg);
+            savingVourches(endDate,vNum,pointNum,DescV,nameOfV,VType,startDate,voucherCode,selectValue,msg);
         }
         return true;
     }
@@ -422,7 +525,7 @@ if(DescOfDeals==''){
                             return false;
                         }
 
-if(selectBranch=="10")
+if(selectBranch==0)
                         {
                        alert("الرجاء اختيار الفرع "+msg);      
                       return false;
@@ -459,41 +562,41 @@ if(selectBranch=="10")
 
  }
 
- function addOntherOffer(){
-    var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة عرض آخر ؟");
-    if (conf==true){
-        //save
-    if(nextOffersAndDeals(' الحالي '))
-   clear();   
-    }  
- }
+//  function addOntherOffer(){
+//     var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة عرض آخر ؟");
+//     if (conf==true){
+//         //save
+//     if(nextOffersAndDeals(' الحالي '))
+//    clear();   
+//     }  
+//  }
 
- function addOntherVouchres(){
-    var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة قسيمة أخرى ؟");
-    if (conf==true){
-        //save
-    if( nextVouchers(' الحالي '))
-        clear();   
-    }  
- }
- function clear (){
-    document.getElementById("offerName").value='';
-    document.getElementById("Desc").value='';
-   document.getElementById("code").value='';
-    document.getElementById("branch").value='10';
-    document.getElementById("srartDate").value='';
-    document.getElementById("endDate").value='';
-    //vouchres
-    document.getElementById("titleV").value='';
-    document.getElementById("DescV").value='';
-   document.getElementById("code2").value='';
-    document.getElementById("pointNum").value='';
-    document.getElementById("vourchesNum").value='';
-    document.getElementById("branch2").value='10';
-    document.getElementById("startV").value='';
-     document.getElementById("endV").value='';
+//  function addOntherVouchres(){
+//     var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة قسيمة أخرى ؟");
+//     if (conf==true){
+//         //save
+//     if( nextVouchers(' الحالي '))
+//         clear();   
+//     }  
+//  }
+//  function clear (){
+//     document.getElementById("offerName").value='';
+//     document.getElementById("Desc").value='';
+//    document.getElementById("code").value='';
+//     document.getElementById("branch").value='10';
+//     document.getElementById("srartDate").value='';
+//     document.getElementById("endDate").value='';
+//     //vouchres
+//     document.getElementById("titleV").value='';
+//     document.getElementById("DescV").value='';
+//    document.getElementById("code2").value='';
+//     document.getElementById("pointNum").value='';
+//     document.getElementById("vourchesNum").value='';
+//     document.getElementById("branch2").value='10';
+//     document.getElementById("startV").value='';
+//      document.getElementById("endV").value='';
 
- }
+//  }
 
  function goHome(){
     setTimeout(function() {
@@ -509,4 +612,66 @@ if(selectBranch=="10")
    //     localStorage.setItem("tradmarkID_offer",'');
         window.location.href = "manageTradeMarksHome.html";    }, 2000);
 
+ }
+
+
+ function checkB(){
+    var lnx = document.querySelectorAll("#list1 li input");
+    var num=0;
+
+    /* The .length property applies to any jQuery Object
+    || Using let to define the increment variable is safe
+    */
+    for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+         num= num+1;}
+        }
+        return num;
+       
+    
+ }
+ function checkB2(){
+    var lnx = document.querySelectorAll("#list2 li input");
+    var num=0;
+
+    /* The .length property applies to any jQuery Object
+    || Using let to define the increment variable is safe
+    */
+    for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+         num= num+1;}
+        }
+        console.log(num);
+        return num;      
+ }
+
+ function hi (){
+    var lnx = document.querySelectorAll("#list2 li input");
+    var lnx2 = document.querySelectorAll("#list2 li");
+ 
+    
+        for (let i = 0; i < lnx.length; i++) {
+         if( lnx[i].checked==true){
+          
+    var selectBranchText = lnx2[i].textContent;//,,,,,/,,,,,
+    var n = selectBranchText.search("/");
+    var s=Number(n);
+    var res = selectBranchText.slice(0, s);
+    var array=[];
+    array.push(res);
+    for(var j of array){
+    console.log(j);
+    if (array.length==j+1)
+    console.log(finish);
+
+    }
+         }}
+    var ref = firebase.database().ref('Trademarks/'+tid+'/Offers/'+'-MROR5Xozi5KvAaCLyN1');
+    ref.once("value")
+        .then(function(sc) {
+    if(!sc.exists())
+    console.log(sc.exists());
+    else
+    console.log('norhing')
+        });
  }

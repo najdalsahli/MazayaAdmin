@@ -18,8 +18,8 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_E",'');
 
   //to make the branch global for lat and lng for map
-var latB;
-var lngB;
+var latB='';
+var lngB='';
 var lat='';
 var lng='';
   //flag for map to not take value of lat and lag for frist time;
@@ -434,8 +434,8 @@ var nameOfBranch = document.getElementById("branchName").value;
  if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/branchName').set(nameOfBranch);
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/description').set(DescOfBranch);
-    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/latitude').set(latB);
-    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/longitude').set(lngB);
+    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/latitude').set(latB.toString());
+    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/longitude').set(lngB.toString());
 if(selectRegionText!=regionDB){
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/region').set(selectRegionText);
     firebase.database().ref('Regions/'+regionDB+'/Trademarks/'+tmID).remove();
