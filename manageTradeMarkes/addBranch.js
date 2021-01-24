@@ -18,8 +18,7 @@ const firebaseConfig = {
   var lng='';
   //localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
 
-  var tmBranchID='-MRmmMFJHRq7KgO8Uanw';
-  //localStorage.getItem("tradmarkID_branch");
+  var tmBranchID=localStorage.getItem("tradmarkID_branch");
   //localStorage.getItem("tradmarkID_branch");
 
   function nextTradeMarkInfoOffer(msg){
