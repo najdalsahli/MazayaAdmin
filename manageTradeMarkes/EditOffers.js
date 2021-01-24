@@ -13,8 +13,7 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
-  var tmID= '-MRJkm9BxQjTyBLmb7zS';
-  //localStorage.getItem("tradmarkID_E_O");
+  var tmID= localStorage.getItem("tradmarkID_E_O");
   var flagOnline=false;
   var selectValue=777;//means it is online
   var arrB=[];
@@ -1254,7 +1253,6 @@ firebase.database().ref('Vouchers/'+key+'/Branches').once('value').then(function
         document.getElementById('next').style.display='none'
         document.getElementById('div1').style.display='none'
         setTimeout(function() {
-            console.log('iam deal ore offer');
        //     localStorage.setItem("tradmarkID_offer",'');
             window.location.href = "EditOffers.html";    }, 1000);
     
