@@ -18,10 +18,10 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_E",'');
 
   //to make the branch global for lat and lng for map
-var latB='';
-var lngB='';
-var lat='';
-var lng='';
+var latB;
+var lngB;
+var lat;
+var lng;
   //flag for map to not take value of lat and lag for frist time;
   var flag=false;
   var regionDB;
@@ -181,6 +181,11 @@ var ref= firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bidKey);
 }
 
 ref.once("value", function(bid) {
+  //map
+  latB=parseFloat(bid.child("latitude").val());
+lngB=parseFloat(bid.child("longitude").val());
+initMap(latB,lngB);
+
   //name
 document.getElementById("branchName").value=bid.child("branchName").val();
 
@@ -218,9 +223,7 @@ document.getElementById("region").value="25";
 
 
 flag=true;
-latB=parseFloat(bid.child("latitude").val());
-lngB=parseFloat(bid.child("longitude").val());
-initMap(latB,lngB);
+
 });
 
 var update=document.getElementById("update");
@@ -229,9 +232,9 @@ update.onclick=function(){
 }
 }
 
-function initMap() {
+function initMap(latB,lngB) {
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -33.8688, lng: 151.2195 },
+    center: { lat: Number(latB) , lng: Number(lngB)  },
     zoom: 13,
   });
   const input = document.getElementById("pac-input");

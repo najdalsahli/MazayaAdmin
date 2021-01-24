@@ -19,6 +19,7 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
 
   var tmBranchID=localStorage.getItem("tradmarkID_branch");
+  //localStorage.getItem("tradmarkID_branch");
 
   function nextTradeMarkInfoOffer(msg){
     //alert(tmBranchID);
@@ -30,10 +31,11 @@ const firebaseConfig = {
 
 
  function saveDBbranch(nameOfBranch,DescOfBranch,selectRegion,msg){
+  console.log('before saving');
       var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
       if(Validation(nameOfBranch,DescOfBranch,selectRegion.value,msg)){
           // trademark + branch tabel.
-          try{
+       
       firebase.database().ref('Trademarks/'+tmBranchID+'/Branches').push(
                   {
                       branchName:nameOfBranch,
@@ -43,16 +45,14 @@ const firebaseConfig = {
                       region:selectRegionText
                   });
                       // region tabel
+                      console.log(selectRegionText);
      firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/'+tmBranchID).set("true");
       alert('تم إضافة الفرع بنجاح');
       document.getElementById('next').style.display='none'
       document.getElementById('offerpage').style.display='block'
       
         
-        }//try
-          catch{
-            alert("عذرا حدث خطأ !")
-          } 
+       
   }//IF VALDITE
     }
 
