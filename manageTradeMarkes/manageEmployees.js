@@ -1,12 +1,5 @@
 
-// var admin = require("firebase-admin");
 
-// var serviceAccount = require("path/to/serviceAccountKey.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://mc-mazaya.firebaseio.com"
-// });
 const firebaseConfig = {
     apiKey: "AIzaSyBDUVxL_S0b9AxSRjBsQ6ri80mhO0kZ03c",
     authDomain: "mc-mazaya.firebaseapp.com",
@@ -16,14 +9,13 @@ const firebaseConfig = {
     messagingSenderId: "1043747982646",
     appId: "1:1043747982646:web:eb8806eb17fa88668fb797",
     measurementId: "G-5VCPWL0HQL"
+    
   };
   //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
- // var admin = require('firebase-admin');
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
-
-
+ 
 
 function displayusers(){
 
@@ -67,7 +59,9 @@ function displayusers(){
       deletebtn.className='buttons btn btn-primary';
       deletebtn.textContent="تعطيل";
       deletebtn.onclick=function(){
-        deleteEmp(snapshot1.key);
+        localStorage.setItem("email",snapshot1.child("email").val());
+        window.location.href = "DeleteUser.html";
+
       };
   
   
@@ -150,7 +144,7 @@ function displayusers(){
           addbtn.className='buttons btn btn-primary';
           addbtn.textContent="إضافة";
           addbtn.style.backgroundColor='#4b4c4d'
-
+          
           noPointcel.className='cells';
           noPointcel.textContent='-';   
   
@@ -249,27 +243,3 @@ function addtion(uid){
  
 }
 
-function deleteEmp(uid){
-
-// //delete from real data .
-//   firebase.database().ref('Users/'+uid).remove();
-
-//   var admin = require('firebase-admin');
-
-
- 
-//   admin.auth().deleteUser(uid)
-//   .then(function() {
-//     console.log('Successfully deleted user');
-//   })
-//   .catch(function(error) {
-//     console.log('Error deleting user:', error);
-//   });
-
-//   while (list.hasChildNodes()) {  
-//     list.removeChild(list.firstChild);
-//   }
-//   alert("تم حذف الموظف بنجاح");
-//   window.location.reload();     
-
-} 

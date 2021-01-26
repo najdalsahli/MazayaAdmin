@@ -8,7 +8,6 @@ const firebaseConfig = {
     appId: "1:1043747982646:web:eb8806eb17fa88668fb797",
     measurementId: "G-5VCPWL0HQL"
   };
-  //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
   firebase.initializeApp(firebaseConfig);
   const auth=firebase.auth();
   var tid=localStorage.getItem("tradmarkID_offer");

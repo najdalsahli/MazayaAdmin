@@ -178,8 +178,7 @@ switch(msg){
       
       if(serviceType=='محلي')
       document.getElementById("allV").checked=true;
-    
-    
+
     fillBranch3(key);
     });
     break;

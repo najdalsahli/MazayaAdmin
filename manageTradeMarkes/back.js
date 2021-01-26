@@ -231,17 +231,18 @@ function showTradeMarkes(categoryName){
 
 if(categoryName=='الكل'){
 
-
+var countTM=0;
   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
         
     snapshot.forEach(function(snapshot1) {
+      countTM++;
       var numoffers=snapshot1.child('Offers').numChildren();
       var numbraches=snapshot1.child('Branches').numChildren();
       var trademarkName=snapshot1.child('trademarkName').val();
       var imgtradesmark=snapshot1.child('imgURL').val();
  
 
-      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key);
+      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM);
 
     })
   });
@@ -262,12 +263,12 @@ if(categoryName=='الكل'){
         var imgtradesmark=snapshot1.child('imgURL').val();
    
   
-        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key);
+        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM);
 })
 })
 });
 }
-  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid){
+  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM){
     
     var deletecel = document.createElement('td');
     deletecel.className='btncel';
@@ -361,9 +362,15 @@ function change_page(){
   
     var imgtrade= document.createElement('img');
     imgtrade.className='rounded-circle mr-2 imageTrade';
+    imgtrade.style.marginTop='10px';
     imgtrade.src=imgtradesmark;
-  
-    tradecel.appendChild(imgtrade);
+
+
+    var countcel= document.createElement('td');
+    countcel.className='infocel';
+    countcel.textContent=countTM;
+
+    //tradecel.appendChild(imgtrade);
   
   
   
@@ -376,6 +383,10 @@ function change_page(){
     newRow.appendChild(offerscel);
     newRow.appendChild(brachescel);
     newRow.appendChild(tradecel);
+    newRow.appendChild(imgtrade);
+    newRow.appendChild(countcel);
+
+
   
   
   

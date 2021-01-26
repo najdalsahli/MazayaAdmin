@@ -1,6 +1,9 @@
 {
+
   "database": {
     "rules": "database.rules.json"
+    
+  
   },
   "firestore": {
     "rules": "firestore.rules",
@@ -34,4 +37,5 @@
   "remoteconfig": {
     "template": "remoteconfig.template.json"
   }
+  
 }

@@ -278,6 +278,8 @@ function after_theLoop(){
   
   function change_page(){
     localStorage.setItem("tradmarkID_branch",savedtrademark);
+    localStorage.setItem("tradmarkID_offer",savedtrademark);
+
     var trademark_Type=document.getElementById("trademarkType").value;
     if(trademark_Type=="13"){//online
       window.location.href = "AddOffers.html";
