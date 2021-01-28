@@ -1,3 +1,4 @@
+//const { service } = require("firebase-functions/lib/providers/analytics");
 
 
 const firebaseConfig = {
@@ -191,33 +192,50 @@ return;
     return;
   }
   
-
+  var re = /\S+@\S+\.\S+/;
   //id mail 
   var trademarkmail=document.getElementById("mail").value;
-  if(trademarkmail=='')
+  if(trademarkmail!='' && !re.test(trademarkmail))
   {
-alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية");
+alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة");
 return;
   }
-
 
   //id maillink
   var trademarkmaillink=document.getElementById("maillink").value;
-  if(trademarkmaillink=='')
+  var pattern = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/; 
+
+ 
+  if(trademarkmaillink!=''&&!pattern.test(trademarkmaillink))
   {
-alert("الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية")
+alert(" الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
 return;
   }
 
-
   // id inst
-  var accountinst=document.getElementById("inst").value;
-
+  var accountinst=document.getElementById("inst").value.toLowerCase();
+  var isMatch = accountinst.substr(0, 8) == 'https://' || accountinst.substr(0, 7) == 'http://';
+  if(accountinst!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط الانستقرام الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+      }
   //id twi
   var accounttwi=document.getElementById("twi").value;
-
+  var isMatch = accounttwi.substr(0, 8) == 'https://' || accounttwi.substr(0, 7) == 'http://';
+  if(accounttwi!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط تويتر الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+      }
   //id snap 
   var accountsnap=document.getElementById("snap").value;
+  var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
+  if(accountsnap!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط سناب الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+      }
 
 //id trademarkType 
 var trademark_Type=document.getElementById("trademarkType").value;

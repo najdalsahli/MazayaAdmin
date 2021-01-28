@@ -236,20 +236,21 @@ var countTM=0;
         
     snapshot.forEach(function(snapshot1) {
       countTM++;
-      var numoffers=snapshot1.child('Offers').numChildren();
+      var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
       var numbraches=snapshot1.child('Branches').numChildren();
       var trademarkName=snapshot1.child('trademarkName').val();
       var imgtradesmark=snapshot1.child('imgURL').val();
- 
+      var serviceType=snapshot1.child('serviceType').val();
 
-      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM);
+
+      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
 
     })
   });
 }
 
 
-
+var countTM=0;
   firebase.database().ref('Categories').child(categoryName).child("Trademarks").once('value').then(function(snapshot) {
         
     snapshot.forEach(function(snapshot) {
@@ -257,18 +258,20 @@ var countTM=0;
       
       firebase.database().ref("Trademarks").orderByKey().equalTo(snapshot.key).on("child_added",function(snapshot1) {
      
-        var numoffers=snapshot1.child('Offers').numChildren();
+        var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
         var numbraches=snapshot1.child('Branches').numChildren();
         var trademarkName=snapshot1.child('trademarkName').val();
         var imgtradesmark=snapshot1.child('imgURL').val();
+        var serviceType=snapshot1.child('serviceType').val();
    
-  
-        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM);
+        countTM++;
+
+        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
 })
 })
 });
 }
-  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM){
+  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM,serviceType){
     
     var deletecel = document.createElement('td');
     deletecel.className='btncel';
@@ -306,6 +309,11 @@ var countTM=0;
       }, 1000);
 function change_page(){
   localStorage.setItem("tradmarkID_E",uid);
+  if (serviceType=='أونلاين')
+  localStorage.setItem("flagOnlineE",true);
+else
+localStorage.setItem("flagOnlineE",false);
+
 window.location.href = "EditTrademark.html";
      };
     }
@@ -466,7 +474,7 @@ function login() {
   .then((user) => {
     // Signed in 
     // ...
-    window.location.href="manageTradeMarksHome.html";
+    window.location.href="dashboard.html";
 
   })
   .catch((error) => {

@@ -15,7 +15,7 @@ const firebaseConfig = {
   const auth=firebase.auth();
 
 
-var savedtrademark='';
+  var savedtrademark='';
   function nextTradeMarkInfo(){
 
     var trademarkName=document.getElementById("name").value;
@@ -47,42 +47,42 @@ var savedtrademark='';
     
     console.log(tradecontactnum);
   
-    //id mail 
-    var trademarkmail=document.getElementById("mail").value;
-    if(trademarkmail=='')
-    {
-  alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية");
-  return;
-    }
-    console.log(trademarkmail);
-  
-  
-    //id maillink
-    var trademarkmaillink=document.getElementById("maillink").value;
-    if(trademarkmaillink=='')
-    {
-  alert("الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية")
-  return;
-    }
-    console.log(trademarkmaillink);
-  
-  
-    // id inst
-    var accountinst=document.getElementById("inst").value;
+  //id maillink
+  var trademarkmaillink=document.getElementById("maillink").value;
+  var pattern = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/; 
 
-    console.log(accountinst);
-  
-    //id twi
-    var accounttwi=document.getElementById("twi").value;
-  
-    console.log(accounttwi);
-  
-    //id snap 
-    var accountsnap=document.getElementById("snap").value;
+ 
+  if(trademarkmaillink!=''&&!pattern.test(trademarkmaillink))
+  {
+alert(" الرجاء ادخال رابط الموقع الالكتروني الخاص بالعلامة التجارية بالطريقة الصحيحة ")
+return;
+  }
 
-    
-    console.log(accountsnap);
-  
+  // id inst
+  var accountinst=document.getElementById("inst").value.toLowerCase();
+  var isMatch = accountinst.substr(0, 8) == 'https://' || accountinst.substr(0, 7) == 'http://';
+  if(accountinst!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط الانستقرام الخاص بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+      }
+  //id twi
+  var accounttwi=document.getElementById("twi").value;
+  var isMatch = accounttwi.substr(0, 8) == 'https://' || accounttwi.substr(0, 7) == 'http://';
+  if(accounttwi!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط تويتر الخاص بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+      }
+  //id snap 
+  var accountsnap=document.getElementById("snap").value;
+  var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
+  if(accountsnap!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط سناب الخاص بالعلامة التجارية بالطريقة الصحيحة ")
+    return;
+  }
+
   
   //id trademarkType 
   var trademark_Type=document.getElementById("trademarkType").value;
@@ -264,6 +264,8 @@ function after_theLoop(){
           snapshot.forEach(function(data) {
               savedtrademark= data.key;
               localStorage.setItem("tradmarkID_branch",savedtrademark);
+              localStorage.setItem("tradmarkID_offer",savedtrademark);
+
               console.log('saved trademark key',savedtrademark);
 
              });  
@@ -279,12 +281,14 @@ function after_theLoop(){
   function change_page(){
     localStorage.setItem("tradmarkID_branch",savedtrademark);
     localStorage.setItem("tradmarkID_offer",savedtrademark);
-
+    
     var trademark_Type=document.getElementById("trademarkType").value;
-    if(trademark_Type=="13"){//online
+    if(trademark_Type=="13"){//online 
+      localStorage.setItem("flagOnline",true);
       window.location.href = "AddOffers.html";
 
     }else{
+      localStorage.setItem("flagOnline",false);
       window.location.href = "AddBranch.html";}
   
 } 

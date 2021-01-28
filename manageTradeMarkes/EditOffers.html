@@ -260,7 +260,7 @@
                 <form>
                     <div class="form-row">
                         <div class="col" style="margin-top: 4px;"><label style="margin-right: -232px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">عدد النقاط</label>
-                            <input id="pointNum"class="form-control" type="text" placeholder="مثال: خمسين بالمئة" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;">
+                            <input id="pointNum"class="form-control" type="text" placeholder="مثال: 10" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                             <div
                                 class="form-row">
                                 <div class="col" style="margin-top: 11px;"><label class="col-form-label" style="margin-right: -221px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">وصف العرض</label></div>
@@ -270,7 +270,7 @@
                             <input id="titleV"class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname"
                                 style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;margin-top: 4px;"></div>
                         <div class="form-group"><label for="last_name" style="margin-left: 228px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;"><strong>عدد القسائم</strong><br></label>
-                            <input id="vourchesNum" class="form-control" type="text" placeholder="100" name="last_name"
+                            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="vourchesNum" class="form-control" type="text" placeholder="100" name="last_name"
                                 style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"></div>
                                 <div class="form-group"><label for="last_name" style="margin-left: 234px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;">كود الخصم&nbsp;<br></label>
                                     <input id="code2"class="form-control" type="text" placeholder="MC123" name="last_name" style="text-align: right;font-family: Frutiger LT Arabic;height: 44px;"></div>

@@ -13,8 +13,8 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
-  var tmID= localStorage.getItem("tradmarkID_E_O");
-  var flagOnline=false;
+  var tmID=localStorage.getItem("tradmarkID_E_O");
+  var flagOnline=localStorage.getItem("flagOnlineE");
   var selectValue=777;//means it is online
   var arrB=[];
 
@@ -626,7 +626,7 @@ if(DescOfOffer==''){
                             return false;
                         }
 
-if(selectBranch==0&&flagOnline==false)//no choice and not online
+          if(selectBranch==0&&flagOnline==false)//no choice and not online
                         {
                        alert("الرجاء اختيار الفرع ");      
                       return false;
@@ -660,8 +660,8 @@ if(code=='')
                        alert("الرجاء اختيار كود الخصم ");      
                       return false;
                          }  
-if(selectBranch==0&&flagOnline==false)
-                        {
+                         if(selectBranch==0&&flagOnline==false)//no choice and not online
+                         {
                        alert("الرجاء اختيار الفرع ");      
                       return false;
                          }  
@@ -778,15 +778,11 @@ function nextOD(){
     var ServiceType;
    
 
-    firebase.database().ref('Trademarks/'+tmID).once("value",function(snapshot){
-        if(snapshot.child('serviceType').val()=='أونلاين'){
-            console.log(snapshot.child('serviceType').val());
-            flagOnline=true;
-    }
-});
- if (flagOnline==false){
+   
+    if (flagOnline==false)
     selectValue=checkB();
- }
+    else 
+    selectValu
 
     if(valditeFialdes(nameOfOffer,DescOfOffer,code,selectValue,startDate,endDate)){
      userType=validiteRdUserType(); 
@@ -885,7 +881,14 @@ function div(){
                 }}}
                      });
                  });
-     
+                 console.log(selectValue);
+                 if (flagOnline==true){//online then add in all region 
+                   firebase.database().ref('Regions').once("value", function(snapshot) {
+                   snapshot.forEach(function(data) {
+               firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+                   });
+               });
+           }
       alert('تم إضافة العرض بنجاح');
       document.getElementById('next').style.display='none'
       document.getElementById('final').style.display='block'
@@ -952,7 +955,14 @@ function div(){
                 }}
                      });
                  });
-             
+                 console.log(selectValue);
+                 if (flagOnline==true){//online then add in all region 
+                   firebase.database().ref('Regions').once("value", function(snapshot) {
+                   snapshot.forEach(function(data) {
+               firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+                   });
+               });
+           } 
        alert('تم إضافة الصفقة بنجاح');
        document.getElementById('next').style.display='none'
        document.getElementById('final').style.display='block'
@@ -1004,6 +1014,7 @@ function div(){
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
+                  console.log(selectValue);
                 if(selectBranch2!=777){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         //console.log(arraySavingBranchKey[i]);
@@ -1024,6 +1035,14 @@ function div(){
               });
               
           });
+          console.log(selectValue);
+          if (flagOnline==true){//online then add in all region 
+            firebase.database().ref('Regions').once("value", function(snapshot) {
+            snapshot.forEach(function(data) {
+        firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+            });
+        });
+    }
           alert('تم إضافة القسيمة بنجاح');
 
           document.getElementById('nextV').style.display='none'
@@ -1043,17 +1062,12 @@ function div(){
          var VType;
 
 
-         firebase.database().ref('Trademarks/'+tmID).once("value",function(snapshot){
-            if(snapshot.child('serviceType').val()=='أونلاين'){
-                console.log(snapshot.child('serviceType').val());
-                flagOnline=true;
-        }
-    });
+     
+ if (flagOnline==false)
+ selectValue=checkB2();
+ else 
+ selectValue=777;//online
 
-
-     if (flagOnline==false){
-        selectValue=checkB2();
-     }
          if(valditeFialdesVourches(nameOfV,DescV,pointNum,voucherCode,selectValue,startDate,endDate,vNum)){
              VType=dealsType();  
              if(VType){
@@ -1086,19 +1100,38 @@ function div(){
      }
 
      function deleteThisOffer(key,msg){
-        var conf =confirm("هل أنت متأكد من حذف العرض ؟");
+        var conf =confirm("هل أنت متأكد من الحذف  ؟");
         if (conf==true){//true
         if(msg=='قسيمة'){
-            firebase.database().ref('Trademarks/'+tmID+'/Vouchers/'+key).remove();   
+            firebase.database().ref('Regions').once("value", function(snapshot) {
+                snapshot.forEach(function(data) {
+            firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).remove();
+                });
+            });
+            firebase.database().ref('Trademarks/'+tmID+'/Vouchers/'+key).remove();    
             firebase.database().ref('Vouchers/'+key).remove();   
             alert('تم حذف القسيمة');
         }
         if(msg=='عرض'){
+            firebase.database().ref('Regions').once("value", function(snapshot) {
+                snapshot.forEach(function(data) {
+               console.log(data.key);
+            firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).remove();
+                });
+            });
+
             firebase.database().ref('Trademarks/'+tmID+'/Offers/'+key).remove();   
             firebase.database().ref('Offers/'+key).remove(); 
             alert('تم حذف العرض');
         }
         if(msg=='صفقة'){
+            firebase.database().ref('Regions').once("value", function(snapshot) {
+                snapshot.forEach(function(data) {
+               console.log(data.key);
+            firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).remove();
+                });
+            });
+
             firebase.database().ref('Trademarks/'+tmID+'/Deals/'+key).remove();   
             firebase.database().ref('Deals/'+key).remove(); 
             alert('تم حذف الصفقة');
@@ -1238,7 +1271,7 @@ firebase.database().ref('Vouchers/'+key+'/Branches').once('value').then(function
      }
 
      function goHome2(){
-
+    
         document.getElementById('nextV').style.display='none'
         document.getElementById('div2').style.display='none'
         setTimeout(function() {
@@ -1249,6 +1282,7 @@ firebase.database().ref('Vouchers/'+key+'/Branches').once('value').then(function
      }
 
      function goHome(){
+     
         document.getElementById('next').style.display='none'
         document.getElementById('div1').style.display='none'
         setTimeout(function() {

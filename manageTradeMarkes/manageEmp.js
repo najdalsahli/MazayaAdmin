@@ -2,19 +2,21 @@
 var email='amutairi@mc.gov.sa';
 //localStorage.getItem("email");
 
-import { initializeApp, credential as _credential, auth } from 'firebase-admin';
+var admin = require('firebase-admin');
 
-import serviceAccount from "mc-mazaya-firebase-adminsdk-m59kp-a097f1d285.json";
+const serviceAccount = require("mc-mazaya-firebase-adminsdk-m59kp-a097f1d285.json");
 
-initializeApp({
-  credential: _credential.cert(serviceAccount),
-  databaseURL: "https://mc-mazaya.firebaseio.com"
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://mc-mazaya.firebaseio.com",
+
 });
 
 
 var GOOGLE_APPLICATION_CREDENTIALS="MazayaAdmin/manageTradeMarkes/mc-mazaya-firebase-adminsdk-m59kp-a097f1d285.json";
   console.log(email);
-  auth()
+  admin
+      .auth()
       .getUserByEmail(email)
       .then((userRecord) => {
         // See the UserRecord reference doc for the contents of userRecord.
@@ -58,12 +60,11 @@ var GOOGLE_APPLICATION_CREDENTIALS="MazayaAdmin/manageTradeMarkes/mc-mazaya-fire
 //     .catch((error) => {
 //       console.log('Error fetching user data:', error);
 //     });
-
   
   // //delete from real data .
   //   firebase.database().ref('Users/'+uid).remove();
-  
-  // //delete from auth data
+    
+  // //delete from  auth data .
   //   var admin = require('firebase-admin');
   
   
@@ -80,6 +81,6 @@ var GOOGLE_APPLICATION_CREDENTIALS="MazayaAdmin/manageTradeMarkes/mc-mazaya-fire
   //     list.removeChild(list.firstChild);
   //   }
   //   alert("تم حذف الموظف بنجاح");
-
+  //   window.location.reload();     
   
   
