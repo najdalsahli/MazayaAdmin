@@ -87,6 +87,9 @@ document.getElementById("categoryType").value="24";
 if(textCatogory=="سيارات")
 document.getElementById("categoryType").value="25";
 
+//delete to rewrite 
+console.log(textCatogory);
+firebase.database().ref('Categories/'+textCatogory+'/Trademarks/'+tmID).remove();
 
 
 
@@ -231,11 +234,14 @@ return;
   //id snap 
   var accountsnap=document.getElementById("snap").value;
   var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
-  if(accountsnap!=''&&!isMatch)
-  {
-    alert(" الرجاء ادخال رابط سناب الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
-    return;
-      }
+  var Full_link;
+  if(isMatch){
+    Full_link=accountsnap;
+  }
+  else{
+    Full_link="https://www.snapchat.com/add/"+ accountsnap;
+
+  }
 
 //id trademarkType 
 var trademark_Type=document.getElementById("trademarkType").value;
@@ -273,10 +279,12 @@ firebase.database().ref('Trademarks/'+tmID+'/email').set(trademarkmail);
 firebase.database().ref('Trademarks/'+tmID+'/instagram').set(accountinst);
 firebase.database().ref('Trademarks/'+tmID+'/isFeatured').set(isـFeatured);
 firebase.database().ref('Trademarks/'+tmID+'/serviceType').set(trademark_Type1);
-firebase.database().ref('Trademarks/'+tmID+'/snapchat').set(accountsnap);
+firebase.database().ref('Trademarks/'+tmID+'/snapchat').set(Full_link);
 firebase.database().ref('Trademarks/'+tmID+'/trademarkName').set(trademarkName);
 firebase.database().ref('Trademarks/'+tmID+'/twitter').set(accounttwi);
 firebase.database().ref('Trademarks/'+tmID+'/website').set(trademarkmaillink);
+
+firebase.database().ref('Categories/'+category_Type1+'/Trademarks/'+tmID).set(true);
 
 alert("تم تعديل العلامة التجارية بنجاح");
 x.style.display='none';

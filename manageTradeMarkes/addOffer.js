@@ -13,8 +13,8 @@ const firebaseConfig = {
   var tid=localStorage.getItem("tradmarkID_offer");
   tmID=tid;
   var flagOnline=localStorage.getItem("flagOnline");
-
-  function nextOffersAndDeals(msg){
+  var selectValue=0;
+    function nextOffersAndDeals(msg){
     var nameOfOffer = document.getElementById("offerName").value;
     var DescOfOffer = document.getElementById("Desc").value;
     var  code= document.getElementById("code").value;
@@ -25,10 +25,10 @@ const firebaseConfig = {
     var useageType;  
     var ServiceType;
  
-    if (flagOnline==false)
+    if (flagOnline=='false')
     selectValue=checkB();
     else 
-    selectValue=777;//online
+    selectValue=0;//online
  
 
 
@@ -159,7 +159,7 @@ if(code=='')
                        alert("الرجاء اختيار كود الخصم "+msg);      
                       return false;
                          }  
-                         if(selectBranch==0&&flagOnline==false)//no choice and not online
+                         if(selectBranch==0&&flagOnline=='false')//no choice and not online
                          {
     alert("الرجاء اختيار الفرع");
 
@@ -305,7 +305,7 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectBranch!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Offers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -324,7 +324,7 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
                      });
                  });
                  console.log(selectValue);
-                 if (flagOnline==true){//online then add in all region 
+                 if (flagOnline=='true'){//online then add in all region 
                    firebase.database().ref('Regions').once("value", function(snapshot) {
                    snapshot.forEach(function(data) {
                firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -380,7 +380,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectBranch!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Deals/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -398,7 +398,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
                      });
                  });
                  console.log(selectValue);
-          if (flagOnline==true){//online then add in all region 
+          if (flagOnline=='true'){//online then add in all region 
             firebase.database().ref('Regions').once("value", function(snapshot) {
             snapshot.forEach(function(data) {
         firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -455,7 +455,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tid).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectBranch2!=777){ //not online so add branch in voucher       
+                if(flagOnline=='false'){ //not online so add branch in voucher       
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Vouchers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -477,7 +477,7 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
               
           });
           console.log(selectValue);
-          if (flagOnline==true){//online then add in all region 
+          if (flagOnline=='true'){//online then add in all region 
             firebase.database().ref('Regions').once("value", function(snapshot) {
             snapshot.forEach(function(data) {
         firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -503,10 +503,10 @@ function  savingDeals(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
     var VType;
   
    
- if (flagOnline==false)
+ if (flagOnline=='false')
     selectValue=checkB2();
     else 
-    selectValue=777;//online
+    selectValue=0;//online
  
     if(valditeFialdesVourches(nameOfV,DescV,pointNum,vNum,startDate,endDate,selectValue,voucherCode,msg)){
         VType=dealsType(msg);  
@@ -543,7 +543,7 @@ if(DescOfDeals==''){
                             return false;
                         }
 
-                        if(selectBranch==0&&flagOnline==false)//no choice and not online
+                        if(selectBranch==0&&flagOnline=='false')//no choice and not online
                         {
                        alert("الرجاء اختيار الفرع "+msg);      
                       return false;

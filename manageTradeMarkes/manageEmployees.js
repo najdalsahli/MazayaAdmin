@@ -33,6 +33,8 @@ function displayusers(){
         var addbtn = document.createElement('button');
         addbtn.className='buttons btn btn-primary';
         addbtn.textContent="إضافة";
+        addbtn.style.backgroundColor='#2B8D7B'
+
         addbtn.onclick=function(){
           addtion(snapshot1.key);
         };
@@ -45,7 +47,7 @@ function displayusers(){
         var addbtn = document.createElement('button');
         addbtn.className='buttons btn btn-primary';
         addbtn.textContent="إضافة";
-        addbtn.style.backgroundColor='#4b4c4d'
+        addbtn.style.backgroundColor='#BFC2C2'
         noPointcel.className='cells';
         noPointcel.textContent='-';   
 

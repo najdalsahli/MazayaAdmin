@@ -48,7 +48,7 @@ function viewTradeMarks(){
                 var pragraph = document.createElement("p");
                
                 Divforcell.className="Dives";
-                image.className="images";ß
+                image.className="images";
                 pragraph.className="pragraphs";
                 count=count+1;
                 image.src=snapshot2.child("BrandImage").val();
@@ -230,10 +230,25 @@ function showTradeMarkes(categoryName){
   }
 
 if(categoryName=='الكل'){
-
+    
 var countTM=0;
   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
-        
+    if(snapshot.numChildren()==0){
+      var noResult= document.createElement('td');
+      noResult.style.color='#F51B46';
+      noResult.style.textAlign='center';
+      noResult.style.font='font-family';
+      noResult.style.weight='bold';
+      noResult.textContent="لا يوجد علامة تجارية";
+      var newRow = document.createElement('tr');
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+       newRow.appendChild(noResult);
+      document.getElementById("bodyOftable").appendChild(newRow);
+        }
+      else{
     snapshot.forEach(function(snapshot1) {
       countTM++;
       var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
@@ -246,16 +261,39 @@ var countTM=0;
       readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
 
     })
+  }
   });
+
 }
 
-
+else{//else 1
 var countTM=0;
-  firebase.database().ref('Categories').child(categoryName).child("Trademarks").once('value').then(function(snapshot) {
-        
-    snapshot.forEach(function(snapshot) {
+  firebase.database().ref('Categories').child(categoryName).child("Trademarks").once('value').then(function(snapshot2) {
+    var numkey=snapshot2.numChildren();
+    console.log(numkey);
+    if(numkey==0){
+      var newRow = document.createElement('tr');
+      const newDiv = document.createElement("div");
+      const newContent = document.createTextNode("لا يوجد علامة تجارية");
+      newDiv.appendChild(newContent);
+        newDiv.className='table-responsive table mt-2';
+      var noResult= document.createElement('td');
+      noResult.style.color='#F51B46';
+      noResult.style.textAlign='center';
+      noResult.style.font='font-family';
+      noResult.style.weight='bold';
+      noResult.textContent="لا يوجد علامة تجارية";
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+       newRow.appendChild(noResult);
+      document.getElementById("bodyOftable").appendChild(newRow);
+  
+          }
+      else{//else 2
+    snapshot2.forEach(function(snapshot) {
 
-      
       firebase.database().ref("Trademarks").orderByKey().equalTo(snapshot.key).on("child_added",function(snapshot1) {
      
         var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
@@ -269,8 +307,10 @@ var countTM=0;
         readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
 })
 })
+}//else2
 });
-}
+}// else 1
+}//end function 
   function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM,serviceType){
     
     var deletecel = document.createElement('td');
@@ -325,7 +365,7 @@ window.location.href = "EditTrademark.html";
     var showbtn=document.createElement('button');
     var showIcon= document.createElement('i');
     showIcon.className='viewIcon icon ion-ios-eye';
-    
+
     showbtn.textContent='عرض';
 
     showbtn.className='btn viewbtn ';
@@ -410,14 +450,12 @@ function change_page(){
       var conf =confirm("هل أنت متأكد من حذف العلامة التجاية بملحقاتها؟");
       if (conf==true){//true
         //delete region 
-        var ref=firebase.database().ref('Trademarks/'+uid+'/Branches');
-        ref.on("value",function(snapshot){
-          snapshot.forEach(function(snapshot1){
-           region =snapshot1.child('region').val(); 
-           alert(region);      
-  firebase.database().ref('Regions/'+region+'/Trademarks/'+uid).remove();
+        firebase.database().ref('Regions').once("value", function(snapshot) {
+          snapshot.forEach(function(data) {
+         console.log(data.key);
+      firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).remove();
+          });
       });
-    });
     //delete vouchres
 var ref3=firebase.database().ref('Vouchers');
 ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
@@ -441,6 +479,11 @@ ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
   });
 });
 
+
+  //delete category 
+  firebase.database().ref('Trademarks/'+uid).once("value",function(snapshot){
+firebase.database().ref('Categories/'+snapshot.child('category').val()+'/Trademarks/'+uid).remove();
+});
 
 
   //delete trademark 

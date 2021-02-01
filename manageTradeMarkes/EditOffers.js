@@ -1,3 +1,5 @@
+//const e = require("express");
+
 const firebaseConfig = {
     apiKey: "AIzaSyBDUVxL_S0b9AxSRjBsQ6ri80mhO0kZ03c",
     authDomain: "mc-mazaya.firebaseapp.com",
@@ -15,14 +17,36 @@ const firebaseConfig = {
   const auth=firebase.auth();
   var tmID=localStorage.getItem("tradmarkID_E_O");
   var flagOnline=localStorage.getItem("flagOnlineE");
-  var selectValue=777;//means it is online
+
+  var selectValue=0;//means it is online
   var arrB=[];
 
    function load(){
-    console.log(tmID);
+    console.log(tmID +'....' +flagOnline);
 
     tm=tmID;
-    
+    firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot) {
+        var numoffers;
+  
+ numoffers=snapshot.child('Offers').numChildren()+snapshot.child('Deals').numChildren()+snapshot.child('Vouchers').numChildren();
+
+if (numoffers==0){
+    console.log(numoffers);
+    var newRow = document.createElement('tr');
+    var noResult= document.createElement('td');
+    noResult.style.color='#F51B46';
+    noResult.style.textAlign='center';
+    noResult.style.font='font-family';
+    noResult.style.weight='bold';
+    noResult.textContent="لا يوجد عروض";
+    newRow.appendChild(document.createElement('td'));
+    newRow.appendChild(document.createElement('td'));
+    newRow.appendChild(document.createElement('td'));
+    newRow.appendChild(document.createElement('td'));
+     newRow.appendChild(noResult);
+    document.getElementById("tableBody").appendChild(newRow);
+}
+});  
     firebase.database().ref('Trademarks/'+tmID+'/Offers').once('value').then(function(snapshot) {
         snapshot.forEach(function(snapshot1) {
             retrive('Offers',snapshot1.key,'عرض');
@@ -139,7 +163,7 @@ newrow.appendChild(name);
 newrow.appendChild(type);
 
 document.getElementById('tableBody').appendChild(newrow);
-
+  //  }
     });
   
 //document.getElementById("dataTable").deleteRow(1);
@@ -358,16 +382,11 @@ function updateV(key,msg){
     var eDate=document.getElementById("endV").value
     //var  selectBranch= document.getElementById("branch2");
    /// var selectRegionText = selectBranch.options[selectBranch.selectedIndex].text;
-    var sType;
-    firebase.database().ref('Trademarks/'+tmID).once("value",function(snapshot){
-        if(snapshot.child('serviceType').val()=='أونلاين'){
-            console.log(snapshot.child('serviceType').val());
-            flagOnline=true;
-    }
-});
- if (flagOnline==false){
-    selectValue=checkB2();
- }
+   if (flagOnline=='false')
+   selectValue=checkB2();
+   else 
+   selectValue=0;//online
+
 
 if(valditeFialdesVourches(name,des,point,code2,selectValue,sDate,eDate,Vnum)){
      sType=vType();
@@ -412,7 +431,7 @@ firebase.database().ref('Vouchers/'+key+'/Branches').remove();
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectValue!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log('in edit branch in offer'+arraySavingBranchKey[i]);
                         firebase.database().ref('Vouchers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set('true');
@@ -422,6 +441,13 @@ firebase.database().ref('Vouchers/'+key+'/Branches').remove();
               
           });
         }//if s type
+        if (flagOnline=='true'){//online then add in all region 
+            firebase.database().ref('Regions').once("value", function(snapshot) {
+            snapshot.forEach(function(data) {
+        firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+            });
+        });
+    }      
     alert('تم تعديل القسيمة بنجاح');
 reload_page();
     return true;
@@ -437,17 +463,11 @@ else{
     var userType;
     var useageType;  
     var ServiceType;
-    var selectValue;
- 
-    firebase.database().ref('Trademarks/'+tmID).once("value",function(snapshot){
-        if(snapshot.child('serviceType').val()=='أونلاين'){
-            console.log(snapshot.child('serviceType').val());
-            flagOnline=true;
-    }
-});
- if (flagOnline==false){
+    
+    if (flagOnline=='false')
     selectValue=checkB();
- }
+    else 
+    selectValue=0;//online
 
     if(valditeFialdes(nameOfOffer,DescOfOffer,code,selectValue,startDate,endDate)){
      userType=validiteRdUserType(); 
@@ -498,7 +518,7 @@ firebase.database().ref('Offers/'+key+'/Branches').remove();
                    }//for array
                  refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
                          snapshot1.forEach(function(data) {
-                           if(selectValue!=777){        
+                           if(flagOnline=='flase'){        
                                for (var i = 0; i < arraySavingBranchKey.length; i++) {
                                    console.log(arraySavingBranchKey[i]);
                                    firebase.database().ref('Offers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -506,7 +526,13 @@ firebase.database().ref('Offers/'+key+'/Branches').remove();
                        
                                 });
                             });
-                
+                            if (flagOnline=='true'){//online then add in all region 
+                                firebase.database().ref('Regions').once("value", function(snapshot) {
+                                snapshot.forEach(function(data) {
+                            firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+                                });
+                            });
+                        }      
     alert('تم تعديل العرض بنجاح');
     reload_page();
 }//end offers
@@ -552,7 +578,7 @@ firebase.database().ref('Deals/'+key+'/Branches').remove();
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectValue!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Deals/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -560,7 +586,13 @@ firebase.database().ref('Deals/'+key+'/Branches').remove();
               
                      });
                  });
-             
+   if (flagOnline=='true'){//online then add in all region 
+                    firebase.database().ref('Regions').once("value", function(snapshot) {
+                    snapshot.forEach(function(data) {
+                firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
+                    });
+                });
+            }      
                   alert('تم تعديل الصفقة بنجاح');
 reload_page();
 }
@@ -626,7 +658,7 @@ if(DescOfOffer==''){
                             return false;
                         }
 
-          if(selectBranch==0&&flagOnline==false)//no choice and not online
+          if(selectBranch==0&&flagOnline=='false')//no choice and not online
                         {
                        alert("الرجاء اختيار الفرع ");      
                       return false;
@@ -660,7 +692,7 @@ if(code=='')
                        alert("الرجاء اختيار كود الخصم ");      
                       return false;
                          }  
-                         if(selectBranch==0&&flagOnline==false)//no choice and not online
+                         if(selectBranch==0&&flagOnline=='false')//no choice and not online
                          {
                        alert("الرجاء اختيار الفرع ");      
                       return false;
@@ -769,7 +801,7 @@ function nextOD(){
     var nameOfOffer = document.getElementById("offerName").value;
     var DescOfOffer = document.getElementById("Desc").value;
     var  code= document.getElementById("code").value;
-    var  selectBranch= document.getElementById("branch");
+   // var  selectBranch= document.getElementById("branch");
     var  startDate= document.getElementById("srartDate").value;
     var  endDate= document.getElementById("endDate").value;
     var  selectOffer= document.getElementById("offer");
@@ -778,11 +810,11 @@ function nextOD(){
     var ServiceType;
    
 
-   
-    if (flagOnline==false)
+    if (flagOnline=='false')
     selectValue=checkB();
     else 
-    selectValu
+    selectValue=0;//online
+
 
     if(valditeFialdes(nameOfOffer,DescOfOffer,code,selectValue,startDate,endDate)){
      userType=validiteRdUserType(); 
@@ -863,7 +895,7 @@ function div(){
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectBranch!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Offers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -872,17 +904,17 @@ function div(){
                   if(data.child("offerDetails").val()==DescOfOffer){
                     if(data.child("offerTitle").val()==nameOfOffer){
                         if(data.child("discountCode").val()==code){
-                            var ref = firebase.database().ref('Trademarks/'+tmID+'/Offers/'+data.key);
-                    ref.once("value")
-                        .then(function(sc) {
-                    if(!sc.exists())//to dont duplicate with voucher tm id
+                    //         var ref = firebase.database().ref('Trademarks/'+tmID+'/Offers/'+data.key);
+                    // ref.once("value")
+                    //     .then(function(sc) {
+                    // if(!sc.exists())//to dont duplicate with voucher tm id
                   firebase.database().ref('Trademarks/'+tmID+'/Offers/'+data.key).set("true");
-                        });
+                       // });
                 }}}
                      });
                  });
                  console.log(selectValue);
-                 if (flagOnline==true){//online then add in all region 
+                 if (flagOnline=='true'){//online then add in all region 
                    firebase.database().ref('Regions').once("value", function(snapshot) {
                    snapshot.forEach(function(data) {
                firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -938,7 +970,7 @@ function div(){
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                if(selectBranch!=777){        
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
                         console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Deals/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
@@ -946,17 +978,17 @@ function div(){
               //add in tradeMarks
                   if(data.child("offerDetails").val()==DescOfOffer){
                     if(data.child("offerTitle").val()==nameOfOffer){
-                    var ref = firebase.database().ref('Trademarks/'+tmID+'/Deals/'+data.key);
-                    ref.once("value")
-                        .then(function(sc) {
-                    if(!sc.exists())//to dont duplicate with voucher tm id
+                    // var ref = firebase.database().ref('Trademarks/'+tmID+'/Deals/'+data.key);
+                    // ref.once("value")
+                    //     .then(function(sc) {
+                    // if(!sc.exists())//to dont duplicate with voucher tm id
                   firebase.database().ref('Trademarks/'+tmID+'/Deals/'+data.key).set("true");
-                        });
+                 //       });
                 }}
                      });
                  });
                  console.log(selectValue);
-                 if (flagOnline==true){//online then add in all region 
+                 if (flagOnline=='true'){//online then add in all region 
                    firebase.database().ref('Regions').once("value", function(snapshot) {
                    snapshot.forEach(function(data) {
                firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -1014,29 +1046,28 @@ function div(){
         }//for array
       refOffer.orderByChild('trademarkID').equalTo(tmID).on("value", function(snapshot1) {
               snapshot1.forEach(function(data) {
-                  console.log(selectValue);
-                if(selectBranch2!=777){        
+                  console.log(data.key);
+                if(flagOnline=='false'){        
                     for (var i = 0; i < arraySavingBranchKey.length; i++) {
-                        //console.log(arraySavingBranchKey[i]);
+                        console.log(arraySavingBranchKey[i]);
                         firebase.database().ref('Vouchers/'+data.key+'/Branches/'+arraySavingBranchKey[i]).set(true);
                  } }
 
           //add in tradeMarks
            if(data.child("offerDetails").val()==offerDetails){
            if(data.child("offerTitle").val()==offerTitle)
-            var ref = firebase.database().ref('Trademarks/'+tmID+'/Vouchers/'+data.key);
-            ref.once("value")
-                .then(function(sc) {
-            if(!sc.exists())//to dont duplicate with voucher tm id
+            // var ref = firebase.database().ref('Trademarks/'+tmID+'/Vouchers/'+data.key);
+            // ref.once("value")
+            //     .then(function(sc) {
+            // if(!sc.exists())//to dont duplicate with voucher tm id
            firebase.database().ref('Trademarks/'+tmID+'/Vouchers/'+data.key).set('true');
-
-        });
+//  });
     }
               });
               
           });
-          console.log(selectValue);
-          if (flagOnline==true){//online then add in all region 
+
+          if (flagOnline=='true'){//online then add in all region 
             firebase.database().ref('Regions').once("value", function(snapshot) {
             snapshot.forEach(function(data) {
         firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).set("true");
@@ -1061,18 +1092,17 @@ function div(){
          var  endDate= document.getElementById("endV").value;
          var VType;
 
+         if (flagOnline=='false')
+         selectValue=checkB2();
+         else
+         selectValue=0;//online
 
-     
- if (flagOnline==false)
- selectValue=checkB2();
- else 
- selectValue=777;//online
-
+         
          if(valditeFialdesVourches(nameOfV,DescV,pointNum,voucherCode,selectValue,startDate,endDate,vNum)){
              VType=dealsType();  
              if(VType){
                 console.log(selectValue);
- savingVourches(endDate,vNum,pointNum,DescV,nameOfV,VType,startDate,voucherCode,selectValue);
+savingVourches(endDate,vNum,pointNum,DescV,nameOfV,VType,startDate,voucherCode,selectValue);
              }
              return true;
          }
@@ -1195,12 +1225,7 @@ function div(){
         
                             
                             }//end function 
-    function fillBranch2(key){
-
  
-                            
-                            }//end function 
-
     function fillBranch3(key){
 
  
@@ -1266,7 +1291,7 @@ firebase.database().ref('Vouchers/'+key+'/Branches').once('value').then(function
             if( lnx[i].checked==true){
              num= num+1;}
             }
-            console.log(num);
+            console.log('selection num'+num);
             return num;      
      }
 

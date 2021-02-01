@@ -74,15 +74,17 @@ return;
     alert(" الرجاء ادخال رابط تويتر الخاص بالعلامة التجارية بالطريقة الصحيحة ")
     return;
       }
+
   //id snap 
   var accountsnap=document.getElementById("snap").value;
   var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
-  if(accountsnap!=''&&!isMatch)
-  {
-    alert(" الرجاء ادخال رابط سناب الخاص بالعلامة التجارية بالطريقة الصحيحة ")
-    return;
+  var Full_link;
+  if(isMatch){
+    Full_link=accountsnap;
   }
-
+  else{
+    Full_link="https://www.snapchat.com/add/"+ accountsnap;
+  }
   
   //id trademarkType 
   var trademark_Type=document.getElementById("trademarkType").value;
@@ -186,7 +188,7 @@ function after_theLoop(){
     firebase.database().ref('Trademarks/'+savedtrademark+'/instagram').set(accountinst);
     firebase.database().ref('Trademarks/'+savedtrademark+'/isFeatured').set(isـFeatured);
     firebase.database().ref('Trademarks/'+savedtrademark+'/serviceType').set(trademark_Type1);
-    firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(accountsnap);
+    firebase.database().ref('Trademarks/'+savedtrademark+'/snapchat').set(Full_link);
     firebase.database().ref('Trademarks/'+savedtrademark+'/trademarkName').set(trademarkName);
     firebase.database().ref('Trademarks/'+savedtrademark+'/twitter').set(accounttwi);
     firebase.database().ref('Trademarks/'+savedtrademark+'/views').set(0);

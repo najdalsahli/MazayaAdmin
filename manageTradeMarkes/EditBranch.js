@@ -33,7 +33,23 @@ function load(){
     
 //alert(tmID);
     firebase.database().ref('Trademarks/'+tmID+'/Branches').once('value').then(function(snapshot) {
-        
+      var numkey=snapshot.numChildren();
+      console.log(numkey);
+      if(numkey==0){
+        var newRow = document.createElement('tr');
+        var noResult= document.createElement('td');
+        noResult.style.color='#F51B46';
+        noResult.style.textAlign='center';
+        noResult.style.font='font-family';
+        noResult.style.weight='bold';
+        noResult.textContent="لا يوجد فروع";
+        newRow.appendChild(document.createElement('td'));
+        newRow.appendChild(document.createElement('td'));
+        newRow.appendChild(document.createElement('td'));
+         newRow.appendChild(noResult);
+        document.getElementById("dataTable").appendChild(newRow);
+            }
+        else{//else 2
         snapshot.forEach(function(snapshot1) {
             var newrow = document.createElement('tr');
            numOfB=numOfB+1;
@@ -88,7 +104,9 @@ function load(){
     
    
         });
+      }
     });
+  
     document.getElementById("dataTable").deleteRow(1);
 
 //buttons of editing
