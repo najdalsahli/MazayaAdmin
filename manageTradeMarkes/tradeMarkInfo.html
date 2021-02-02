@@ -85,19 +85,19 @@
                                             <div class="col" style="margin-top: 0px;">
                                                 <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;" >انستقرام</label></div>
                                                 <input
-                                                id="inst" class="form-control" type="text"></div>
+                                                placeholder=" مثال : https://www.instagram.com/mazaya/"  id="inst" class="form-control" type="text"></div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col" style="margin-top: 19px;">
                                                 <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">تويتر</label></div>
                                                 <input
-                                                id="twi" class="form-control" type="text" style="margin-top: 7px;"></div>
+                                                placeholder="مثال : https://www.twitter.com/mazaya/"    id="twi" class="form-control" type="text" style="margin-top: 7px;"></div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col" style="margin-top: 21px;">
                                                 <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">سناب تشات</label></div>
                                                 <input
-                                                id="snap" class="form-control" type="text"></div>
+                                                placeholder="مثال : https://www.snapchat.com/mazaya/"  id="snap" class="form-control" type="text"></div>
                                         </div><label style="margin-top: 18px;margin-right: -110px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">نوع نشاط العلامة التجارية</label><select id="trademarkType" class="form-control d-table d-xl-flex" style="margin-top: -1px;font-family: Frutiger LT Arabic;padding-top: 0px;text-align: right;">
                                             <option value="12" selected="">يرجى اختيار</option>
                                             <option value="13" >أونلاين</option>
@@ -126,7 +126,7 @@
                                                 style="text-align: right;margin-top: 21px;font-family: Frutiger LT Arabic;"></div>
                                         <div class="form-group"><label for="last_name" style="margin-left: 260px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>الوصف&nbsp;</strong><br></label><input class="form-control" type="text"  id="description" placeholder="مثال : شركة شوكلاته"
                                                 name="last_name" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
-                                        <div class="form-group"><label  style="margin-left: 218px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>رقم التواصل</strong></label><input class="form-control" type="tel"  id="contactnum" placeholder="05xxxxxxxx" name="PhoneNumber"
+                                        <div class="form-group"><label  style="margin-left: 218px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>رقم التواصل</strong></label><input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" type="tel"  id="contactnum" placeholder="05xxxxxxxx" name="PhoneNumber"
                                                 style="text-align: right;"></div>
                                         <div class="form-group"><label  style="margin-right: -208px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>البريد الالكتروني</strong></label><input class="form-control" type="email"  id="mail" placeholder="example@example.com"
                                                 name="email" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
