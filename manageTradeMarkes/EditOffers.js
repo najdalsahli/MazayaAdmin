@@ -107,7 +107,7 @@ function retrive(type,key,msg){
 
         var newrow = document.createElement('tr');
 
-        //delete sugg
+        //delete 
         var deletecel = document.createElement('td');
         deletecel.className='delcell';
         var deletebtn = document.createElement('button');
