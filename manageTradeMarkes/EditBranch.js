@@ -20,8 +20,8 @@ const firebaseConfig = {
   //to make the branch global for lat and lng for map
 var latB;
 var lngB;
-var lat='';
-var lng='';
+var lat;
+var lng;
   //flag for map to not take value of lat and lag for frist time;
   var flag=false;
   var regionDB;
@@ -33,7 +33,23 @@ function load(){
     
 //alert(tmID);
     firebase.database().ref('Trademarks/'+tmID+'/Branches').once('value').then(function(snapshot) {
-        
+      var numkey=snapshot.numChildren();
+      console.log(numkey);
+      if(numkey==0){
+        var newRow = document.createElement('tr');
+        var noResult= document.createElement('td');
+        noResult.style.color='#F51B46';
+        noResult.style.textAlign='center';
+        noResult.style.font='font-family';
+        noResult.style.weight='bold';
+        noResult.textContent="لا يوجد فروع";
+        newRow.appendChild(document.createElement('td'));
+        newRow.appendChild(document.createElement('td'));
+        newRow.appendChild(document.createElement('td'));
+         newRow.appendChild(noResult);
+        document.getElementById("dataTable").appendChild(newRow);
+            }
+        else{//else 2
         snapshot.forEach(function(snapshot1) {
             var newrow = document.createElement('tr');
            numOfB=numOfB+1;
@@ -88,7 +104,9 @@ function load(){
     
    
         });
+      }
     });
+  
     document.getElementById("dataTable").deleteRow(1);
 
 //buttons of editing
@@ -181,6 +199,11 @@ var ref= firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bidKey);
 }
 
 ref.once("value", function(bid) {
+  //map
+  latB=parseFloat(bid.child("latitude").val());
+lngB=parseFloat(bid.child("longitude").val());
+initMap(latB,lngB);
+
   //name
 document.getElementById("branchName").value=bid.child("branchName").val();
 
@@ -218,9 +241,7 @@ document.getElementById("region").value="25";
 
 
 flag=true;
-latB=parseFloat(bid.child("latitude").val());
-lngB=parseFloat(bid.child("longitude").val());
-initMap(latB,lngB);
+
 });
 
 var update=document.getElementById("update");
@@ -229,9 +250,9 @@ update.onclick=function(){
 }
 }
 
-function initMap() {
+function initMap(latB,lngB) {
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -33.8688, lng: 151.2195 },
+    center: { lat: Number(latB) , lng: Number(lngB)  },
     zoom: 13,
   });
   const input = document.getElementById("pac-input");
@@ -434,8 +455,8 @@ var nameOfBranch = document.getElementById("branchName").value;
  if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/branchName').set(nameOfBranch);
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/description').set(DescOfBranch);
-    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/latitude').set(latB);
-    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/longitude').set(lngB);
+    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/latitude').set(latB.toString());
+    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/longitude').set(lngB.toString());
 if(selectRegionText!=regionDB){
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/region').set(selectRegionText);
     firebase.database().ref('Regions/'+regionDB+'/Trademarks/'+tmID).remove();

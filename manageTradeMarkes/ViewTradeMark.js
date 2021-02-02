@@ -84,7 +84,7 @@ function load(){
       document.getElementById("twitterbtn").addEventListener("click", function(){ 
 
         if(trademarkTwi!=''){
-        if(trademarkTwi.startsWith("https")){
+        if(trademarkTwi.startsWith("https")||trademarkTwi.startsWith("http")){
           location.href=trademarkTwi;
 
         }else{
@@ -103,13 +103,14 @@ function load(){
 
 
         if(trademarkSnap!=''){
-        if(trademarkSnap.startsWith("https")){
-          location.href=trademarkSnap;
-
-        }else{
-        //https://www.snapchat.com/add/ruba_alsmail
-        var Full_link="https://www.snapchat.com/add/"+ trademarkSnap;
-        location.href=Full_link; }}
+          var isMatch = trademarkSnap.substr(0, 8) == 'https://' || trademarkSnap.substr(0, 7) == 'http://';
+          var Full_link;
+          if(isMatch){
+            Full_link=trademarkSnap;
+          }
+          else{
+            Full_link="https://www.snapchat.com/add/"+ trademarkSnap;
+          }}
       });
       
 
@@ -120,7 +121,7 @@ function load(){
       document.getElementById("instagrambtn").addEventListener("click", function(){ 
 
         if(trademarkInst!=''){
-        if(trademarkInst.startsWith("https")){
+        if(trademarkInst.startsWith("https")||trademarkInst.startsWith("https")){
           location.href=trademarkInst; 
 
         }else{

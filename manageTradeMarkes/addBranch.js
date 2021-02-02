@@ -9,8 +9,8 @@ const firebaseConfig = {
     appId: "1:1043747982646:web:eb8806eb17fa88668fb797",
     measurementId: "G-5VCPWL0HQL"
   };
-  //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
 
+  
   firebase.initializeApp(firebaseConfig);
   const auth=firebase.auth();
 
@@ -19,6 +19,7 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
 
   var tmBranchID=localStorage.getItem("tradmarkID_branch");
+  //localStorage.getItem("tradmarkID_branch");
 
   function nextTradeMarkInfoOffer(msg){
     //alert(tmBranchID);
@@ -30,10 +31,11 @@ const firebaseConfig = {
 
 
  function saveDBbranch(nameOfBranch,DescOfBranch,selectRegion,msg){
+  console.log('before saving');
       var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
       if(Validation(nameOfBranch,DescOfBranch,selectRegion.value,msg)){
           // trademark + branch tabel.
-          try{
+       
       firebase.database().ref('Trademarks/'+tmBranchID+'/Branches').push(
                   {
                       branchName:nameOfBranch,
@@ -43,16 +45,14 @@ const firebaseConfig = {
                       region:selectRegionText
                   });
                       // region tabel
+                      console.log(selectRegionText);
      firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/'+tmBranchID).set("true");
       alert('تم إضافة الفرع بنجاح');
       document.getElementById('next').style.display='none'
       document.getElementById('offerpage').style.display='block'
       
         
-        }//try
-          catch{
-            alert("عذرا حدث خطأ !")
-          } 
+       
   }//IF VALDITE
     }
 
@@ -150,7 +150,7 @@ function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
         setTimeout(function() {
           console.log('iam here');
           localStorage.setItem("tradmarkID_offer",tmBranchID);
-          window.location.href = "AddOffers.html";    }, 2000);
+          window.location.href = "AddOffers.html";    }, 5000);
 
       }
 
