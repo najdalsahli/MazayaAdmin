@@ -16,7 +16,7 @@ const firebaseConfig = {
   
   const auth=firebase.auth();
 
-
+var flag=false;
 
 
 
@@ -66,173 +66,26 @@ function viewTradeMarks(){
   }
 
 
-  var flag=false;
 
-  function search(searchtxt){
-
-    var list = document.getElementById("bodytable");
-    document.getElementById("loader").style.display = "block";
-    document.getElementById("myDiv").style.display = "none";
-    // As long as <ul> has a child node, remove it
-    while (list.hasChildNodes()) {  
-      list.removeChild(list.firstChild);
-    }
-
-  
-    
-
-    var database = firebase.database().ref("Users");
-  
-   
-     database.orderByChild("email").equalTo(searchtxt).on("child_added",function(snapshot1) {
-       flag=true;
-       
-      var newrow = document.createElement('tr');
-     
-      var  deletecel = document.createElement('td');
-        deletecel.className='deletecel';
-       var deletebtn = document.createElement('button');
-        deletebtn.className='buttons btn btn-primary';
-        deletebtn.textContent="تعطيل";
-        deletebtn.onclick=function(){
-          deleteEmp(snapshot1.key);
-        };
-    
-    
-      var addcel = document.createElement('td');
-        addcel.className='deletecel';
-        var addbtn = document.createElement('button');
-        addbtn.className='buttons btn btn-primary';
-        addbtn.textContent="إضافة"
-        addbtn.onclick=function(){
-          addtion(snapshot1.key);
-        };
-    
-       var noPointcel = document.createElement('td');
-        noPointcel.className='cells';
-        noPointcel.textContent=snapshot1.child("points").val();
-    
-    
-       var gendercel = document.createElement('td');
-        gendercel.className='cells';
-        gendercel.textContent=snapshot1.child("gender").val();
-       var phonecel = document.createElement('td');
-        phonecel.className='cells';
-        phonecel.textContent=snapshot1.child("email").val();
-       var namecel = document.createElement('td');
-        namecel.className='cells';
-        namecel.textContent=snapshot1.child("name").val();
-    
-       
-    
-    
-        
-        
-        deletecel.appendChild(deletebtn);
-        newrow.appendChild(deletecel);
-    
-        addcel.appendChild(addbtn);
-        newrow.appendChild(addcel);
-    
-        newrow.appendChild(noPointcel);
-        newrow.appendChild(gendercel);
-        newrow.appendChild(phonecel);
-        newrow.appendChild(namecel);
-        document.getElementById('tableBody').appendChild(newrow);
-        
-    
-    
-       
-        
- 
-    });
-
-   
-
-    setTimeout(wait,3000);
-    
-
-  
-  }
-function wait(){
-  
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("myDiv").style.display = "block";
-  if(!flag){
-    alert("لايوجد موظف بنفس البريد الالكتروني");
-    displayusers();
-    
- }else{
-  flag=false;
- }
-}
-
-function addtion(uid){
-  
-  var txt;
-  var person = prompt("ادخل عدد النقاط المضافة");
-  if (person == null || person == "") {
-   
-  } 
-    
-  
-  if(isNaN(person)){
-      
-    alert("ادخل عدد صحيح");
-  } else{
-    var addingPoints= person+2;
-   
-   
- firebase.database().ref('/Users/' + uid).once('value').then(function(snapshot) {
-  var oldPoints = snapshot.child("points").val();
-  var sumOfPoints=parseInt(person+"")+parseInt(oldPoints+"");
-  console.log(sumOfPoints);
-  firebase.database().ref('/Users/' + uid).child("points").set(sumOfPoints);
-  // ...
-});
-
-  
-
-
-  }
- 
-}
-
-function deleteEmp(uid){
-  //var admin = require('firebase-admin');
-
-/*
- 
-  admin.auth().deleteUser(uid)
-  .then(function() {
-    console.log('Successfully deleted user');
-  })
-  .catch(function(error) {
-    console.log('Error deleting user:', error);
-  });
-
-
-  /*firebase.database().ref("Users").child(uid).remove();
-  while (list.hasChildNodes()) {  
-    list.removeChild(list.firstChild);
-  }
-  displayusers();
-  alert("تم حذف الموظف بنجاح");
-*/
-}
 function showTradeMarkes(categoryName){
  
   document.getElementById("catheader").innerHTML=categoryName;
   document.getElementById("category-container").style.display = "block";
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+
   var list=document.getElementById('bodyOftable');
   while (list.hasChildNodes()) {  
     list.removeChild(list.firstChild);
   }
 
+
+ 
 if(categoryName=='الكل'){
     
 var countTM=0;
   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
+    flag=true;
     if(snapshot.numChildren()==0){
       var noResult= document.createElement('td');
       noResult.style.color='#F51B46';
@@ -269,6 +122,7 @@ var countTM=0;
 else{//else 1
 var countTM=0;
   firebase.database().ref('Categories').child(categoryName).child("Trademarks").once('value').then(function(snapshot2) {
+    flag=true;
     var numkey=snapshot2.numChildren();
     console.log(numkey);
     if(numkey==0){
@@ -310,6 +164,7 @@ var countTM=0;
 }//else2
 });
 }// else 1
+setTimeout(wait, 3000);
 }//end function 
   function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM,serviceType){
     
@@ -541,6 +396,17 @@ function logout(){
     });
 
 }        
+
+
+function wait(){
+  document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+    if(!flag){
+      
+   }else{
+    flag=false;
+   }
+}
 
 
 

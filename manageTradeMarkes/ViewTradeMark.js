@@ -56,16 +56,19 @@ const firebaseConfig = {
 
 
 
-
+var flagWait=false;
 
 function load(){
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+
   var tmID= localStorage.getItem("tradmarkID");
     //alert(tmID);
     //Write your code here darling 
     //firebase.database().ref('Trademarks/'+savedtrademark+'/description').set(trademarkDescription);
 
     firebase.database().ref('Trademarks/'+tmID).once('value').then(function(snapshot){
-
+      flagWait=true;
 
 
       //#1
@@ -273,4 +276,15 @@ function branchTable(){
 
 
     localStorage.setItem("tradmarkID",'');
+    setTimeout(wait, 5000);
+}
+
+function wait(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+  if(!flagWait){
+    
+ }else{
+  flagWait=false;
+ }
 }

@@ -26,13 +26,21 @@ var lng;
   var flag=false;
   var regionDB;
   var numOfB=0;
+  var flagWait=false;
 function load(){
   console.log(tmID);
-
+  var list = document.getElementById("tableBody");
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+  // As long as <ul> has a child node, remove it
+  while (list.hasChildNodes()) {  
+    list.removeChild(list.firstChild);
+  }
     tm=tmID;
     
 //alert(tmID);
     firebase.database().ref('Trademarks/'+tmID+'/Branches').once('value').then(function(snapshot) {
+      flagWait=true;
       var numkey=snapshot.numChildren();
       console.log(numkey);
       if(numkey==0){
@@ -50,9 +58,11 @@ function load(){
         document.getElementById("dataTable").appendChild(newRow);
             }
         else{//else 2
+          flagWait=true;
         snapshot.forEach(function(snapshot1) {
             var newrow = document.createElement('tr');
            numOfB=numOfB+1;
+          
 
             //delete sugg
             var deletecel = document.createElement('td');
@@ -105,8 +115,10 @@ function load(){
    
         });
       }
+
     });
-  
+    setTimeout(wait, 5000);
+
     document.getElementById("dataTable").deleteRow(1);
 
 //buttons of editing
@@ -477,3 +489,14 @@ function clear(){
 function reload_page() { 
   window.location.reload();     
   }
+
+function wait(){
+
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+  if(!flagWait){
+    
+ }else{
+  flagWait=false;
+ }
+}

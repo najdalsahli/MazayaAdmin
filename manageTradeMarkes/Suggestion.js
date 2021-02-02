@@ -21,6 +21,8 @@ var flag=false;
 function suggestion ()
 {
  
+  
+
     var list = document.getElementById("tableBody");
     document.getElementById("loader").style.display = "block";
     document.getElementById("myDiv").style.display = "none";
@@ -28,11 +30,10 @@ function suggestion ()
     while (list.hasChildNodes()) {  
       list.removeChild(list.firstChild);
     }
-    
     firebase.database().ref('Suggestion').once('value').then(function(snapshot) {
         
       snapshot.forEach(function(snapshot1) {
-flag=true;
+      flag=true;
          
    var newrow = document.createElement('tr');
 //delete sugg
@@ -107,7 +108,8 @@ showbtn.onclick=function(){
 });
 document.getElementById("dataTable").deleteRow(1);
 
-  setTimeout(wait,3000);
+  setTimeout(wait,5000);
+
   }//end sugg
 
   function deleteSugg(uid){

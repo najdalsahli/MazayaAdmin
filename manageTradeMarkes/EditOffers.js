@@ -20,8 +20,15 @@ const firebaseConfig = {
 
   var selectValue=0;//means it is online
   var arrB=[];
-
+var flagWait=false;
    function load(){
+    var list = document.getElementById("tableBody");
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("myDiv").style.display = "none";
+    // As long as <ul> has a child node, remove it
+    while (list.hasChildNodes()) {  
+      list.removeChild(list.firstChild);
+    }
     console.log(tmID +'....' +flagOnline);
 
     tm=tmID;
@@ -29,7 +36,7 @@ const firebaseConfig = {
         var numoffers;
   
  numoffers=snapshot.child('Offers').numChildren()+snapshot.child('Deals').numChildren()+snapshot.child('Vouchers').numChildren();
-
+flagWait=true;
 if (numoffers==0){
     console.log(numoffers);
     var newRow = document.createElement('tr');
@@ -99,7 +106,7 @@ if (numoffers==0){
   window.location.href = "EditTrademark.html";
    };
   }
-
+  setTimeout(wait, 5000);
 }
 
 function retrive(type,key,msg){
@@ -1315,3 +1322,14 @@ firebase.database().ref('Vouchers/'+key+'/Branches').once('value').then(function
             window.location.href = "EditOffers.html";    }, 1000);
     
      }
+
+     function wait(){
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("myDiv").style.display = "block";
+        if(!flagWait){
+          
+       }else{
+        flagWait=false;
+       }
+      }

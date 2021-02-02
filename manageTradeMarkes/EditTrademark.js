@@ -18,11 +18,16 @@ const firebaseConfig = {
   const auth=firebase.auth();
   var tmID= localStorage.getItem("tradmarkID_E");
   //localStorage.setItem("tradmarkID_E",'');
-
+var flag=false;
 function s(){
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+
+ 
   console.log(tmID);
     var ref=firebase.database().ref('Trademarks/'+tmID);
     ref.once("value", function(snapshot) {
+      flag=true;
     document.getElementById("name").value=snapshot.child("trademarkName").val();
     document.getElementById("description").value=snapshot.child("description").val();
     document.getElementById("contactnum").value=snapshot.child("contactNum").val();
@@ -290,6 +295,7 @@ alert("تم تعديل العلامة التجارية بنجاح");
 x.style.display='none';
 
 }
+setTimeout(wait, 3000);
 }
 
 
@@ -434,3 +440,13 @@ fileButton1.addEventListener('change', function (e) {
 
 });
 
+
+function wait(){
+  document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+    if(!flag){
+      
+   }else{
+    flag=false;
+   }
+}
