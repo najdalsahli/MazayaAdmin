@@ -15,55 +15,61 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   
   const auth=firebase.auth();
- 
+  var startFlag=false;
+
 
 function displayusers(){
-
+  var list = document.getElementById("bodytable");
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+  // As long as <ul> has a child node, remove it
+  while (list.hasChildNodes()) {  
+    list.removeChild(list.firstChild);
+  }
     firebase.database().ref('Users').once('value').then(function(snapshot) {
-        
+      var num=1;
+      startFlag=true;
+
         snapshot.forEach(function(snapshot1) {
-  
-           
+          if (snapshot1.child("userType").val()=='موظف'){
+
      var newrow = document.createElement('tr');
-     var addcel = document.createElement('td');
      var noPointcel = document.createElement('td');
 
-     if (snapshot1.child("userType").val()=='موظف'){
-        addcel.className='deletecel';
-        var addbtn = document.createElement('button');
-        addbtn.className='buttons btn btn-primary';
-        addbtn.textContent="إضافة";
-        addbtn.style.backgroundColor='#2B8D7B'
+     var editcel = document.createElement('td');
+     var  editbtn= document.createElement('button');
+     var editIcon= document.createElement('i');
 
-        addbtn.onclick=function(){
+      editcel.className='editcell';
+       editbtn.className='btnEdit';
+       editIcon.className='ion-android-create editIcon';
+       editbtn.textContent='إضافة';
+       editbtn.appendChild(editIcon);
+       editcel.appendChild(editbtn);
+
+       editbtn.onclick=function(){
           addtion(snapshot1.key);
         };
     
         noPointcel.className='cells';
         noPointcel.textContent=snapshot1.child("points").val();
-    }
-    else{
-        addcel.className='deletecel';
-        var addbtn = document.createElement('button');
-        addbtn.className='buttons btn btn-primary';
-        addbtn.textContent="إضافة";
-        addbtn.style.backgroundColor='#BFC2C2'
-        noPointcel.className='cells';
-        noPointcel.textContent='-';   
-
-    }
+    
 
 
 
-    var  deletecel = document.createElement('td');
-      deletecel.className='deletecel';
-     var deletebtn = document.createElement('button');
-      deletebtn.className='buttons btn btn-primary';
-      deletebtn.textContent="تعطيل";
+    var deletecel = document.createElement('td');
+    deletecel.className='delcell';
+    var deletebtn = document.createElement('button');
+    deletebtn.className='btnDelete';
+    deletebtn.textContent='تعطيل';
+    var deleteIcon = document.createElement('i');
+    deleteIcon.className='far fa-trash-alt deleteIcon';
+    deletebtn.appendChild(deleteIcon);
+    deletecel.appendChild(deletebtn);
+
       deletebtn.onclick=function(){
         localStorage.setItem("email",snapshot1.child("email").val());
         window.location.href = "DeleteUser.html";
-
       };
   
   
@@ -75,6 +81,7 @@ function displayusers(){
      var phonecel = document.createElement('td');
       phonecel.className='cells';
       phonecel.textContent=snapshot1.child("email").val();
+
      var namecel = document.createElement('td');
       namecel.className='cells';
       namecel.textContent=snapshot1.child("name").val();
@@ -82,34 +89,59 @@ function displayusers(){
       var typecel = document.createElement('td');
       typecel.className='cells';
       typecel.textContent=snapshot1.child("userType").val();
-  
+
+        var fam = document.createElement('td');
+      fam.className='cells';
+      fam.style.color='#009BDA';
+      fam.textContent=snapshot1.child("FamilyMembers").numChildren();
+      fam.style.cursor = 'pointer';
+
+     
+
+      fam.onclick=function(){
+        localStorage.setItem("famNum",snapshot1.child("FamilyMembers").numChildren());
+        localStorage.setItem("uid",snapshot1.key);
+        window.location.href = "manageFamily.html";
+      
+      }
+      var numcell= document.createElement('td');
+      numcell.className='cells';
+      numcell.textContent=num;
+
   
       
       
       deletecel.appendChild(deletebtn);
       newrow.appendChild(deletecel);
   
-      addcel.appendChild(addbtn);
-      newrow.appendChild(addcel);
-  
+      newrow.appendChild(editcel);
+
       newrow.appendChild(noPointcel);
+      newrow.appendChild(fam);
+
       newrow.appendChild(gendercel);
+
       newrow.appendChild(phonecel);
       newrow.appendChild(namecel);
-      newrow.appendChild(typecel);
-  
+     newrow.appendChild(numcell);
+        num++;
       document.getElementById('bodytable').appendChild(newrow);
-
+    }
    
 
    });
   
 });
+setTimeout(StartWait,3000);
 
   
   }
+
+
+
   var flagEmp=false;
   var flagFam=false;
+  var flag=false;
 
   function search(searchtxt){
     var list = document.getElementById("bodytable");
@@ -123,77 +155,104 @@ function displayusers(){
     var database = firebase.database().ref("Users");   
      database.orderByChild("email").equalTo(searchtxt).on("child_added",function(snapshot1) {
        flag=true;
-       
-       var newrow = document.createElement('tr');
-       var addcel = document.createElement('td');
-       var noPointcel = document.createElement('td');
-  
+       var num=1;
        if (snapshot1.child("userType").val()=='موظف'){
-          addcel.className='deletecel';
-          var addbtn = document.createElement('button');
-          addbtn.className='buttons btn btn-primary';
-          addbtn.textContent="إضافة";
-          addbtn.onclick=function(){
-            addtion(snapshot1.key);
-          };
-      
-          noPointcel.className='cells';
-          noPointcel.textContent=snapshot1.child("points").val();
-      }
-      else{
-          addcel.className='deletecel';
-          var addbtn = document.createElement('button');
-          addbtn.className='buttons btn btn-primary';
-          addbtn.textContent="إضافة";
-          addbtn.style.backgroundColor='#4b4c4d'
-          
-          noPointcel.className='cells';
-          noPointcel.textContent='-';   
-  
-      }
-     
-      var  deletecel = document.createElement('td');
-        deletecel.className='deletecel';
-       var deletebtn = document.createElement('button');
-        deletebtn.className='buttons btn btn-primary';
-        deletebtn.textContent="تعطيل";
-        deletebtn.onclick=function(){
-          deleteEmp(snapshot1.key);
-        };
-    
-     
-       var gendercel = document.createElement('td');
-        gendercel.className='cells';
-        gendercel.textContent=snapshot1.child("gender").val();
-       var phonecel = document.createElement('td');
-        phonecel.className='cells';
-        phonecel.textContent=snapshot1.child("email").val();
-       var namecel = document.createElement('td');
-        namecel.className='cells';
-        namecel.textContent=snapshot1.child("name").val();
-    
-        var typecel = document.createElement('td');
-        typecel.className='cells';
-        typecel.textContent=snapshot1.child("userType").val();
-    
-    
-    
-        
-        
-        deletecel.appendChild(deletebtn);
-        newrow.appendChild(deletecel);
-    
-        addcel.appendChild(addbtn);
-        newrow.appendChild(addcel);
-    
-        newrow.appendChild(noPointcel);
-        newrow.appendChild(gendercel);
-        newrow.appendChild(phonecel);
-        newrow.appendChild(namecel);
-        newrow.appendChild(typecel);
 
-        document.getElementById('bodytable').appendChild(newrow);
+        var newrow = document.createElement('tr');
+        var noPointcel = document.createElement('td');
+   
+        var editcel = document.createElement('td');
+        var  editbtn= document.createElement('button');
+        var editIcon= document.createElement('i');
+   
+         editcel.className='editcell';
+          editbtn.className='btnEdit';
+          editIcon.className='ion-android-create editIcon';
+          editbtn.textContent='إضافة';
+          editbtn.appendChild(editIcon);
+          editcel.appendChild(editbtn);
+   
+          editbtn.onclick=function(){
+             addtion(snapshot1.key);
+           };
+       
+           noPointcel.className='cells';
+           noPointcel.textContent=snapshot1.child("points").val();
+       
+   
+   
+   
+       var deletecel = document.createElement('td');
+       deletecel.className='delcell';
+       var deletebtn = document.createElement('button');
+       deletebtn.className='btnDelete';
+       deletebtn.textContent='تعطيل';
+       var deleteIcon = document.createElement('i');
+       deleteIcon.className='far fa-trash-alt deleteIcon';
+       deletebtn.appendChild(deleteIcon);
+       deletecel.appendChild(deletebtn);
+   
+         deletebtn.onclick=function(){
+           localStorage.setItem("email",snapshot1.child("email").val());
+           window.location.href = "DeleteUser.html";
+         };
+     
+     
       
+     
+        var gendercel = document.createElement('td');
+         gendercel.className='cells';
+         gendercel.textContent=snapshot1.child("gender").val();
+        var phonecel = document.createElement('td');
+         phonecel.className='cells';
+         phonecel.textContent=snapshot1.child("email").val();
+   
+        var namecel = document.createElement('td');
+         namecel.className='cells';
+         namecel.textContent=snapshot1.child("name").val();
+     
+         var typecel = document.createElement('td');
+         typecel.className='cells';
+         typecel.textContent=snapshot1.child("userType").val();
+   
+         var fam = document.createElement('td');
+         fam.className='cells';
+         fam.style.color='#009BDA';
+         fam.textContent=snapshot1.child("FamilyMembers").numChildren();
+         fam.style.cursor = 'pointer';
+   
+        
+   
+         fam.onclick=function(){
+          localStorage.setItem("famNum",snapshot1.child("FamilyMembers").numChildren());
+           localStorage.setItem("uid",snapshot1.key);
+           window.location.href = "manageFamily.html";
+         
+         }
+   
+         var numcell= document.createElement('td');
+         numcell.className='cells';
+         numcell.textContent=num;
+     
+         
+         
+         deletecel.appendChild(deletebtn);
+         newrow.appendChild(deletecel);
+     
+         newrow.appendChild(editcel);
+   
+         newrow.appendChild(noPointcel);
+         newrow.appendChild(fam);
+   
+         newrow.appendChild(gendercel);
+   
+         newrow.appendChild(phonecel);
+         newrow.appendChild(namecel);
+        newrow.appendChild(numcell);
+           num++;
+         document.getElementById('bodytable').appendChild(newrow);   
+        }
+     
     });
     setTimeout(wait,3000);
     
@@ -205,7 +264,7 @@ function wait(){
   document.getElementById("loader").style.display = "none";
   document.getElementById("myDiv").style.display = "block";
   if(!flag){
-    alert("لايوجد مستخدم بنفس البريد الالكتروني");
+    alert("لايوجد موظف بنفس البريد الالكتروني");
     displayusers();
     
  }else{
@@ -235,7 +294,8 @@ function addtion(uid){
   var sumOfPoints=parseInt(person+"")+parseInt(oldPoints+"");
   console.log(sumOfPoints);
   firebase.database().ref('/Users/' + uid).child("points").set(sumOfPoints);
-    window.location.reload();     
+  setTimeout(function() {
+         window.location.href = "manageEmployees.html";    }, 1000);
 });
 
   
@@ -245,3 +305,12 @@ function addtion(uid){
  
 }
 
+function StartWait(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+  if(!startFlag){
+    
+ }else{
+  startFlag=false;
+ }
+}
