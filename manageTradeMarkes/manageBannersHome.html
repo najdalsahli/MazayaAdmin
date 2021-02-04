@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 
-<head>   
+<head>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-storage.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>الاقتراحات</title>
-        
+    <title font-family: Frutiger LT Arabic;>إدارة الشريط الإعلاني</title>
+    
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
@@ -26,8 +25,10 @@
     <link rel="stylesheet" href="assets/bootstrap/css/format.css">
 </head>
 
-<body id="page-top" onload="suggestion()">
+<body id="page-top">
     <div id="wrapper" style="background: #00524d;">
+
+
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#00524d 0%, #38a089 100%);margin-top: 70px;filter: grayscale(0%) sepia(0%);">
             <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: 9px;">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
@@ -39,9 +40,10 @@
             </div>
         </nav>
 
+
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-              <nav class="navbar navbar-light navbar-expand bg-dark shadow mb-4 topbar static-top" style="background: linear-gradient(#00524d, #00524d);">
+                <nav class="navbar navbar-light navbar-expand bg-dark shadow mb-4 topbar static-top" style="background: linear-gradient(#00524d, #00524d);">
                     <div class="container-fluid">
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
 
@@ -58,37 +60,46 @@
             </div>
             </nav>
 
+
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <h1 style="text-align: right;color: #38a089;font-family: Frutiger LT Arabic;">الاقتراحات<i class="typcn typcn-minus" style="margin-left: 21px;color: #00524d;"></i></h1>
+                                    <h1 style="text-align: right;color: #38a089; font-family: Frutiger LT Arabic;"> الشريط الإعلاني-الفئات<i class="typcn typcn-minus" style="margin-left: 21px;color: #00524d;"></i></h1>
                                 </div>
                             </div>
                             <div class="table-responsive table-borderless" style="text-align: center;margin-top: 20px;">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr></tr>
+                                        <tr>
+                                            <th><button class="btn btn-primary cards" onclick="showTradeMarkes('مطاعم')" type="button" style="background: url(assets/img/categories/group_10596.png) center / cover;"></button></th>
+                                            <th><button class="btn btn-primary cards" onclick="showTradeMarkes('مقاهي')" type="button" style="background: url(assets/img/categories/group_10597.png) center / cover;"></button></th>
+                                            <th><button class="btn btn-primary cards" onclick="showTradeMarkes('حلويات')" type="button" style="background: url(assets/img/categories/group_10604.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards " onclick="showTradeMarkes('أغذية صحية')" type="button" style="background: url(assets/img/categories/group_10598.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards" onclick="showTradeMarkes('تسوق')"type="button" style="background: url(assets/img/categories/group_10601.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards" onclick="showTradeMarkes('جمال وسبا')"type="button" style="background: url(assets/img/categories/group_10600.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards" onclick="showTradeMarkes('ترفيه')"type="button" style="background: url(assets/img/categories/group_10603.png) center / cover;"></button></th>
+
+                                        </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
                             </div>
-                            <div class="table-responsive table-borderless text-center" style="margin-top: -46px;">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr></tr>
-                                        <tr></tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                           
                             <div class="table-responsive table-borderless text-center" style="margin-top: -21px;">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr></tr>
+                                        <tr>
+                                            <th ><br><button class="btn btn-primary cards" onclick="showTradeMarkes('الكل')" type="button" style="background: url(assets/img/categories/group_10624.png) center / cover;"></button></th>
+                                            <th ><br><button class="btn btn-primary cards" onclick="showTradeMarkes('خدمات')" type="button" style="background: url(assets/img/categories/group_10605.png) center / cover;"></button></th>
+                                            <th><button class="btn btn-primary cards" type="button" onclick="showTradeMarkes('تعليم')" style="background: url(assets/img/categories/group_10599.png) center / cover;"></button></th>
+                                            <th><button class="btn btn-primary cards" type="button" onclick="showTradeMarkes('صحة ولياقة')" style="background: url(assets/img/categories/group_10602.png) center / cover;"></button></th>
+                                            <th><button class="btn btn-primary cards" type="button" onclick="showTradeMarkes('سفر وسياحة')" style="background: url(assets/img/categories/group_10606.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards" onclick="showTradeMarkes('إلكترونيات')"type="button" style="background: url(assets/img/categories/group_10607.png) center / cover;"></button></th>
+                                            <th ><button class="btn btn-primary cards" onclick="showTradeMarkes('سيارات')"type="button" style="background: url(assets/img/categories/group_10608.PNG) center / cover;"></button></th>
+
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <tr></tr>
@@ -99,49 +110,63 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid" style="margin-top: 54px;">
-                    <div  style="display:none;"  class='loader' id="loader"></div>
-                    <div  id="myDiv" class="card shadow animate-bottom ">
-
+                <div class="container-fluid" style="display: none;"id="category-container">
+                    
                     <div class="card shadow">
                         <div class="card-header py-3" style="background: #00524d;">
-                            <h6 style="color: #ffffff;font-size: 30px;font-family: Frutiger LT Arabic;text-align: right;font-weight: bold;">الاقتراحات</h6>
+                            <h6 id="catheader" style="color: #ffffff;font-size: 30px;font-family: Frutiger LT Arabic;text-align: right;font-weight: bold;"></h6>
                         </div>
-
                         <div class="card-body">
+                            <div class="row">
+                
+                            </div>
                             <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: center;font-family: Frutiger LT Arabic;"></th>
-                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">المزيد</th>
-                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">البريد الالكتروني</th>
-                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">رقم الجوال</th>
-                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">الفئة</th>
+                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">إضافة شريط إعلاني</th>
+                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">عدد العروض</th>
                                             <th style="text-align: center;font-family: Frutiger LT Arabic;">العلامة التجارية</th>
+                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">الصورة </th>
+                                            <th style="text-align: center;font-family: Frutiger LT Arabic;">العدد </th>
+
+
                                         </tr>
                                     </thead>
-                                    <tbody id="tableBody">
+                                    <div  style="display:none;" class='loader' id="loader"></div>
+                                    <div  id="myDiv" class="card shadow animate-bottom ">
+        
+                                    <tbody id="bodyOftable">
                                         <tr>
+                                            <td class="btncel"><button class="btn deletebtn" type="button" >حذف<i class="far fa-trash-alt deleteIcon "></i></button></td>
+                                            <td class="btncel"><button class="btn editbtn " type="button" >تعديل<i class="ion-android-create editIcon" ></i></button></td>
+                                            <td class="btncel"><button class="btn viewbtn " type="button" >عرض</button></td>
+                                            <td id='tdd'style="margin-right: 11px;"><button class="btn viewbtn " type="button" >إضافة<i class="icon ion-ios-eye" style="margin-left: 5px;margin-top: -5px;font-size: 20px;"></i></button></td>
+                                            <td class="infocel">10</td>
+                                            <td class="infocel">11</td>
+                                            <td class="infocel" >انوش<img class="rounded-circle mr-2 imageTrade"   src="assets/img/avatars/avatar1.jpeg" ></td>
                                         </tr>
+
+
                                     </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
-                                </table>
                             </div>
-                        </div>
+
+                                   
+                                </table>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="BackEnd/Suggestion.js"></script>
+    <script src="BackEnd/manageBannersHome.js"></script>
 </body>
 
 </html>

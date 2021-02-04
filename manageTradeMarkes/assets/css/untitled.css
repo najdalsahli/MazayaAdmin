@@ -89,3 +89,26 @@ margin-left: 8px;margin-top: -5px;font-size: 20px;color: #aa262e;}
 .dropdown-check-list.visible .items {
   display: block;
 }
+.loader {
+  border: 16px solid #BFC2C2;
+  border-radius: 50%;
+  border-top: 16px solid #2B8D7B;
+  border-right: 16px solid #00524D;
+  border-bottom: 16px solid #f3f3f3;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 0;left: 0; right:0; margin:0 auto;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

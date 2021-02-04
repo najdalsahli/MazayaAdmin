@@ -20,8 +20,6 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_E",'');
 var flag=false;
 function s(){
-  document.getElementById("loader").style.display = "block";
-  document.getElementById("myDiv").style.display = "none";
 
  
   console.log(tmID);
@@ -295,7 +293,6 @@ alert("تم تعديل العلامة التجارية بنجاح");
 x.style.display='none';
 
 }
-setTimeout(wait, 3000);
 }
 
 
@@ -440,13 +437,3 @@ fileButton1.addEventListener('change', function (e) {
 
 });
 
-
-function wait(){
-  document.getElementById("loader").style.display = "none";
-    document.getElementById("myDiv").style.display = "block";
-    if(!flag){
-      
-   }else{
-    flag=false;
-   }
-}
