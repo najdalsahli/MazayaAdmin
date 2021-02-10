@@ -17,8 +17,11 @@ const firebaseConfig = {
   const auth=firebase.auth();
 
 var tid=localStorage.getItem('tradmarkID');
+var type='';
 
-console.log("tm id"+tid);
+console.log("tm id"+tid) ;
+console.log("type 1"+type) ;
+var savedBannersID='';
 var flag=false;
 function myFunction() {
     var popup = document.getElementById("myPopup");
@@ -27,19 +30,38 @@ function myFunction() {
   
     // document.getElementById("loader").style.display = "block";
     //  document.getElementById("myDiv").style.display = "none";
-    fillOffers();
 
 function fillOffers(){
     document.getElementById("loader").style.display = "block";
     document.getElementById("myDiv").style.display = "none";
+    console.log("type id"+type) ;
+
+    if(type=='pinned'){
+      var  selectOffer= document.getElementById("pinned");
+    var ref=firebase.database().ref('Trademarks/'+tid+'/Offers');
+      ref.once('value',function(snapshot) {
+          snapshot.forEach(function(snapshot1) {
+            firebase.database().ref('Offers/'+snapshot1.key).once('value',function(snapshot2) {
+              console.log('pinned'+snapshot2.key);
+              flag=true;
+
+          var option = document.createElement( 'option' );
+            option.value=snapshot2.key;
+            option.text = snapshot2.child("offerTitle").val()+'/'+snapshot2.child("offerDetails").val();
+           selectOffer.add( option );
+            });
+          });
+      });
+    }
+    else{
 
     var ref=firebase.database().ref('Trademarks/'+tid+'/Offers');
     ref.once('value',function(snapshot) {
      snapshot.forEach(function(snapshot1) {
         firebase.database().ref('Offers/'+snapshot1.key).once('value',function(snapshot2) {
-    flag=false;
-    console.log(snapshot1.key);
-var checkList = document.getElementById('offers');
+    flag=true;
+    console.log('seasonal'+snapshot1.key);
+var checkList = document.getElementById('seasnoal');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
   if (checkList.classList.contains('visible'))
     checkList.classList.remove('visible');
@@ -50,7 +72,8 @@ var ul=document.getElementById('list');
 var inp=document.createElement("input");
 inp.type='checkbox';
 var li=document.createElement("li");
-var t = document.createTextNode('عرض' +'/' + snapshot2.child("offerDetails").val());
+var t = document.createTextNode(snapshot2.child("offerTitle").val()+'/'+snapshot2.child("offerDetails").val());
+inp.id=snapshot2.key;
 li.appendChild(t);
 inp.value=t;
 li.appendChild(inp);
@@ -58,63 +81,11 @@ ul.appendChild(li);
      });
     });
     });
-    var ref=firebase.database().ref('Trademarks/'+tid+'/Deals');
-    ref.once('value',function(snapshot) {
-     snapshot.forEach(function(snapshot1) {
-        firebase.database().ref('Deals/'+snapshot1.key).once('value',function(snapshot2) {
-            flag=false;
-
-    console.log(snapshot1.key);
-var checkList = document.getElementById('offers');
-checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-  if (checkList.classList.contains('visible'))
-    checkList.classList.remove('visible');
-  else
-    checkList.classList.add('visible');
-}
-var ul=document.getElementById('list');
-var inp=document.createElement("input");
-inp.type='checkbox';
-var li=document.createElement("li");
-var t = document.createTextNode('صفقة' +'/' + snapshot2.child("offerDetails").val());
-li.appendChild(t);
-inp.value=t;
-li.appendChild(inp);
-ul.appendChild(li);
-     });
-    });
-    });
-    var ref=firebase.database().ref('Trademarks/'+tid+'/Vouchers');
-    ref.once('value',function(snapshot) {
-     snapshot.forEach(function(snapshot1) {
-        firebase.database().ref('Vouchers/'+snapshot1.key).once('value',function(snapshot2) {
-            flag=false;
-
-    console.log(snapshot1.key);
-var checkList = document.getElementById('Vouchers');
-checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-  if (checkList.classList.contains('visible'))
-    checkList.classList.remove('visible');
-  else
-    checkList.classList.add('visible');
-}
-var ul=document.getElementById('list');
-var inp=document.createElement("input");
-inp.type='checkbox';
-var li=document.createElement("li");
-var t = document.createTextNode('قسيمة' +'/' + snapshot2.child("offerTitle").val());
-li.appendChild(t);
-inp.value=t;
-li.appendChild(inp);
-ul.appendChild(li);
-     });
-    });
-    });
+    }
     setTimeout(wait, 5000);
 
 }
 
-function file(){
 var fbBucketName = 'images';
 
 //alert(" code 1 ");
@@ -171,7 +142,7 @@ fileButton.addEventListener('change', function (e) {
 
       const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
         imgURL = url;
-     //   firebase.database().ref('Trademarks/'+savedtrademark+'/imgURL').set(url);
+      firebase.database().ref('Banners/'+savedBannersID+'/imgURL').set(url);
  
         //return url;
         console.log('imgURL', imgURL);
@@ -181,7 +152,7 @@ fileButton.addEventListener('change', function (e) {
 
     });
     
-  }
+  
 function wait(){
     document.getElementById("loader").style.display = "none";
     document.getElementById("myDiv").style.display = "block";
@@ -195,65 +166,64 @@ function wait(){
 
 function save(){
     var title=document.getElementById('title').value;
-    var  selectBanners= document.getElementById("typeOfBnnaers");
-    var selectBannersText = selectBanners.options[selectBanners.selectedIndex].text;
-    var selectOffer=checkOffers();
     var startDate=document.getElementById('startDate').value
     var endDate=document.getElementById('endDate').value
 
-    if(valdite(title,selectBanners,selectOffer,startDate,endDate)){
-      console.log(selectOffer+selectBannersText);
+    if(type=='pinned'){
+      var selectOffer=document.getElementById('pinned').value;
+    if(valditePinned(title,selectOffer,startDate,endDate)){
+      console.log(selectOffer);
 
-      if (selectBanners=='13'){
-        selectBannersText='seasonal';
-      }
-      else{
-        selectBannersText='pinned';
-      }
-
-
-      var lnx = document.querySelectorAll("#list li input");
-      var lnx2 = document.querySelectorAll("#list li");
-      var array=[];
-   
-          for (let i = 0; i < lnx.length; i++) {
-           if( lnx[i].checked==true){
-      var selectofferText = lnx2[i].textContent;//,,,,,/,,,,,
-      var n = selectofferText.search("/");
-      var s=Number(n);
-      var res = selectofferText.slice(0, s);
-      array.push(res);
-           }}
       
-      
+      firebase.database().ref('Banners').push({
+        endDate:endDate,
+        imgURL:'',
+        offerID:selectOffer,
+        startDate:startDate,
+       title:title,
+        type:'pinned'
+      });
+goHome();
+    }//if valdite
+  }
 
-
+  else{
+    var selectOffer=checkOffers();
+    if(valditeSeasonal(title,selectOffer,startDate,endDate)){
       firebase.database().ref('Banners').push({
         endDate:endDate,
         imgURL:'',
         startDate:startDate,
         title:title,
-        type:selectBannersText
+        type:'seasonal'
       });
+    
 
-   var refTrademarks=firebase.database().ref('Trademarks');
-      refTrademarks.orderByChild('trademarkName').equalTo('').on("value", function(snapshot) {
+   var refBanners=firebase.database().ref('Banners');
+   refBanners.orderByChild('title').equalTo(title).on("value", function(snapshot) {
           snapshot.forEach(function(data) {
-              savedtrademark= data.key;
-              localStorage.setItem("tradmarkID_branch",savedtrademark);
-              localStorage.setItem("tradmarkID_offer",savedtrademark);
-
-              console.log('saved trademark key',savedtrademark);
-
+            if(data.child('type').val()=='seasonal'){
+              console.log('saved trademark key',data.key);
+  //saving Offer
+   var lnx = document.querySelectorAll("#list li input");
+       for (let i = 0; i < lnx.length; i++) {
+        if( lnx[i].checked==true){
+          console.log(lnx[i].id);
+          firebase.database().ref('Banners/'+data.key+'/Offers/'+lnx[i].id).set(true);
+        }}
+            }
              });  
+
          }); 
-    }
+         goHome();
+
+    }//if valdite 
+  }//else
+
+    //ile(savedBannersID);
 
 
-    file(bannerID);
-
-
-}
+}//end function
 
 function checkOffers(){
 
@@ -273,7 +243,7 @@ function checkOffers(){
  }
 
 
- function valdite(title,selectBanners,selectOffer,startDate,endDate){
+ function valditePinned(title,selectOffer,startDate,endDate){
 if(title==''){
   alert(" الرجاء ادخال عنوان للشريط الإعلاني ");
   return false;
@@ -286,13 +256,10 @@ if(document.getElementById("fileButton").files.length == 0 ){
   return false;
 }
 
-if (selectBanners=='12'){
-  alert(" الرجاء اختيار نوع الشريط الإعلاني ");
-  return false;
-}
 
-if (selectOffer==0){
-  alert(" الرجاء اختيار عرض واحد على الأقل ");
+
+if (selectOffer=='10'){
+  alert(" الرجاء اختيار عرض ");
   return false;
 }
 if (startDate==''){
@@ -307,3 +274,77 @@ if (endDate==''){
  return true;
 
  }
+
+ function valditeSeasonal(title,selectOffer,startDate,endDate){
+  if(title==''){
+    alert(" الرجاء ادخال عنوان للشريط الإعلاني ");
+    return false;
+  
+  }
+  
+  if(document.getElementById("fileButton").files.length == 0 ){
+    console.log("no files selected- img");
+    alert(" الرجاء اختيار صورة للشريط الإعلاني ");
+    return false;
+  }
+  
+  
+  
+  if (selectOffer== 0){
+    alert(" الرجاء اختيار عرض واحد على الأقل");
+    return false;
+  }
+  if (startDate==''){
+    alert(" الرجاء اختيار تاريخ البدء ");
+    return false;
+  }
+  
+  if (endDate==''){
+    alert(" الرجاء اختيار تاريخ النهاية ");
+    return false;
+  }
+   return true;
+  
+   }
+  
+
+ function sesonal(){
+   type='sesonal';
+  document.getElementById('header').innerHTML='الشريط الإعلاني-الموسمية';
+ // document.getElementById('Info').style.display='none';
+  document.getElementById('divMain').style.display='block';
+  document.getElementById('pinned').style.display='none';
+   document.getElementById('seasnoal').style.display='block';
+fillOffers();
+ }
+
+
+ function pinned(){
+  type='pinned';
+  document.getElementById('header').innerHTML='الشريط الإعلاني-المثبتة';
+ // document.getElementById('Info').style.display='none';
+  document.getElementById('divMain').style.display='block';
+  document.getElementById('pinned').style.display='block';
+  document.getElementById('seasnoal').style.display='none';
+fillOffers();
+}
+
+function hi(){
+  var lnx = document.querySelectorAll("#list li input");
+  var lnx2 = document.querySelectorAll("#list li");
+  var array=[];
+  var arraySavingBranchKey=[];
+ 
+
+      for (let i = 0; i < lnx.length; i++) {
+       if( lnx[i].checked==true){
+         console.log(lnx[i].id);
+       }}
+}
+
+function goHome(){
+  setTimeout(function(){
+    window.location.href = "manageBannersHome.html";    }, 2000);
+
+  
+}

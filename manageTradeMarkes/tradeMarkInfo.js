@@ -46,6 +46,14 @@ const firebaseConfig = {
     }
     
     console.log(tradecontactnum);
+    var re = /\S+@\S+\.\S+/;
+  //id mail 
+  var trademarkmail=document.getElementById("mail").value;
+  if(trademarkmail!='' && !re.test(trademarkmail))
+  {
+alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة");
+return;
+  }
   
   //id maillink
   var trademarkmaillink=document.getElementById("maillink").value;

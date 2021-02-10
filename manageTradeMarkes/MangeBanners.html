@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="assets/fonts/typicons.min.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
       <link rel="stylesheet" href="assets/css/popup.css">
+      
 
 </head>
 
@@ -78,31 +79,28 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div id='moreInfo' style='display: none;' class="col-sm-6 col-md-5 col-lg-4 item" style="margin-top: 81px;margin-left: 94px;background: linear-gradient(#ffffff, #e4f1ee);width: 100px;">
+                <div class="row" id='Info'>
+                    <div id='moreInfo' s class="col-sm-6 col-md-5 col-lg-4 item" style="margin-top: 81px;margin-left: 94px;background: linear-gradient(#ffffff, #e4f1ee);width: 100px;">
                         <div class="box">
-                            <img src='assets/img/lamp.png' ></img>
                             <h3 class="name" style="text-align: center;margin-top: 75px;margin-bottom: 19px;font-family: Frutiger LT Arabic;color: #00524d;">العروض الموسمية</h3>
                             <p class="description" style="text-align: center;font-family: Frutiger LT Arabic;">هي عروض مؤقتة يتم الحصول عليها في مواسم معينة خلال السنة ، ويمكن إضافتها اكثر من مرة</p>
                         </div>
-                         <button class="btn btn-primary" type="button" style="background: linear-gradient(rgb(237,245,244), rgb(234,244,242));border-top-color: rgb(230,242,240);border-right-color: rgb(232,243,241);border-bottom-color: rgb(230,243,240);border-left-color: rgb(231,243,241);margin: 57px;margin-left: 135px;margin-top: 11px;width: 89px;height: 38px;color: var(--blue);font-family: Frutiger LT Arabic;">إضافة</button> 
+                        <button onclick='sesonal()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 175px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إضافة</button>
                     </div> 
-                    <div id='moreInfo2' style='display: none;'class="col-sm-6 col-md-5 col-lg-4 item" style="margin-left: 163px;margin-top: 81px;background: linear-gradient(#ffffff, #e4f1ee);">
+                    <div id='moreInfo2' class="col-sm-6 col-md-5 col-lg-4 item" style="margin-left: 163px;margin-top: 81px;background: linear-gradient(#ffffff, #e4f1ee);">
                         <div class="box" style="height: 103px;border-top-color: #858796;">
-                            <img src='assets/img/lamp.png'></img>
                             <h3 class="name" style="text-align: center;margin-top: 82px;margin-bottom: 19px;font-family: Frutiger LT Arabic;color: #00524d;">العروض المثبتة</h3>
                             <p class="description" style="text-align: center;margin-top: 20px;margin-bottom: 11px;font-family: Frutiger LT Arabic;">هي عروض ثابتة في الشريط الإعلاني، ويمكن إضافتها مره واحده فقط</p>
-
-                             <button class="btn btn-primary" type="button" style="background: linear-gradient(rgb(237,245,244), rgb(234,244,242));border-top-color: rgb(230,242,240);border-right-color: rgb(232,243,241);border-bottom-color: rgb(230,243,240);border-left-color: rgb(231,243,241);margin: 57px;margin-left: 141px;margin-top: 11px;width: 89px;height: 38px;color: var(--blue);font-family: Frutiger LT Arabic;">إضافة</button> 
+                            <button onclick='pinned()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 175px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إضافة</button>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 
-                <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 225px;margin-top: 37px;">
+                <div id='divMain'class="col-lg-7 col-xl-8" style="display: none; text-align: center;margin-left: 225px;margin-top: 37px ;">
                     <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 30px;">
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;">
-                            <h1 style="font-family: Frutiger LT Arabic;font-size: 25px;color: #ffffff;margin-left: 450px;">الشريط الإعلاني   </h1>
-                            <button class="popup" onclick="myFunction()"  type="button"  >
+                            <h1 id='header'style="font-family: Frutiger LT Arabic;font-size: 25px;color: #ffffff;margin-left: 450px;">  الشريط الإعلاني-الموسمية   </h1>
+                            <!-- <button class="popup" onclick="myFunction()"  type="button"  >
                                 <img src="assets/img/exclamation-mark-in-a-circle (1).png" style="background-color: #00524d;">
                                 <span class="popuptext" id="myPopup"><strong>: العروض الموسمية</strong>
                                     <br>هي عروض مؤقتة يتم الحصول عليها في مواسم معينة خلال السنة ، ويمكن إضافتها اكثر من مرة
@@ -111,7 +109,7 @@
                                 هي عروض ثابتة في الشريط الإعلاني، ويمكن إضافتها مره واحده فقط
                             </span>
 
-                            </button>
+                            </button> -->
                         </div>
                         <div  style="display:none;" class='loader' id="loader"></div>
                         <div  id="myDiv" class="card shadow animate-bottom ">
@@ -120,18 +118,12 @@
                             <form>
                                 <div class="form-row">
                                     <div class="col" style="margin-top: 4px;">
-                                        <label style="margin-right: -232px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">إضافة صورة</label>
+                                        <label style="margin-right: -132px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">العروض</label>
                                         <div class="form-row">
                                             <div class="col">
-                                                
-                                                <input value="upload" id="fileButton" required accept="image/*"type="file" style="width: 310px;">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col"><label class="col-form-label" style="font-family: Frutiger LT Arabic;margin-bottom: 11px;margin-left: -54px;font-weight: 55;color: #38a089;margin-right: -299px;margin-top: 18px;">العروض</label></div>
-                                        </div>
-                                        <div id="offers" class="dropdown-check-list" tabindex="100">
-                                            <span class="anchor"style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">يرجى اختيار الفرع</span>
+                    
+                                           <div id="seasnoal" class="dropdown-check-list" tabindex="100" style='display: none;'>
+                                            <span class="anchor"style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">يرجى اختيار العرض</span>
                                             <ul id='list'class="items">
                                               <!-- <li><input type="checkbox" />Apple </li>
                                               <li><input type="checkbox" />Orange</li>
@@ -141,12 +133,20 @@
                                               <li><input type="checkbox" />Banana </li>
                                               <li><input type="checkbox" />Tomato</li> -->
                                             </ul>
+                                        </div>  
+
+                                        <select id="pinned"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px; display: none;">
+                                            <option value="10" selected="">يرجى اختيار العرض</option></select>
+                            
+                                          </div>
                                         </div>
+                                    
+                                      
                                     </div>
                                     <div class="col">
                                         <div class="form-group"><label for="email" style="font-family: Frutiger LT Arabic;color: #38a089;font-weight: 55;margin-right: -147px;">عنوان الشريط الاعلاني<br></label>
                                             <input id='title' class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 43px;"></div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
 
                                             <label  for="last_name" style="margin-left: 180px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;margin-top: -35px;margin-bottom: 4px;">نوع الشريط الاعلاني<br>
 
@@ -155,7 +155,7 @@
                                             <option value="12" selected="">يرجى اختيار النوع</option>
                                             <option value="13">موسمي</option>
                                             <option value="14">مثبتة</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -174,10 +174,11 @@
                                     <div class="table-responsive table-borderless">
                                         <table class="table table-bordered">
                                             <thead>
+                                                
                                                 <tr>
                                                     <th></th>
                                                     <td style="font-family: Frutiger LT Arabic;color: #38a089;">تاريخ انتهاء</td>
-                                                    <td style="width: 95px;color: #38a089;font-family: Frutiger LT Arabic;padding-right: 19px;padding-bottom: 12px;padding-left: 11px;">تاريخ البدء</td>
+                                                    <td style="width: 95px;color: #38a089;font-family: Frutiger LT Arabic;padding-right:4px;padding-bottom: 12px;padding-left: 151px;">تاريخ البدء</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -188,8 +189,31 @@
                                                     <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-top: 7px;">
                                                         <input id='startDate'class="form-control" type="date" style="margin-left: 43px;width: 176px;margin-right: 35px;margin-bottom: 15px;"></td>
                                                 </tr>
-                                                <tr></tr>
-                                                <tr></tr>
+                                              
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                
+                                                <tr>
+                                                    <th></th>
+                                              <td style="width: 95px;color: #38a089;font-family: Frutiger LT Arabic;padding-bottom: 12px;padding-left: 401px;">إضافة صورة</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <input value="upload" id="fileButton" required accept="image/*"type="file" style="width: 310px;margin-left: 353px;margin-bottom: 15px;">
+                                                </tr>
+                                          
+                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -197,9 +221,12 @@
                             </form>
                             <!-- <button class="btn btn-primary" type="button" style="width: 235px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-top: -33px;font-family: Frutiger LT Arabic;margin-left: 8px;margin-right: 2px;">إضافة العرض</button> -->
                         </div>
-                        <div class="card-body"><button onclick='save()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 74px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button></div>
+                        <div class="card-body">
+                            <button onclick='save()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 74px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button>
+                        </div>
                     </div>
                 </div>
+              
                 </div>
             </div>
         </div>

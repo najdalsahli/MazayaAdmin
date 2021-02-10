@@ -409,6 +409,25 @@ function wait(){
 }
 
 
+// function hi(){
+//   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
+        
+//     snapshot.forEach(function(snapshot1) {
+//       if(snapshot1.child('serviceType').val()=='أون لاين'||snapshot1.child('serviceType').val()=='أونلاين'){
+//         if(snapshot1.child('Offers').numChildren()!=0||snapshot1.child('Deals').numChildren()!=0)
+//              console.log(snapshot1.child('trademarkName').val());
+//              firebase.database().ref('Regions').once("value", function(snapshot3) {
+//               snapshot3.forEach(function(data) {
+//           firebase.database().ref('Regions/'+data.key+'/Trademarks/'+snapshot1.key).set("true");
+//               });
+//           });
+  
+
+//       }
+//     });
+//   });
+// }
+
 
 
 
