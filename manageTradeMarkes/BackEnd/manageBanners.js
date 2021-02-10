@@ -86,71 +86,71 @@ ul.appendChild(li);
 
 }
 
-var fbBucketName = 'images';
+// var fbBucketName = 'images';
 
-//alert(" code 1 ");
-// get elements
-var fileButton = document.getElementById('fileButton');
+// //alert(" code 1 ");
+// // get elements
+// var fileButton = document.getElementById('fileButton');
 
-// listen for file selection
-fileButton.addEventListener('change', function (e) {
+// // listen for file selection
+// fileButton.addEventListener('change', function (e) {
 
-  // what happened
-  console.log('file upload event', e);
+//   // what happened
+//   console.log('file upload event', e);
 
-  // get file
-  var file = e.target.files[0];
+//   // get file
+//   var file = e.target.files[0];
 
-  // create a storage ref
-  var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+//   // create a storage ref
+//   var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
 
-  // upload file
-  var uploadTask = storageRef.put(file);
+//   // upload file
+//   var uploadTask = storageRef.put(file);
 
 
-  // update progress bar
-  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function (snapshot) {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploader.value = progress;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
-    }, function (error) {
+//   // update progress bar
+//   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+//     function (snapshot) {
+//       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+//      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       uploader.value = progress;
+//       console.log('Upload is ' + progress + '% done');
+//       switch (snapshot.state) {
+//         case firebase.storage.TaskState.PAUSED: // or 'paused'
+//           console.log('Upload is paused');
+//           break;
+//         case firebase.storage.TaskState.RUNNING: // or 'running'
+//           console.log('Upload is running');
+//           break;
+//       }
+//     }, function (error) {
 
-      switch (error.code) {
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
+//       switch (error.code) {
+//         case 'storage/unauthorized':
+//           // User doesn't have permission to access the object
+//           break;
 
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
+//         case 'storage/canceled':
+//           // User canceled the upload
+//           break;
 
-        case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    }, function () {
+//         case 'storage/unknown':
+//           // Unknown error occurred, inspect error.serverResponse
+//           break;
+//       }
+//     }, function () {
 
-      const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
-        imgURL = url;
-      firebase.database().ref('Banners/'+savedBannersID+'/imgURL').set(url);
+//       const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+//         imgURL = url;
+//       firebase.database().ref('Banners/'+savedBannersID+'/imgURL').set(url);
  
-        //return url;
-        console.log('imgURL', imgURL);
-      });
+//         //return url;
+//         console.log('imgURL', imgURL);
+//       });
 
-    });
+//     });
 
-    });
+//     });
     
   
 function wait(){
@@ -174,7 +174,13 @@ function save(){
     if(valditePinned(title,selectOffer,startDate,endDate)){
       console.log(selectOffer);
 
-      
+      let storageRef = firebase.storage().ref('images')
+      let fileUpload = document.getElementById("fileButton")
+    
+      fileUpload.addEventListener('change', function(evt) {
+          let firstFile = evt.target.files[0] // upload the first file only
+          let uploadTask = storageRef.put(firstFile)
+      })
       firebase.database().ref('Banners').push({
         endDate:endDate,
         imgURL:'',
