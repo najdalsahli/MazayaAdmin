@@ -59,7 +59,7 @@ var countTM=0;
       else{
     snapshot.forEach(function(snapshot1) {
       countTM++;
-      var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
+      var numoffers=snapshot1.child('Offers').numChildren();
       var numbraches=snapshot1.child('Branches').numChildren();
       var trademarkName=snapshot1.child('trademarkName').val();
       var imgtradesmark=snapshot1.child('imgURL').val();
@@ -102,7 +102,7 @@ var countTM=0;
 
       firebase.database().ref("Trademarks").orderByKey().equalTo(snapshot.key).on("child_added",function(snapshot1) {
      
-        var numoffers=snapshot1.child('Offers').numChildren()+snapshot1.child('Deals').numChildren()+snapshot1.child('Vouchers').numChildren();
+        var numoffers=snapshot1.child('Offers').numChildren();
         var numbraches=snapshot1.child('Branches').numChildren();
         var trademarkName=snapshot1.child('trademarkName').val();
         var imgtradesmark=snapshot1.child('imgURL').val();
