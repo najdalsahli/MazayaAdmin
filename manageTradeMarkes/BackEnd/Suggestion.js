@@ -42,12 +42,14 @@ var deletecel = document.createElement('td');
 deletecel.className='delcell';
 var deletebtn = document.createElement('button');
 deletebtn.className='btnDelete';
-deletebtn.textContent='تعطيل';
+deletebtn.textContent='حذف';
 var deleteIcon = document.createElement('i');
 deleteIcon.className='far fa-trash-alt deleteIcon';
 deletebtn.appendChild(deleteIcon);
 deletecel.appendChild(deletebtn);
-
+deletebtn.onclick=function(){
+  deleteSugg(snapshot1.key);
+ };
 
 //view sugg
 var showcel= document.createElement('td');
@@ -79,6 +81,7 @@ showbtn.onclick=function(){
 
 
    trademarkEmail.onclick=function(){
+     if(snapshot1.child("contactEmailAddress").val()!='')
      contactSugg(snapshot1.child("contactEmailAddress").val());
    }
 

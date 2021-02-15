@@ -1,5 +1,6 @@
 
-var email=localStorage.getItem("email");
+var email='amutairi@mc.gov.sa';
+//localStorage.getItem("email");
 
 var admin = require('firebase-admin');
 
