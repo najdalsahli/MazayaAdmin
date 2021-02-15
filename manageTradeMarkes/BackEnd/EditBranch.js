@@ -18,15 +18,17 @@ const firebaseConfig = {
   //localStorage.setItem("tradmarkID_E",'');
 
   //to make the branch global for lat and lng for map
-var latB;
-var lngB;
-var lat;
-var lng;
+var latB='';
+var lngB='';
+
   //flag for map to not take value of lat and lag for frist time;
   var flag=false;
   var regionDB;
   var numOfB=0;
   var flagWait=false;
+  var Coordinate=false;
+  // initMap();
+
 function load(){
   console.log(tmID);
   var list = document.getElementById("tableBody");
@@ -212,9 +214,10 @@ var ref= firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bidKey);
 
 ref.once("value", function(bid) {
   //map
-  latB=parseFloat(bid.child("latitude").val());
-lngB=parseFloat(bid.child("longitude").val());
-initMap(latB,lngB);
+latB=bid.child("latitude").val();
+lngB=bid.child("longitude").val();
+document.getElementById('lat').value=latB;
+document.getElementById('lng').value=lngB;
 
   //name
 document.getElementById("branchName").value=bid.child("branchName").val();
@@ -262,9 +265,11 @@ update.onclick=function(){
 }
 }
 
-function initMap(latB,lngB) {
+function initMap() {
+    
+
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: Number(latB) , lng: Number(lngB)  },
+    center: { lat: -33.8688, lng: 151.2195 },
     zoom: 13,
   });
   const input = document.getElementById("pac-input");
@@ -307,99 +312,96 @@ function initMap(latB,lngB) {
     infowindow.open(map, marker);
 
   });      
-
-
 }
 
-function initMap(latB,lngB){
+// function initMap(latB,lngB){
 
-  //  // alert(latB+ ",,,,"+ lngB);
+//   //  // alert(latB+ ",,,,"+ lngB);
     
-  //     const myLatlng = { lat: Number(latB) , lng:Number(lngB) };
-  //     const map = new google.maps.Map(document.getElementById("map"), {
-  //       zoom: 4,
-  //       center: myLatlng
-  //     });
-  //     var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-  //     '<p>  الموقع المحدد'+'</p></div>';
-  //     // Create the initial InfoWindow.
-  //     let infoWindow = new google.maps.InfoWindow({
-  //       content: content,
-  //       position: myLatlng,
-  //     });
-  //     infoWindow.open(map);
-  //     //marker
+//   //     const myLatlng = { lat: Number(latB) , lng:Number(lngB) };
+//   //     const map = new google.maps.Map(document.getElementById("map"), {
+//   //       zoom: 4,
+//   //       center: myLatlng
+//   //     });
+//   //     var content='<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+//   //     '<p>  الموقع المحدد'+'</p></div>';
+//   //     // Create the initial InfoWindow.
+//   //     let infoWindow = new google.maps.InfoWindow({
+//   //       content: content,
+//   //       position: myLatlng,
+//   //     });
+//   //     infoWindow.open(map);
+//   //     //marker
     
-  //     // Configure the click listener.
-  //     map.addListener("click", (mapsMouseEvent) => {
-  //       // Close the current InfoWindow.
-  //       infoWindow.close();
-  //       // Create a new InfoWindow.
-  //       infoWindow = new google.maps.InfoWindow({
-  //         position: mapsMouseEvent.latLng,
-  //       });
-  //              //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-  //       lat=mapsMouseEvent.latLng.toJSON().lat;
-  //       lng=mapsMouseEvent.latLng.toJSON().lng;
-  //       infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
-  //       '<p> تم تعديل الموقع بنجاح'+'</p></div>'
-  //       );
+//   //     // Configure the click listener.
+//   //     map.addListener("click", (mapsMouseEvent) => {
+//   //       // Close the current InfoWindow.
+//   //       infoWindow.close();
+//   //       // Create a new InfoWindow.
+//   //       infoWindow = new google.maps.InfoWindow({
+//   //         position: mapsMouseEvent.latLng,
+//   //       });
+//   //              //     JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+//   //       lat=mapsMouseEvent.latLng.toJSON().lat;
+//   //       lng=mapsMouseEvent.latLng.toJSON().lng;
+//   //       infoWindow.setContent('<div style="color: #38a089;font-family: Frutiger LT Arabic;font-size: 14px;">'+
+//   //       '<p> تم تعديل الموقع بنجاح'+'</p></div>'
+//   //       );
     
-  //       latB=mapsMouseEvent.latLng.toJSON().lat;
-  //       lngB=mapsMouseEvent.latLng.toJSON().lng;
-  //      infoWindow.open(map);
-  //     });
+//   //       latB=mapsMouseEvent.latLng.toJSON().lat;
+//   //       lngB=mapsMouseEvent.latLng.toJSON().lng;
+//   //      infoWindow.open(map);
+//   //     });
 
-  const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: latB, lng: lngB},
-    zoom: 13,
-  });
-  const input = document.getElementById("pac-input");
-  const autocomplete = new google.maps.places.Autocomplete(input);
-  autocomplete.bindTo("bounds", map);
-  // Specify just the place data fields that you need.
-  autocomplete.setFields(["place_id", "geometry", "name"]);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  const infowindow = new google.maps.InfoWindow();
-  const infowindowContent = document.getElementById("infowindow-content");
-  infowindow.setContent(infowindowContent);
-  const marker = new google.maps.Marker({ map: map });
-  marker.addListener("click", () => {
-    infowindow.open(map, marker);
-  });
-  autocomplete.addListener("place_changed", () => {
-    infowindow.close();
-    const place = autocomplete.getPlace();
+//   const map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: latB, lng: lngB},
+//     zoom: 13,
+//   });
+//   const input = document.getElementById("pac-input");
+//   const autocomplete = new google.maps.places.Autocomplete(input);
+//   autocomplete.bindTo("bounds", map);
+//   // Specify just the place data fields that you need.
+//   autocomplete.setFields(["place_id", "geometry", "name"]);
+//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//   const infowindow = new google.maps.InfoWindow();
+//   const infowindowContent = document.getElementById("infowindow-content");
+//   infowindow.setContent(infowindowContent);
+//   const marker = new google.maps.Marker({ map: map });
+//   marker.addListener("click", () => {
+//     infowindow.open(map, marker);
+//   });
+//   autocomplete.addListener("place_changed", () => {
+//     infowindow.close();
+//     const place = autocomplete.getPlace();
 
-    if (!place.geometry) {
-      return;
-    }
+//     if (!place.geometry) {
+//       return;
+//     }
 
-    if (place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.setCenter(place.geometry.location);
-      map.setZoom(17);
-    }
-    // Set the position of the marker using the place ID and location.
-    marker.setPlace({
-      placeId: place.place_id,
-      location: place.geometry.location,
-    });
-    marker.setVisible(true);
-  infowindow.setContent('تم التحديد');
-  lng=place.geometry.location.lng();
-  lat=place.geometry.location.lat();
+//     if (place.geometry.viewport) {
+//       map.fitBounds(place.geometry.viewport);
+//     } else {
+//       map.setCenter(place.geometry.location);
+//       map.setZoom(17);
+//     }
+//     // Set the position of the marker using the place ID and location.
+//     marker.setPlace({
+//       placeId: place.place_id,
+//       location: place.geometry.location,
+//     });
+//     marker.setVisible(true);
+//   infowindow.setContent('تم التحديد');
+//   lng=place.geometry.location.lng();
+//   lat=place.geometry.location.lat();
 
-    infowindow.open(map, marker);
+//     infowindow.open(map, marker);
 
-  });      
-}
+//   });      
+// }
 
 
 function addOntherBranch(){
 
-initMap(24,24);
      //div hide and show with js
  var x = document.getElementById("myDIV");
    if (x.style.display == 'none') {
@@ -416,17 +418,25 @@ initMap(24,24);
   var  selectRegion= document.getElementById("region");
   var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
   console.log(nameOfBranch);
- if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
+  if(document.getElementById('lat').value!=''||document.getElementById('lng').value!=''){
+    Coordinate=true;
+  }
+  if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
+      // trademark + branch tabel.
+   if (Coordinate==true){
+     lngB=document.getElementById('lng').value;
+     latB=document.getElementById('lat').value;
+   }
      //id of key of the trademark.
  firebase.database().ref('Trademarks/'+tmID+'/Branches').push(
              {
                  branchName:nameOfBranch,
                  description:DescOfBranch,
-                 latitude:lat.toString(),
-                 longitude:lng.toString(),
+                 latitude:latB.toString(),
+                 longitude:lngB.toString(),
                  region:selectRegionText
              });
-             console.log(lat+'---'+lng);
+             console.log(latB+'---'+lngB);
              firebase.database().ref('Regions/'+selectRegionText+'/Trademarks/'+tmID).set("true");
              alert('تم إضافة الفرع بنجاح');
             clear();
@@ -444,11 +454,18 @@ initMap(24,24);
                                         alert(" الرجاء ادخال وصف للفرع  ");
                                         return false;
                                     }
-      if(latB==''&&lngB=='')
-                                    {
-                                   alert("الرجاء اختيار موقع الفرع من الخريطة ");      
-                                  return false;
-                                     }  
+                                    if(Coordinate==true){
+                 if(document.getElementById('lng').value==''|| document.getElementById('lat').value=='')
+                                                                    {
+                          alert("الرجاء اختيار موقع الفرع وإكمال الاحداثيات "+msg);      
+                                                  return false;
+                                                                     }  }
+                                     if(Coordinate==false){
+            if(latB==''&&lngB=='')
+                                                                                                    {
+                                                                              alert("الرجاء اختيار موقع الفرع  "+msg);      
+                                                                                  return false;
+                                                                                                     }  }
    if(selectRegionValue=="12")
                                     {
                                    alert("الرجاء اختيار منطقة للفرع  ");      
@@ -464,8 +481,16 @@ var nameOfBranch = document.getElementById("branchName").value;
  var DescOfBranch = document.getElementById("Desc").value;
  var  selectRegion= document.getElementById("region");
  var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
- if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
-    firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/branchName').set(nameOfBranch);
+ if(document.getElementById('lat').value!=''||document.getElementById('lng').value!=''){
+  Coordinate=true;
+}
+if(Validation2(nameOfBranch,DescOfBranch,selectRegion.value)){
+    // trademark + branch tabel.
+ if (Coordinate==true){
+   lngB=document.getElementById('lng').value;
+   latB=document.getElementById('lat').value;
+ }
+firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/branchName').set(nameOfBranch);
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/description').set(DescOfBranch);
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/latitude').set(latB.toString());
     firebase.database().ref('Trademarks/'+tmID+'/Branches/'+bid+'/longitude').set(lngB.toString());

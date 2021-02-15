@@ -16,6 +16,7 @@ const firebaseConfig = {
 
   var lat='';
   var lng='';
+  var Coordinate=false;
   //localStorage.setItem("tradmarkID_branch",'-MPcZEvUiI61k8GwbrLM');
 
   var tmBranchID=localStorage.getItem("tradmarkID_branch");
@@ -33,9 +34,15 @@ const firebaseConfig = {
  function saveDBbranch(nameOfBranch,DescOfBranch,selectRegion,msg){
   console.log('before saving');
       var selectRegionText = selectRegion.options[selectRegion.selectedIndex].text;
+      if(document.getElementById('lat').value!=''||document.getElementById('lng').value!=''){
+        Coordinate=true;
+      }
       if(Validation(nameOfBranch,DescOfBranch,selectRegion.value,msg)){
           // trademark + branch tabel.
-       
+       if (Coordinate==true){
+         lng=document.getElementById('lng').value;
+         lat=document.getElementById('lat').value;
+       }
       firebase.database().ref('Trademarks/'+tmBranchID+'/Branches').push(
                   {
                       branchName:nameOfBranch,
@@ -66,11 +73,18 @@ function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
             alert("الرجاء ادخال وصف للفرع "+msg);
                      return false;
                                     }
-      if(lat==''&&lng=='')
+      if(Coordinate==true){
+      if(document.getElementById('lng').value==''|| document.getElementById('lat').value=='')
                                     {
-              alert("الرجاء اختيار موقع الفرع من الخريطة "+msg);      
+              alert("الرجاء اختيار موقع الفرع وإكمال الاحداثيات "+msg);      
                   return false;
-                                     }  
+                                     }  }
+     if(Coordinate==false){
+        if(lat==''&&lng=='')
+                                                                    {
+                                              alert("الرجاء اختيار موقع الفرع  "+msg);      
+                                                  return false;
+                                                                     }  }
    if(selectRegionValue=="12")
                                     {
              alert("الرجاء اختيار منطقة "+msg);      
