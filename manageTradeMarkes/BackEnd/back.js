@@ -371,14 +371,16 @@ function login() {
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
   .then((user) => {
     // Signed in 
-    // ...
+    //updateBanners
+    deleteBanners();
+    
     window.location.href="dashboard.html";
 
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert("البريد الالكترروني أو الرقم السري خاطئ");
+    alert("البريد الالكتروني أو الرقم السري خاطئ");
   });
 
   }
@@ -409,26 +411,52 @@ function wait(){
 }
 
 
-// function hi(){
-//   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
-        
-//     snapshot.forEach(function(snapshot1) {
-//       if(snapshot1.child('serviceType').val()=='أون لاين'||snapshot1.child('serviceType').val()=='أونلاين'){
-//         if(snapshot1.child('Offers').numChildren()!=0||snapshot1.child('Deals').numChildren()!=0)
-//              console.log(snapshot1.child('trademarkName').val());
-//              firebase.database().ref('Regions').once("value", function(snapshot3) {
-//               snapshot3.forEach(function(data) {
-//           firebase.database().ref('Regions/'+data.key+'/Trademarks/'+snapshot1.key).set("true");
-//               });
-//           });
+
+function deleteBanners(){
+  //check the bannres stautes
+  firebase.database().ref('Banners').once('value').then(function(snapshot) {
+   snapshot.forEach(function(snapshot1) {
+     if(snapshot1.child('type').val()!='other'){          
+       var curday = function(sp){
+         today = new Date();
+         var dd = today.getDate();
+         var mm = today.getMonth()+1; //As January is 0.
+         var yyyy = today.getFullYear();
+         
+         if(dd<10) dd='0'+dd;
+         if(mm<10) mm='0'+mm;
+         return (mm+sp+dd+sp+yyyy);
+         };
+         var dateToday=curday('-');//was var
   
-
-//       }
-//     });
-//   });
-// }
+     var offerEnd=snapshot1.child("endDate").val();
+     var reversedOfferEndDate1=offerEnd.split("-").reverse().join("/");
+     var diffDays = Math.round((compareDate(reversedOfferEndDate1)-Date.parse(dateToday))/(1000*60*60*24));
 
 
+
+     if(diffDays<=0){
+         //هنا العروض قريبة الانتهاء 
+         console.log(diffDays);
+         console.log(snapshot1.child('title').val());
+         console.log(snapshot1.key);
+         firebase.database().ref('Banners/'+snapshot1.key).remove();
+     }
+   }
+ });
+//after_theLoop();
+});
+
+}
+//---4
+function compareDate(str1){
+ // str1 format should be dd/mm/yyyy. Separator can be anything e.g. / or -. It wont effect
+ var dt1   = parseInt(str1.substring(0,2));
+ var mon1  = parseInt(str1.substring(3,5));
+ var yr1   = parseInt(str1.substring(6,10));
+ var date1 = new Date(yr1, mon1-1, dt1);
+ return date1;
+ }
 
 
 

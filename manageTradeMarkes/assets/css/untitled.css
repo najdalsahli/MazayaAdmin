@@ -112,3 +112,6 @@ margin-left: 8px;margin-top: -5px;font-size: 20px;color: #aa262e;}
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.la la-banners-o{
+  background: url(assets/img/billboard.png)
+ }

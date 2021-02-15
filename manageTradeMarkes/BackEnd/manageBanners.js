@@ -21,16 +21,12 @@ var type='';
 
 console.log("tm id"+tid) ;
 console.log("type 1"+type) ;
-var savedBannersID='';
 var flag=false;
-function myFunction() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-  }
+// function myFunction() {
+//     var popup = document.getElementById("myPopup");
+//     popup.classList.toggle("show");
+//   }
   
-    // document.getElementById("loader").style.display = "block";
-    //  document.getElementById("myDiv").style.display = "none";
-
 function fillOffers(){
     document.getElementById("loader").style.display = "block";
     document.getElementById("myDiv").style.display = "none";
@@ -86,72 +82,6 @@ ul.appendChild(li);
 
 }
 
-// var fbBucketName = 'images';
-
-// //alert(" code 1 ");
-// // get elements
-// var fileButton = document.getElementById('fileButton');
-
-// // listen for file selection
-// fileButton.addEventListener('change', function (e) {
-
-//   // what happened
-//   console.log('file upload event', e);
-
-//   // get file
-//   var file = e.target.files[0];
-
-//   // create a storage ref
-//   var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
-
-//   // upload file
-//   var uploadTask = storageRef.put(file);
-
-
-//   // update progress bar
-//   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-//     function (snapshot) {
-//       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-//      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//       uploader.value = progress;
-//       console.log('Upload is ' + progress + '% done');
-//       switch (snapshot.state) {
-//         case firebase.storage.TaskState.PAUSED: // or 'paused'
-//           console.log('Upload is paused');
-//           break;
-//         case firebase.storage.TaskState.RUNNING: // or 'running'
-//           console.log('Upload is running');
-//           break;
-//       }
-//     }, function (error) {
-
-//       switch (error.code) {
-//         case 'storage/unauthorized':
-//           // User doesn't have permission to access the object
-//           break;
-
-//         case 'storage/canceled':
-//           // User canceled the upload
-//           break;
-
-//         case 'storage/unknown':
-//           // Unknown error occurred, inspect error.serverResponse
-//           break;
-//       }
-//     }, function () {
-
-//       const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
-//         imgURL = url;
-//       firebase.database().ref('Banners/'+savedBannersID+'/imgURL').set(url);
- 
-//         //return url;
-//         console.log('imgURL', imgURL);
-//       });
-
-//     });
-
-//     });
-    
   
 function wait(){
     document.getElementById("loader").style.display = "none";
@@ -173,37 +103,60 @@ function save(){
       var selectOffer=document.getElementById('pinned').value;
     if(valditePinned(title,selectOffer,startDate,endDate)){
       console.log(selectOffer);
-
-      let storageRef = firebase.storage().ref('images')
-      let fileUpload = document.getElementById("fileButton")
-    
-      fileUpload.addEventListener('change', function(evt) {
-          let firstFile = evt.target.files[0] // upload the first file only
-          let uploadTask = storageRef.put(firstFile)
-      })
-      firebase.database().ref('Banners').push({
-        endDate:endDate,
-        imgURL:'',
-        offerID:selectOffer,
-        startDate:startDate,
-       title:title,
-        type:'pinned'
-      });
-goHome();
+     
+       var fbBucketName = 'BannersImages';
+       const file = document.querySelector("#fileButton").files[0];
+       const ref = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+       const name = +new Date() + "-" + file.name;
+       const metadata = {
+         contentType: file.type
+       };
+       const task = ref.child(name).put(file, metadata);
+       task
+         .then(snapshot => snapshot.ref.getDownloadURL())
+         .then(url => {
+           firebase.database().ref('Banners').push({
+            endDate:endDate,
+            imgURL:url,
+            offerID:selectOffer,
+            startDate:startDate,
+            title:title,
+            type:'pinned'
+          });
+          
+         })
+         .catch(console.error);
+ 
+     goHome();
     }//if valdite
   }
 
   else{
     var selectOffer=checkOffers();
     if(valditeSeasonal(title,selectOffer,startDate,endDate)){
-      firebase.database().ref('Banners').push({
-        endDate:endDate,
-        imgURL:'',
-        startDate:startDate,
-        title:title,
-        type:'seasonal'
-      });
-    
+   
+
+      var fbBucketName = 'BannersImages';
+      const file = document.querySelector("#fileButton").files[0];
+      const ref = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+      const name = +new Date() + "-" + file.name;
+      const metadata = {
+        contentType: file.type
+      };
+      const task = ref.child(name).put(file, metadata);
+      task
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
+          firebase.database().ref('Banners').push({
+            endDate:endDate,
+            imgURL:url,
+            startDate:startDate,
+            title:title,
+            type:'seasonal'
+          });    
+         
+        })
+        .catch(console.error);
 
    var refBanners=firebase.database().ref('Banners');
    refBanners.orderByChild('title').equalTo(title).on("value", function(snapshot) {
@@ -221,7 +174,7 @@ goHome();
              });  
 
          }); 
-         goHome();
+        goHome();
 
     }//if valdite 
   }//else
@@ -317,7 +270,7 @@ if (endDate==''){
  function sesonal(){
    type='sesonal';
   document.getElementById('header').innerHTML='الشريط الإعلاني-الموسمية';
- // document.getElementById('Info').style.display='none';
+  document.getElementById('Info').style.display='none';
   document.getElementById('divMain').style.display='block';
   document.getElementById('pinned').style.display='none';
    document.getElementById('seasnoal').style.display='block';
@@ -328,24 +281,11 @@ fillOffers();
  function pinned(){
   type='pinned';
   document.getElementById('header').innerHTML='الشريط الإعلاني-المثبتة';
- // document.getElementById('Info').style.display='none';
+  document.getElementById('Info').style.display='none';
   document.getElementById('divMain').style.display='block';
   document.getElementById('pinned').style.display='block';
   document.getElementById('seasnoal').style.display='none';
 fillOffers();
-}
-
-function hi(){
-  var lnx = document.querySelectorAll("#list li input");
-  var lnx2 = document.querySelectorAll("#list li");
-  var array=[];
-  var arraySavingBranchKey=[];
- 
-
-      for (let i = 0; i < lnx.length; i++) {
-       if( lnx[i].checked==true){
-         console.log(lnx[i].id);
-       }}
 }
 
 function goHome(){

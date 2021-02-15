@@ -57,20 +57,6 @@ const firebaseConfig = {
     }
 
 
-  //   function change_page(){
-  //  //   localStorage.setItem("tradmarkID_branch",'');
-  //     localStorage.setItem("tradmarkID_offer",tmBranchID);
-  //    window.location.href = "AddOffers.html";
-  //   }
-        
-
-
-// function change_page2(){
-// localStorage.setItem("tradmarkID_branch",tmBranchID);
-//    window.location.href = "AddBranch.html";
-// }
-
-
 function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
     if(nameOfBranch==''){
                     alert("الرجاء ادخال اسم الفرع"+msg);
@@ -144,6 +130,7 @@ function Validation(nameOfBranch,DescOfBranch,selectRegionValue,msg){
 
         });      
       }
+
 
       
       function goOffer(){

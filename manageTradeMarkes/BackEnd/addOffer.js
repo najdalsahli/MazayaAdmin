@@ -10,9 +10,11 @@ const firebaseConfig = {
   };
   firebase.initializeApp(firebaseConfig);
   const auth=firebase.auth();
-  var tid=localStorage.getItem("tradmarkID_offer");
+  var tid='-MRJA_4my7j9ZbfOi82p';
+  //localStorage.getItem("tradmarkID_offer");
   tmID=tid;
-  var flagOnline=localStorage.getItem("flagOnline");
+  var flagOnline='false';
+ // localStorage.getItem("flagOnline");
   var selectValue=0;
     function nextOffersAndDeals(msg){
     var nameOfOffer = document.getElementById("offerName").value;
@@ -314,12 +316,12 @@ function  savingOffer(code,endDate,DescOfOffer,nameOfOffer,ServiceType,startDate
                   if(data.child("offerDetails").val()==DescOfOffer){
                     if(data.child("offerTitle").val()==nameOfOffer){
                         if(data.child("discountCode").val()==code){
-                            var ref = firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key);
-                    ref.once("value")
-                        .then(function(sc) {
-                    if(!sc.exists())//to dont duplicate with voucher tm id
-                  firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
-                        });
+                 firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
+                //             ref.once("value")
+                //         .then(function(sc) {
+                //     if(!sc.exists())//to dont duplicate with voucher tm id
+                //   firebase.database().ref('Trademarks/'+tid+'/Offers/'+data.key).set(true);
+                //         });
                 }}}
                      });
                  });

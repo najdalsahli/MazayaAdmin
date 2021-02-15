@@ -20,12 +20,12 @@ var flag=false;
 
 
 
-
+ 
 
 
 
 function showTradeMarkes(categoryName){
- 
+
   document.getElementById("catheader").innerHTML=categoryName;
   document.getElementById("category-container").style.display = "block";
   document.getElementById("loader").style.display = "block";
@@ -199,61 +199,6 @@ function change_page(){
 
   }  
      
-  function deleteTM(uid){
-    var region;
-      var conf =confirm("هل أنت متأكد من حذف العلامة التجاية بملحقاتها؟");
-      if (conf==true){//true
-        //delete region 
-        firebase.database().ref('Regions').once("value", function(snapshot) {
-          snapshot.forEach(function(data) {
-         console.log(data.key);
-      firebase.database().ref('Regions/'+data.key+'/Trademarks/'+tmID).remove();
-          });
-      });
-    //delete vouchres
-var ref3=firebase.database().ref('Vouchers');
-ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
-  snapshot1.forEach(function(data) {
-    firebase.database().ref('Vouchers/'+data.key).remove();
-  });
-});
-//delete deals
-var ref3=firebase.database().ref('Deals');
-ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
-  snapshot1.forEach(function(data) {
-    firebase.database().ref('Deals/'+data.key).remove();
-  });
-});
-
-//delete offers
-var ref3=firebase.database().ref('Offers');
-ref3.orderByChild('trademarkID').equalTo(uid).on("value", function(snapshot1) {
-  snapshot1.forEach(function(data) {
-    firebase.database().ref('Offers/'+data.key).remove();
-  });
-});
-
-
-  //delete category 
-  firebase.database().ref('Trademarks/'+uid).once("value",function(snapshot){
-firebase.database().ref('Categories/'+snapshot.child('category').val()+'/Trademarks/'+uid).remove();
-});
-
-
-  //delete trademark 
- firebase.database().ref('Trademarks/'+uid).remove();
-
-      alert('تم حذف العلامة التجارية');
-        reload_page();
-     
-      }//if
-}//end
-        
-    
-     
-
-  
-
 
 function wait(){
   document.getElementById("loader").style.display = "none";
