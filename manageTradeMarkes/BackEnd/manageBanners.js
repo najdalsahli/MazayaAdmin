@@ -289,8 +289,8 @@ fillOffers();
 }
 
 function goHome(){
-  alert('تم إضافة الشريط الاعلاني بنجاح');
   setTimeout(function(){
+      alert('تم إضافة الشريط الاعلاني بنجاح');
     window.location.href = "manageBannersHome.html";    }, 2000);
 
   

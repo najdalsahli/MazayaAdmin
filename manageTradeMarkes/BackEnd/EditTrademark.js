@@ -14,7 +14,7 @@ const firebaseConfig = {
   //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
 
   firebase.initializeApp(firebaseConfig);
-  
+  var previoseCat,Full_link;
   const auth=firebase.auth();
   var tmID= localStorage.getItem("tradmarkID_E");
   //localStorage.setItem("tradmarkID_E",'');
@@ -91,8 +91,8 @@ if(textCatogory=="سيارات")
 document.getElementById("categoryType").value="25";
 
 //delete to rewrite 
+previoseCat=textCatogory;
 console.log(textCatogory);
-firebase.database().ref('Categories/'+textCatogory+'/Trademarks/'+tmID).remove();
 
 
 
@@ -168,112 +168,30 @@ window.location.href = "EditBranch.html";
 }
 //-------
 
-//save changes
-var save=document.getElementById("Save");
-save.onclick=function(){
-  //#1
-//valdiate feilds
-  var trademarkName=document.getElementById("name").value;
-  if(trademarkName==''){
-    alert("الرجاء ادخال اسم العلامة التجارية");
-    return;
-  }
-
-
-  //  id  description;
-  var trademarkDescription =document.getElementById("description").value;
-  if(trademarkDescription=='')
-  {
-alert("الرجاء ادخال وصف للعلامة التجارية");
-return;
-  }
-  
-
-  
-  //id contactnum
-  var tradecontactnum=document.getElementById("contactnum").value;
-  if(tradecontactnum=='')
-  {
-    alert("الرجاء ادخال رقم التواصل الخاص  بالعلامة التجارية");
-    return;
-  }
-  
-  var re = /\S+@\S+\.\S+/;
-  //id mail 
-  var trademarkmail=document.getElementById("mail").value;
-  if(trademarkmail!='' && !re.test(trademarkmail))
-  {
-alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة");
-return;
-  }
-
-  //id maillink
-  var trademarkmaillink=document.getElementById("maillink").value;
-  var pattern = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/; 
-
- 
-  if(trademarkmaillink!=''&&!pattern.test(trademarkmaillink))
-  {
-alert(" الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
-return;
-  }
-
-  // id inst
-  var accountinst=document.getElementById("inst").value.toLowerCase();
-  var isMatch = accountinst.substr(0, 8) == 'https://' || accountinst.substr(0, 7) == 'http://';
-  if(accountinst!=''&&!isMatch)
-  {
-    alert(" الرجاء ادخال رابط الانستقرام الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
-    return;
-      }
-  //id twi
-  var accounttwi=document.getElementById("twi").value;
-  var isMatch = accounttwi.substr(0, 8) == 'https://' || accounttwi.substr(0, 7) == 'http://';
-  if(accounttwi!=''&&!isMatch)
-  {
-    alert(" الرجاء ادخال رابط تويتر الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
-    return;
-      }
-  //id snap 
-  var accountsnap=document.getElementById("snap").value;
-  var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
-  var Full_link;
-  if(isMatch){
-    Full_link=accountsnap;
-  }
-  else{
-    Full_link="https://www.snapchat.com/add/"+ accountsnap;
-
-  }
-
-//id trademarkType 
-var trademark_Type=document.getElementById("trademarkType").value;
-
-var  trademark_Type0= document.getElementById("trademarkType");
-var trademark_Type1 = trademark_Type0.options[trademark_Type0.selectedIndex].text;
-
-if(trademark_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
-{
-  alert(" الرجاء اختيار نوع نشاط العلامه التجارية");
-  return;
 }
 
+function save(){
+  var trademarkName=document.getElementById("name").value;
+  var trademarkDescription =document.getElementById("description").value;
+  var tradecontactnum=document.getElementById("contactnum").value;
+  var trademarkmail=document.getElementById("mail").value;
+  var trademarkmaillink=document.getElementById("maillink").value;
+  var accountinst=document.getElementById("inst").value.toLowerCase();
+  var accounttwi=document.getElementById("twi").value;
+  var accountsnap=document.getElementById("snap").value;
+  var trademark_Type=document.getElementById("trademarkType").value;
+  var category_Type=document.getElementById("categoryType").value;
 
-//id categoryType 
-var category_Type=document.getElementById("categoryType").value;
+if(validate(trademarkName,trademarkDescription,tradecontactnum,trademarkmail,trademarkmaillink,accountinst,accounttwi,accountsnap,trademark_Type,category_Type))
+{
+
+  var  trademark_Type0= document.getElementById("trademarkType");
+  var trademark_Type1 = trademark_Type0.options[trademark_Type0.selectedIndex].text;
 
 var  category_Type0= document.getElementById("categoryType");
 var category_Type1 = category_Type0.options[category_Type0.selectedIndex].text;
 
-if(category_Type=="12")//trademark_Type.options[trademark_Type.selectedIndex].text
-{
-  alert(" الرجاء اختيار الفئه");
-  return;
-}
-
-//id isFeatured
 var isـFeatured=document.getElementById("isFeatured").checked;
-//#2
 //Saving 
 firebase.database().ref('Trademarks/'+tmID+'/category').set(category_Type1);
 firebase.database().ref('Trademarks/'+tmID+'/contactNum').set(tradecontactnum);
@@ -286,154 +204,266 @@ firebase.database().ref('Trademarks/'+tmID+'/snapchat').set(Full_link);
 firebase.database().ref('Trademarks/'+tmID+'/trademarkName').set(trademarkName);
 firebase.database().ref('Trademarks/'+tmID+'/twitter').set(accounttwi);
 firebase.database().ref('Trademarks/'+tmID+'/website').set(trademarkmaillink);
-
+console.log('pre'+previoseCat);
+firebase.database().ref('Categories/'+previoseCat+'/Trademarks/'+tmID).remove();
+console.log('after'+category_Type1);
 firebase.database().ref('Categories/'+category_Type1+'/Trademarks/'+tmID).set(true);
 
+//update img
+if( document.getElementById("fileButton").files.length != 0 ){
+  var fbBucketName = 'images';
+  const file = document.querySelector("#fileButton").files[0];
+  const name = +new Date() + "-" + file.name;
+  const ref = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+  const metadata = {
+    contentType: file.type
+  };
+  const task = ref.child(name).put(file, metadata);
+  task
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(url => {
+      firebase.database().ref('Trademarks/'+tmID+'/imgURL').set(url);
+    })
+    .catch(console.error);
+}
+//update background
+if( document.getElementById("fileButton1").files.length != 0 ){
+  var fbBucketName = 'images';
+  const file = document.querySelector("#fileButton1").files[0];
+  const name = +new Date() + "-" + file.name;
+  const ref = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+  const metadata = {
+    contentType: file.type
+  };
+  const task = ref.child(name).put(file, metadata);
+  task
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(url => {
+      firebase.database().ref('Trademarks/'+tmID+'/backgroundImg').set(url);
+    })
+    .catch(console.error);
+}
+
+
+
 alert("تم تعديل العلامة التجارية بنجاح");
-x.style.display='none';
-
-}
+document.getElementById("myDIV").style.display='none';
 }
 
-
-//*updating images */
-var fbBucketName = 'images';
-
-//alert(" code 1 ");
-// get elements
-var uploader = document.getElementById('uploader');
-var fileButton = document.getElementById('fileButton');
-
-// listen for file selection
-fileButton.addEventListener('change', function (e) {
-
-  // what happened
-  console.log('file upload event', e);
-
-  // get file
-  var file = e.target.files[0];
-
-  // create a storage ref
-  var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
-
-  // upload file
-  var uploadTask = storageRef.put(file);
+}
 
 
-  // update progress bar
-  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function (snapshot) {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploader.value = progress;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
-    }, function (error) {
+// //*updating images */
+// var fbBucketName = 'images';
 
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
+// //alert(" code 1 ");
+// // get elements
+// var uploader = document.getElementById('uploader');
+// var fileButton = document.getElementById('fileButton');
 
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
+// // listen for file selection
+// fileButton.addEventListener('change', function (e) {
 
-        case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    }, function () {
+//   // what happened
+//   console.log('file upload event', e);
 
-      const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
-        imgURL = url;
-        firebase.database().ref('Trademarks/'+tmID+'/imgURL').set(url);
+//   // get file
+//   var file = e.target.files[0];
+
+//   // create a storage ref
+//   var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+
+//   // upload file
+//   var uploadTask = storageRef.put(file);
+
+
+//   // update progress bar
+//   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+//     function (snapshot) {
+//       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+//      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       uploader.value = progress;
+//       console.log('Upload is ' + progress + '% done');
+//       switch (snapshot.state) {
+//         case firebase.storage.TaskState.PAUSED: // or 'paused'
+//           console.log('Upload is paused');
+//           break;
+//         case firebase.storage.TaskState.RUNNING: // or 'running'
+//           console.log('Upload is running');
+//           break;
+//       }
+//     }, function (error) {
+
+//       // A full list of error codes is available at
+//       // https://firebase.google.com/docs/storage/web/handle-errors
+//       switch (error.code) {
+//         case 'storage/unauthorized':
+//           // User doesn't have permission to access the object
+//           break;
+
+//         case 'storage/canceled':
+//           // User canceled the upload
+//           break;
+
+//         case 'storage/unknown':
+//           // Unknown error occurred, inspect error.serverResponse
+//           break;
+//       }
+//     }, function () {
+
+//       const img_url = uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+//         imgURL = url;
+//         firebase.database().ref('Trademarks/'+tmID+'/imgURL').set(url);
   
-        console.log('imgURL', imgURL);
-      });
+//         console.log('imgURL', imgURL);
+//       });
       
-    });
+//     });
 
-    });
+//     });
     
 
 
 
-    //---------- file2
+//     //---------- file2
 
-    var fbBucketName1 = 'images';
+//     var fbBucketName1 = 'images';
 
-// get elements
-var uploader1 = document.getElementById('uploader1');
-var fileButton1 = document.getElementById('fileButton1');
+// // get elements
+// var uploader1 = document.getElementById('uploader1');
+// var fileButton1 = document.getElementById('fileButton1');
 
-// listen for file selection
-fileButton1.addEventListener('change', function (e) {
+// // listen for file selection
+// fileButton1.addEventListener('change', function (e) {
 
-  // what happened
-  console.log('file upload event', e);
+//   // what happened
+//   console.log('file upload event', e);
 
-  // get file
-  var file1 = e.target.files[0];
+//   // get file
+//   var file1 = e.target.files[0];
 
-  // create a storage ref
-  var storageRef1 = firebase.storage().ref(`${fbBucketName1}/${file1.name}`);
+//   // create a storage ref
+//   var storageRef1 = firebase.storage().ref(`${fbBucketName1}/${file1.name}`);
 
-  // upload file
-  var uploadTask1 = storageRef1.put(file1);
+//   // upload file
+//   var uploadTask1 = storageRef1.put(file1);
 
-  // The part below is largely copy-pasted from the 'Full Example' section from
-  // https://firebase.google.com/docs/storage/web/upload-files
+//   // The part below is largely copy-pasted from the 'Full Example' section from
+//   // https://firebase.google.com/docs/storage/web/upload-files
 
-  // update progress bar
-  uploadTask1.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function (snapshot) {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploader1.value = progress;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
-    }, function (error) {
+//   // update progress bar
+//   uploadTask1.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+//     function (snapshot) {
+//       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+//       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       uploader1.value = progress;
+//       console.log('Upload is ' + progress + '% done');
+//       switch (snapshot.state) {
+//         case firebase.storage.TaskState.PAUSED: // or 'paused'
+//           console.log('Upload is paused');
+//           break;
+//         case firebase.storage.TaskState.RUNNING: // or 'running'
+//           console.log('Upload is running');
+//           break;
+//       }
+//     }, function (error) {
 
-      // A full list of error codes is available at
-      switch (error.code) {
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
+//       // A full list of error codes is available at
+//       switch (error.code) {
+//         case 'storage/unauthorized':
+//           // User doesn't have permission to access the object
+//           break;
 
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
+//         case 'storage/canceled':
+//           // User canceled the upload
+//           break;
 
-        case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    }, function () {
+//         case 'storage/unknown':
+//           // Unknown error occurred, inspect error.serverResponse
+//           break;
+//       }
+//     }, function () {
  
-      const backgroundImg_url = uploadTask1.snapshot.ref.getDownloadURL().then(function(url){
-        backgroundImg = url;
-        firebase.database().ref('Trademarks/'+tmID+'/backgroundImg').set(url);
-        //return url;
-        console.log('backgroundImg url', backgroundImg);
-      });
-    });
+//       const backgroundImg_url = uploadTask1.snapshot.ref.getDownloadURL().then(function(url){
+//         backgroundImg = url;
+//         firebase.database().ref('Trademarks/'+tmID+'/backgroundImg').set(url);
+//         //return url;
+//         console.log('backgroundImg url', backgroundImg);
+//       });
+//     });
 
-});
+// });
 
+function validate(trademarkName,trademarkDescription,tradecontactnum,trademarkmail,trademarkmaillink,accountinst,accounttwi,accountsnap,trademark_Type,category_Type){
+  if(trademarkName==''){
+    alert("الرجاء ادخال اسم العلامة التجارية");
+    return false;
+  }
+
+  if(trademarkDescription=='')
+  {
+alert("الرجاء ادخال وصف للعلامة التجارية");
+return false;
+  }
+  
+
+  
+  if(tradecontactnum=='')
+  {
+    alert("الرجاء ادخال رقم التواصل الخاص  بالعلامة التجارية");
+    return false;
+  }
+  
+  var re = /\S+@\S+\.\S+/;
+  //id mail 
+  if(trademarkmail!='' && !re.test(trademarkmail))
+  {
+alert("الرجاء ادخال البريد الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة");
+return false;
+  }
+
+  var pattern = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;  
+  if(trademarkmaillink!=''&&!pattern.test(trademarkmaillink))
+  {
+alert(" الرجاء ادخال رابط الموقع الالكتروني الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+return false;
+  }
+
+  // id inst
+  var isMatch = accountinst.substr(0, 8) == 'https://' || accountinst.substr(0, 7) == 'http://';
+  if(accountinst!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط الانستقرام الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+    return false;
+  }
+  //id twi
+  var isMatch = accounttwi.substr(0, 8) == 'https://' || accounttwi.substr(0, 7) == 'http://';
+  if(accounttwi!=''&&!isMatch)
+  {
+    alert(" الرجاء ادخال رابط تويتر الخاص  بالعلامة التجارية بالطريقة الصحيحة ")
+    return false;
+  }
+  //id snap 
+  var isMatch = accountsnap.substr(0, 8) == 'https://' || accountsnap.substr(0, 7) == 'http://';
+  if(isMatch){
+    Full_link=accountsnap;
+  }
+  else{
+    Full_link="https://www.snapchat.com/add/"+ accountsnap;
+  }
+
+if(trademark_Type=="12")
+{
+  alert(" الرجاء اختيار نوع نشاط العلامه التجارية");
+  return false;
+}
+
+
+
+if(category_Type=="12")
+{
+  alert(" الرجاء اختيار الفئه");
+  return false ;
+}
+return true;
+}

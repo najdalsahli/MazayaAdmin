@@ -48,3 +48,10 @@ const auth=firebase.auth();
   messaging.onMessage(function(payload){
     console.log('onMessage: '+ payload);
   });
+
+
+  function send(){
+  var title=document.getElementById('title').value;
+  var text=document.getElementById('textArea').value;
+  
+  }
