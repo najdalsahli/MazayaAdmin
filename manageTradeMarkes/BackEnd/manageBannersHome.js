@@ -1,0 +1,223 @@
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBDUVxL_S0b9AxSRjBsQ6ri80mhO0kZ03c",
+    authDomain: "mc-mazaya.firebaseapp.com",
+    databaseURL: "https://mc-mazaya.firebaseio.com",
+    projectId: "mc-mazaya",
+    storageBucket: "mc-mazaya.appspot.com",
+    messagingSenderId: "1043747982646",
+    appId: "1:1043747982646:web:eb8806eb17fa88668fb797",
+    measurementId: "G-5VCPWL0HQL"
+  };
+  //var GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
+
+  firebase.initializeApp(firebaseConfig);
+  
+  const auth=firebase.auth();
+
+var flag=false;
+
+
+
+ 
+
+
+
+function showTradeMarkes(categoryName){
+
+  document.getElementById("catheader").innerHTML=categoryName;
+  document.getElementById("category-container").style.display = "block";
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+
+  var list=document.getElementById('bodyOftable');
+  while (list.hasChildNodes()) {  
+    list.removeChild(list.firstChild);
+  }
+
+
+ 
+if(categoryName=='الكل'){
+    
+var countTM=0;
+  firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
+    flag=true;
+    if(snapshot.numChildren()==0){
+      var noResult= document.createElement('td');
+      noResult.style.color='#F51B46';
+      noResult.style.textAlign='center';
+      noResult.style.font='font-family';
+      noResult.style.weight='bold';
+      noResult.textContent="لا يوجد علامة تجارية";
+      var newRow = document.createElement('tr');
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+       newRow.appendChild(noResult);
+      document.getElementById("bodyOftable").appendChild(newRow);
+        }
+      else{
+    snapshot.forEach(function(snapshot1) {
+      countTM++;
+      var numoffers=snapshot1.child('Offers').numChildren();
+      var numbraches=snapshot1.child('Branches').numChildren();
+      var trademarkName=snapshot1.child('trademarkName').val();
+      var imgtradesmark=snapshot1.child('imgURL').val();
+      var serviceType=snapshot1.child('serviceType').val();
+
+
+      readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
+
+    })
+  }
+  });
+
+}
+
+else{//else 1
+var countTM=0;
+  firebase.database().ref('Categories').child(categoryName).child("Trademarks").once('value').then(function(snapshot2) {
+    flag=true;
+    var numkey=snapshot2.numChildren();
+    console.log(numkey);
+    if(numkey==0){
+      var newRow = document.createElement('tr');
+      const newDiv = document.createElement("div");
+      const newContent = document.createTextNode("لا يوجد علامة تجارية");
+      newDiv.appendChild(newContent);
+        newDiv.className='table-responsive table mt-2';
+      var noResult= document.createElement('td');
+      noResult.style.color='#F51B46';
+      noResult.style.textAlign='center';
+      noResult.style.font='font-family';
+      noResult.style.weight='bold';
+      noResult.textContent="لا يوجد علامة تجارية";
+      newRow.appendChild(document.createElement('td'));
+       newRow.appendChild(noResult);
+      document.getElementById("bodyOftable").appendChild(newRow);
+  
+          }
+      else{//else 2
+    snapshot2.forEach(function(snapshot) {
+
+      firebase.database().ref("Trademarks").orderByKey().equalTo(snapshot.key).on("child_added",function(snapshot1) {
+     
+        var numoffers=snapshot1.child('Offers').numChildren();
+        var numbraches=snapshot1.child('Branches').numChildren();
+        var trademarkName=snapshot1.child('trademarkName').val();
+        var imgtradesmark=snapshot1.child('imgURL').val();
+        var serviceType=snapshot1.child('serviceType').val();
+   
+        countTM++;
+
+        readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,snapshot1.key,countTM,serviceType);
+})
+})
+}//else2
+});
+}// else 1
+setTimeout(wait, 3000);
+}//end function 
+  function readTradeMarkes(numoffers,numbraches,trademarkName,imgtradesmark,uid,countTM,serviceType){
+    
+
+    
+  
+
+    //for viewing 
+  if(numoffers==0){}
+    var showcel= document.createElement('td');
+    showcel.className='btncel';
+  
+    var showbtn=document.createElement('button');
+    var showIcon= document.createElement('i');
+    showIcon.className='viewIcon icon ion-ios-eye';
+
+    showbtn.textContent='إضافة';
+
+    showbtn.className='btn viewbtn ';
+   // showbtn.appendChild(showIcon);
+    showcel.appendChild(showbtn);
+    showbtn.onclick=function(){
+        if(numoffers!=0){
+      setTimeout(function() {
+        change_page();
+      }, 1000);}
+else{
+    alert(" الرجاء إضافة عرض أولا")
+}
+function change_page(){
+  localStorage.setItem("tradmarkID",uid);
+   window.location.href = "MangeBanners.html";
+     };
+    }
+
+  
+    
+  
+  
+  
+    var offerscel= document.createElement('td');
+    offerscel.className='infocel';
+    offerscel.textContent=numoffers;
+
+    var tradecel= document.createElement('td');
+    tradecel.className='infocel';
+    tradecel.textContent=trademarkName;
+  
+    var imgtrade= document.createElement('img');
+    imgtrade.className='rounded-circle mr-2 imageTrade';
+    imgtrade.style.marginTop='10px';
+    imgtrade.src=imgtradesmark;
+
+
+    var countcel= document.createElement('td');
+    countcel.className='infocel';
+    countcel.textContent=countTM;
+
+    //tradecel.appendChild(imgtrade);
+  
+  
+  
+  
+    var newRow = document.createElement('tr');
+  
+    newRow.appendChild(showcel);
+    newRow.appendChild(offerscel);
+    newRow.appendChild(tradecel);
+    newRow.appendChild(imgtrade);
+    newRow.appendChild(countcel);
+
+
+  
+  
+  
+  
+    document.getElementById("bodyOftable").appendChild(newRow);
+
+    
+
+  }  
+     
+
+function wait(){
+  document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+    if(!flag){
+      
+   }else{
+    flag=false;
+   }
+}
+
+
+
+
+
+
+
+  
+
+
+
+

@@ -36,6 +36,9 @@
                     <li class="nav-item"><a class="nav-link" href="manageEmployees.html" style="text-align: center;padding: 24px;"><i class="fa fa-user" style="margin-left: 0px;margin-right: 81px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة الموظفين</span></a></li>
                     <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageTradeMarksHome.html" style="text-align: center;margin-bottom: 6px;"><i class="fa fa-trademark" style="margin-right: 41px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة العلامات التجارية</span></a></li>
                     <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Suggestion.html" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="la la-comment-o" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">أقتراحات</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageBannersHome.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-tag" style="margin-left: 0px;margin-right: 80px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الشريط الإعلاني</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Notification.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-bell" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الاشعارات</span></a></li>
+
                 </ul>
             </div>
         </nav>
@@ -112,12 +115,15 @@
                             <form>
                                 <div class="form-row">
                                     <div class="col">
-                                        <div class="form-group"><label for="email" style="margin-left: 225px;margin-right: -308px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>عنوان&nbsp; الاشعار</strong><br></label><input class="form-control" type="text" placeholder="مثال : عروض الموسم" name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;"><label for="email" style="margin-left: 3px;font-family: Frutiger LT Arabic;color: #38a089;margin-bottom: -5px;margin-right: -564px;margin-top: 28px;">الرسالة<br></label></div><textarea class="form-control" style="height: 99px;width: 638px;margin-right: 301px;"></textarea>
+                                        <div class="form-group"><label for="email" style="margin-left: 225px;margin-right: -308px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>عنوان&nbsp; الاشعار</strong><br></label>
+                                            <input id='title'class="form-control" type="text" placeholder="مثال : عروض الموسم" name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;">
+                                            <label for="email" style="margin-left: 3px;font-family: Frutiger LT Arabic;color: #38a089;margin-bottom: -5px;margin-right: -564px;margin-top: 28px;">الرسالة<br></label></div>
+                                            <textarea id='textArea'class="form-control" style="height: 99px;width: 638px;margin-right: 301px;"></textarea>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="card-body"><button class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إرسال</button></div>
+                        <div class="card-body"><button onclick=''class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إرسال</button></div>
                     </div>
                 </div>
             </div>
@@ -129,7 +135,7 @@
     <script src="assets/js/bs-init.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="Notification.js"></script>
+    <script src="BackEnd/Notification.js"></script>
 </body>
 
 </html>

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/untitled.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/format.css">
 </head>
 
 <body id="page-top" onload="load()">
@@ -32,7 +33,9 @@
                         <li class="nav-item"><a class="nav-link" href="manageEmployees.html" style="text-align: center;padding: 24px;"><i class="fa fa-user" style="margin-left: 0px;margin-right: 81px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة الموظفين</span></a></li>
                         <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageTradeMarksHome.html" style="text-align: center;margin-bottom: 6px;"><i class="fa fa-trademark" style="margin-right: 41px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة العلامات التجارية</span></a></li>
                         <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Suggestion.html" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="la la-comment-o" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">أقتراحات</span></a></li>
-                    </ul>
+                        <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageBannersHome.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-tag" style="margin-left: 0px;margin-right: 80px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الشريط الإعلاني</span></a></li>
+                        <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Notification.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-bell" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الاشعارات</span></a></li>
+                        </ul>
                 </div>
             </nav>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -80,20 +83,24 @@
                     </table>
                 </div>
                 <div class="container-fluid">
+                    
                     <div class="card shadow">
                         <div  class="card-header py-3" style="background: #00524d;height: 60px;">
                             <h6 style="color: #ffffff;font-size: 30px;font-family: Frutiger LT Arabic;text-align: right;font-weight: 65;margin-top: -10px;">الفروع</h6>
                         </div>
-                        <div class="card-body" >
+                        <div  style="display:none;" class='loader' id="loader"></div>
+                        <div  id="myDiv" class="card shadow animate-bottom">
+                            <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
              
-             <button onclick="addOntherBranch()" id ="addOntherBranch"class="btn btn-primary" style="margin-left: 30px;width: 179px;background: rgb(255,255,255);color: #2cb1c6;font-weight: 55;border-top-width: 2px;border-top-color: #2cb1c6;border-right-width: 2px;border-right-color: #2cb1c6;border-bottom-width: 2px;border-bottom-color: #2cb1c6;border-left-width: 2px;border-left-color: #2cb1c6;margin-bottom: 23px;font-family: Frutiger LT Arabic;font-size: 22px;">إضافة<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-left: 5px;margin-top: -5px;font-size: 20px;">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="currentColor"></path>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-</svg></button></div>
+                                   <button onclick="addOntherBranch()" id ="addOntherBranch"class="btn btn-primary" style="margin-left: 30px;width: 179px;background: rgb(255,255,255);color: #2cb1c6;font-weight: 55;border-top-width: 2px;border-top-color: #2cb1c6;border-right-width: 2px;border-right-color: #2cb1c6;border-bottom-width: 2px;border-bottom-color: #2cb1c6;border-left-width: 2px;border-left-color: #2cb1c6;margin-bottom: 23px;font-family: Frutiger LT Arabic;font-size: 22px;">إضافة<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-left: 5px;margin-top: -5px;font-size: 20px;">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="currentColor"></path>
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+                                        </svg></button></div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+            
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
@@ -104,6 +111,7 @@
                                             <th style="text-align: center;font-family: Frutiger LT Arabic;font-weight: 55;font-size: 22px;">اسم الفرع</th>
                                         </tr>
                                     </thead>
+    
                                     <tbody id="tableBody">
                                         <tr>
                                             <td style="text-align: center;">
@@ -115,6 +123,7 @@
                                                     <td style="text-align: center;font-size: 20px;font-family: Frutiger LT Arabic;font-weight: 55;">العليا</td> -->
                                         </tr>
                                     </tbody>
+
                                     <tfoot>
                                         <tr></tr>
                                     </tfoot>
@@ -122,18 +131,18 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
                 <div id ="myDIV" class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 171px;margin-top: 72px;display: none;">
                     <div class="card shadow mb-4" style="width: 680px;margin-left: 7px;margin-top: 32px;">
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;height: 50px;">
                             <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                 <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
-                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a></div>
+                                </div>
                             </div>
                             <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;">الفروع</h6>
                         </div>
-                        <div   class="card-body" >
+                        <div class="card-body">
                             <form>
                                 <div class="form-row">
                                     <div class="col"><label style="margin-right: -261px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">وصف</label>
@@ -141,37 +150,52 @@
                                             <div class="col"><input id="Desc" class="form-control" type="text" placeholder="مثال: طريق الملك فهد الفرعي" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col"><label style="font-family: Frutiger LT Arabic;font-weight: bold;margin-bottom: -33px;margin-right: -253px;color: #38a089;margin-top: 10px;">المنطقة</label>
-                                                <select id="region" class="form-control" style="margin-top: 15px;font-family: Frutiger LT Arabic;height: 42px;">
-                                                    <option value="12" selected="">يرجى اختيار المنطقة</option>
-                                                    <option value="13">الحدود الشمالية</option>
-                                                    <option value="14">المنطقة الشرقية</option>
-                                                    <option value="15">منطقة الرياض</option>
-                                                    <option value="16">منطقة الجوف</option>
-                                                    <option value="17">منطقة القصيم</option>
-                                                    <option value="18">منطقة المدينة المنورة</option>
-                                                    <option value="19">منطقة تبوك</option>
-                                                    <option value="20">منطقة جازان</option>
-                                                    <option value="21">منطقة حائل</option>
-                                                    <option value="22">منطقة عسير</option>
-                                                    <option value="23">منطقة مكة المكرمة</option>
-                                                    <option value="24">منطقة نجران</option>
-                                                    <option value="25">منطقة الباحة</option></select></div>
+                                     
                                         </div>
-                                        <!-- <div class="form-group" style="margin-top: 52px;width: 305px;height: 31px;">
-                                            <button  id="addOntherBranch"class="btn btn-primary btn-sm" style="margin-right: 152px;margin-left: 44px;background: linear-gradient(#ffffff, #ffffff);padding-left: 41px;font-family: Frutiger LT Arabic;padding-right: 41px;margin-bottom: 3px;margin-top: -20px;height: 66px;width: 170px;color: #38a089;border-color: #38a089;border-top-color: #ffffff;border-right-color: #ffffff;border-bottom-color: #ffffff;border-left-color: #ffffff;font-size: 18px;">إضافة فرع 
+                                        <div class="form-group" style="margin-top: 52px;width: 305px;height: 31px;">
+                                            <!-- <button value="إضافة فرع"  onclick="addBranch()" id="addOntherBranch"class="btn btn-primary btn-sm" style="margin-right: 152px;margin-left: 44px;background: linear-gradient(#ffffff, #ffffff);padding-left: 41px;font-family: Frutiger LT Arabic;padding-right: 41px;margin-bottom: 3px;margin-top: -20px;height: 66px;width: 170px;color: #38a089;border-color: #38a089;border-top-color: #ffffff;border-right-color: #ffffff;border-bottom-color: #ffffff;border-left-color: #ffffff;font-size: 18px;"> إضافة فرع
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" class="bi bi-plus" style="margin-left: -116px;font-size: 34px;margin-right: 11px;">
                                                 <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
                                                                  </svg>
-                                                                         &nbsp;
-                                                                        </button></div> -->
+                                                                      &nbsp;
+                                                     ()                   </button> -->
+                                                                    </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group"><label for="email" style="margin-left: 225px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>اسم الفرع</strong><br></label>
                                             <input id="branchName"class="form-control" type="text" placeholder="مثال العليا"
                                                 name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;"></div>
-                                        <div class="form-group"><label for="email" style="margin-left: 169px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>إضافة موقع الفرع</strong><br></label></div>
-                                        <div style="display: none">
+                                                <div class="col">
+                                                    <label style="font-family: Frutiger LT Arabic;font-weight: bold;margin-bottom: -33px;margin-right: -100px;color: #38a089;margin-top: 10px;">المنطقة</label>
+                                                    <select id="region" class="form-control" style="margin-top: 15px;font-family: Frutiger LT Arabic;height: 42px;">
+                                                        <option value="12" selected="">يرجى اختيار المنطقة</option>
+                                                        <option value="13">الحدود الشمالية</option>
+                                                        <option value="14">المنطقة الشرقية</option>
+                                                        <option value="15">منطقة الرياض</option>
+                                                        <option value="16">منطقة الجوف</option>
+                                                        <option value="17">منطقة القصيم</option>
+                                                        <option value="18">منطقة المدينة المنورة</option>
+                                                        <option value="19">منطقة تبوك</option>
+                                                        <option value="20">منطقة جازان</option>
+                                                        <option value="21">منطقة حائل</option>
+                                                        <option value="22">منطقة عسير</option>
+                                                        <option value="23">منطقة مكة المكرمة</option>
+                                                        <option value="24">منطقة نجران</option>
+                                                        <option value="25">منطقة الباحة</option></select>
+                                                    </div>
+                                            </div>
+                                            <hr size="10" width="80%" color="#BFC2C2">
+
+                                     <div class="col">
+                                        <div class="form-group">
+                                            <label for="email" style="margin-left: 500px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>إضافة موقع الفرع</strong><br></label>
+                                            <label for="email" style="margin-left: 500px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;">: عن طريق الإحداثيات<br></label>
+                                            <input id="lng"class="form-control" type="text" placeholder="خطوط الطول" style="margin-left:200px;text-align: right;font-family: Frutiger LT Arabic;height: 42px; width: 40%;"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                            <input id="lat"class="form-control" type="text" placeholder="خطوط العرض" style="margin-left:200px;text-align: right;font-family: Frutiger LT Arabic;height: 42px;width: 40%;"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+
+                                            <label for="email" style="margin-left: 520px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;">: أو عن طريق الخريطة</strong><br></label></div>
+                                     
+                                            <div style="display: none">
                                             <input
                                               id="pac-input"
                                               class="controls"
@@ -180,9 +204,11 @@
                                             />
                                           </div>
                                           
-                                        <div id="map"  class="container" style="margin-top: 20px;height: 164px;width: 320px;"></div>
-                                    </div>
+                                        <div id="map" class="container" style= "margin-top: 20px;height: 164px;width: 80%"></div>
+
                                 </div>
+                                    </div>
+                  
                             </form>
                             <button id="update"class="btn btn-primary btn-sm" type="submit" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">حفظ</button></div>
                         <div
@@ -194,11 +220,11 @@
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
+    <!-- <script src="assets/js/chart.min.js"></script>
+    <script src="assets/js/bs-init.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="EditBranch.js"></script>
+    <script src="BackEnd/EditBranch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script

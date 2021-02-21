@@ -25,7 +25,7 @@
 
 <body id="page-top" >
     <div id="wrapper" style="background: #00524d;">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#38a089, #00524d);margin-top: 0px;filter: grayscale(0%) sepia(0%);">
+        <!-- <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#38a089, #00524d);margin-top: 0px;filter: grayscale(0%) sepia(0%);">
             <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: 9px;">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="Add%20TreadMark.html" style="text-align: center;padding: 17px;font-weight: bold;"><i class="typcn typcn-th-small-outline" style="margin-left: 0px;margin-right: 71px;font-size: 20px;"></i><span style="margin-right: -15px;font-family: Frutiger LT Arabic;">الصفحة الرئيسية</span></a>
@@ -40,7 +40,7 @@
                             </li>
                 </ul>
             </div>
-        </nav>
+        </nav> -->
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-dark shadow mb-4 topbar static-top" style="background: linear-gradient(black, #00524d 0%, #00524d);">
@@ -153,10 +153,7 @@
                 <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 171px;margin-top: 72px;">
                     <div class="card shadow mb-4" style="width: 680px;margin-left: 7px;margin-top: 32px;">
                         <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;height: 50px;">
-                            <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
-                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a></div>
+                            <div class="dropdown no-arrow">
                             </div>
                             <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;">الفروع</h6>
                         </div>
@@ -168,22 +165,7 @@
                                             <div class="col"><input id="Desc" class="form-control" type="text" placeholder="مثال: طريق الملك فهد الفرعي" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col"><label style="font-family: Frutiger LT Arabic;font-weight: bold;margin-bottom: -33px;margin-right: -253px;color: #38a089;margin-top: 10px;">المنطقة</label>
-                                                <select id="region" class="form-control" style="margin-top: 15px;font-family: Frutiger LT Arabic;height: 42px;">
-                                                    <option value="12" selected="">يرجى اختيار المنطقة</option>
-                                                    <option value="13">الحدود الشمالية</option>
-                                                    <option value="14">المنطقة الشرقية</option>
-                                                    <option value="15">منطقة الرياض</option>
-                                                    <option value="16">منطقة الجوف</option>
-                                                    <option value="17">منطقة القصيم</option>
-                                                    <option value="18">منطقة المدينة المنورة</option>
-                                                    <option value="19">منطقة تبوك</option>
-                                                    <option value="20">منطقة جازان</option>
-                                                    <option value="21">منطقة حائل</option>
-                                                    <option value="22">منطقة عسير</option>
-                                                    <option value="23">منطقة مكة المكرمة</option>
-                                                    <option value="24">منطقة نجران</option>
-                                                    <option value="25">منطقة الباحة</option></select></div>
+                                     
                                         </div>
                                         <div class="form-group" style="margin-top: 52px;width: 305px;height: 31px;">
                                             <!-- <button value="إضافة فرع"  onclick="addBranch()" id="addOntherBranch"class="btn btn-primary btn-sm" style="margin-right: 152px;margin-left: 44px;background: linear-gradient(#ffffff, #ffffff);padding-left: 41px;font-family: Frutiger LT Arabic;padding-right: 41px;margin-bottom: 3px;margin-top: -20px;height: 66px;width: 170px;color: #38a089;border-color: #38a089;border-top-color: #ffffff;border-right-color: #ffffff;border-bottom-color: #ffffff;border-left-color: #ffffff;font-size: 18px;"> إضافة فرع
@@ -198,8 +180,37 @@
                                         <div class="form-group"><label for="email" style="margin-left: 225px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>اسم الفرع</strong><br></label>
                                             <input id="branchName"class="form-control" type="text" placeholder="مثال العليا"
                                                 name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 42px;"></div>
-                                        <div class="form-group"><label for="email" style="margin-left: 169px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>إضافة موقع الفرع</strong><br></label></div>
-                                        <div style="display: none">
+                                                <div class="col">
+                                                    <label style="font-family: Frutiger LT Arabic;font-weight: bold;margin-bottom: -33px;margin-right: -100px;color: #38a089;margin-top: 10px;">المنطقة</label>
+                                                    <select id="region" class="form-control" style="margin-top: 15px;font-family: Frutiger LT Arabic;height: 42px;">
+                                                        <option value="12" selected="">يرجى اختيار المنطقة</option>
+                                                        <option value="13">الحدود الشمالية</option>
+                                                        <option value="14">المنطقة الشرقية</option>
+                                                        <option value="15">منطقة الرياض</option>
+                                                        <option value="16">منطقة الجوف</option>
+                                                        <option value="17">منطقة القصيم</option>
+                                                        <option value="18">منطقة المدينة المنورة</option>
+                                                        <option value="19">منطقة تبوك</option>
+                                                        <option value="20">منطقة جازان</option>
+                                                        <option value="21">منطقة حائل</option>
+                                                        <option value="22">منطقة عسير</option>
+                                                        <option value="23">منطقة مكة المكرمة</option>
+                                                        <option value="24">منطقة نجران</option>
+                                                        <option value="25">منطقة الباحة</option></select>
+                                                    </div>
+                                            </div>
+                                            <hr size="10" width="80%" color="#BFC2C2">
+
+                                     <div class="col">
+                                        <div class="form-group">
+                                            <label for="email" style="margin-left: 500px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>إضافة موقع الفرع</strong><br></label>
+                                            <label for="email" style="margin-left: 500px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;">: عن طريق الإحداثيات<br></label>
+                                            <input id="lng"class="form-control" type="text" placeholder="خطوط الطول" style="margin-left:200px;text-align: right;font-family: Frutiger LT Arabic;height: 42px; width: 40%;"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                            <input id="lat"class="form-control" type="text" placeholder="خطوط العرض" style="margin-left:200px;text-align: right;font-family: Frutiger LT Arabic;height: 42px;width: 40%;"oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+
+                                            <label for="email" style="margin-left: 520px;margin-right: -24px;font-family: Frutiger LT Arabic;color: #38a089;">: أو عن طريق الخريطة</strong><br></label></div>
+                                     
+                                            <div style="display: none">
                                             <input
                                               id="pac-input"
                                               class="controls"
@@ -208,12 +219,15 @@
                                             />
                                           </div>
                                           
-                                        <div id="map"  class="container" style="margin-top: 20px;height: 164px;width: 320px;"></div>
-                                    </div>
+                                        <div id="map" class="container" style= "margin-top: 20px;height: 164px;width: 80%"></div>
+
                                 </div>
+                                    </div>
+                  
                             </form>
                         </div>
-                        <div class="card-body"><button id="next"  onclick="nextTradeMarkInfoOffer('')" class="btn btn-primary btn-sm" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">حفظ</button>
+                        <div class="card-body">
+                            <button id="next"  onclick="nextTradeMarkInfoOffer('')" class="btn btn-primary btn-sm" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">حفظ</button>
                         <button id="offerpage"  onclick="goOffer()" class="btn btn-primary btn-sm" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;display: none;">التالي</button></div>
 
                     </div>
@@ -225,7 +239,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="addBranch.js"></script>
+    <script src="BackEnd/addBranch.js"></script>
     <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkmHUzp0xtObv2OCqiSaG7mn3IW37ee6s&callback=initMap">
