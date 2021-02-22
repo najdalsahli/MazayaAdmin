@@ -65,11 +65,12 @@ document.getElementById('views').innerHTML = viewsCount;
 
 
 
-
-   //---The Rating---
+//----------------------------------------------------------------------------------------------------THE RATINGS SECTION
 
    var tmNamesArray=[];
+   //var tmNamesArray = new Array(30);
    var avgRateArray=[];
+   //var avgRateArray = new Array(30);
 
    //console.log('tmNamesArray: '+tmNamesArray);
    //console.log('avgRateArray: '+avgRateArray);
@@ -111,18 +112,20 @@ firebase.database().ref('Ratings').once('value').then(function(snapshot) {
     
         });
         var avgRate=rateCount/totalUsers;
+        //if(avgRateArray.length < 30){}
         avgRateArray.push(avgRate);
         console.log('*avgRateArray:* '+avgRateArray);
         console.log('avg '+ avgRate);
 
         var ref=firebase.database().ref('Trademarks/'+tmID);
-ref.once("value", function(snapshot) {
+    ref.once("value", function(snapshot) {
     var tmName=snapshot.child("trademarkName").val()
+    //if(tmNamesArray.length < 30){}
     tmNamesArray.push(tmName);
     //chart.update();
     console.log('*tmNamesArray:* '+tmNamesArray);
     //document.getElementById("RubaTest").innerHTML=" hello"+tmNamesArray;//delete this
-console.log('---tm name: '+tmName);
+    console.log('---tm name: '+tmName);
 });
    });
         
@@ -223,21 +226,58 @@ let myChart = document.getElementById('myChart').getContext('2d');
 let barChart = new Chart(myChart,{
     type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
     data:{
-labels: tmNamesArray,
-//['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],//labels= tm names
+labels: //tmNamesArray,
+['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],//labels= tm names
 datasets:[{
   label:'متوسط التقييمات ',
-  data: avgRateArray,//data = avg rate avgRateArray
-  //[617594,181045,153060,106519,105162,95072],
+  data: //avgRateArray,//data = avg rate avgRateArray
+  [617594,181045,153060,106519,105162,95072],
   //backgroundColor:'green',
   backgroundColor:[
-    'rgba(255, 99, 132, 0.6)',
+    /*'rgba(255, 99, 132, 0.6)',
     'rgba(54, 162, 235, 0.6)',
     'rgba(255, 206, 86, 0.6)',
     'rgba(75, 192, 192, 0.6)',
     'rgba(153, 102, 255, 0.6)',
     'rgba(255, 159, 64, 0.6)',
-    'rgba(255, 99, 132, 0.6)'
+    'rgba(255, 99, 132, 0.6)'*/
+
+    'rgb(216,51,74, 0.8)',
+    'rgb(237,85,101, 0.8)',
+    'rgb(252,110,81, 0.8)',
+    'rgb(255,206,84, 0.8)',
+    'rgb(232,206,77, 0.8)',
+
+    'rgb(160,212,104, 0.8)',
+    'rgb(72,207,173, 0.8)',
+    'rgb(160,206,203, 0.8)',
+    'rgb(79,193,233, 0.8)',
+    'rgb(93,156,236, 0.8)',
+
+    'rgb(128,103,183, 0.8)',
+    'rgb(172,146,236, 0.8)',
+    'rgb(236,135,192, 0.8)',
+    'rgb(245,247,250, 0.8)',
+    'rgb(204,209,217, 0.8)',
+
+
+    'rgb(216,51,74, 0.8)',
+    'rgb(237,85,101, 0.8)',
+    'rgb(252,110,81, 0.8)',
+    'rgb(255,206,84, 0.8)',
+    'rgb(232,206,77, 0.8)',
+
+    'rgb(160,212,104, 0.8)',
+    'rgb(72,207,173, 0.8)',
+    'rgb(160,206,203, 0.8)',
+    'rgb(79,193,233, 0.8)',
+    'rgb(93,156,236, 0.8)',
+
+    'rgb(128,103,183, 0.8)',
+    'rgb(172,146,236, 0.8)',
+    'rgb(236,135,192, 0.8)',
+    'rgb(245,247,250, 0.8)',
+    'rgb(204,209,217, 0.8)'//30 color 30 trademark chosen
   ],
   borderWidth:1,
   borderColor:'#777',
@@ -331,7 +371,98 @@ options: {
 
 
 
+//--------------------------------------------------------------------------------------------------------------------NEW SECTION, Ending_soon_offers
 
+
+function Ending_soon_offers(diffDays,offerEnd,offerDetails,offerName,type,tmID,tmCount){
+
+	var tmName;
+	var tmImg;
+	//var tmCount=0;
+
+	var ref=firebase.database().ref('Trademarks/'+tmID);
+	ref.once("value", function(snapshot) {
+
+		tmName=snapshot.child("trademarkName").val();
+		tmImg=snapshot.child("imgURL").val();
+		//tmCount++;
+  
+
+	var diffDays0= document.createElement('td');
+	diffDays0.className='infocel';
+	diffDays0.textContent=diffDays;
+
+	var offerEnd0= document.createElement('td');
+	offerEnd0.className='infocel';
+	offerEnd0.textContent=offerEnd;
+
+	var offerDetails0= document.createElement('td');
+	offerDetails0.className='infocel';
+	offerDetails0.textContent=offerDetails;
+
+	var offerName0= document.createElement('td');
+	offerName0.className='infocel';
+	offerName0.textContent=offerName;
+
+	var type0= document.createElement('td');
+	type0.className='infocel';
+	type0.textContent=type;
+
+	var tmName0= document.createElement('td');
+	tmName0.className='infocel';
+	tmName0.textContent=tmName;
+  
+	var tmImg0= document.createElement('img');
+	tmImg0.className='rounded-circle mr-2 imageTrade z-depth-2';//'rounded-circle z-depth-2 imageTrade';
+	tmImg0.style.marginTop='10px';
+	tmImg0.src=tmImg;
+
+	var tmCount0= document.createElement('td');
+	tmCount0.className='infocel';
+	tmCount0.textContent=tmCount;
+
+
+
+	var newRow = document.createElement('tr');
+	
+	newRow.appendChild(diffDays0);// how many days left
+	newRow.appendChild(offerEnd0);//end date
+	newRow.appendChild(offerDetails0);//offer details
+	newRow.appendChild(offerName0);//offer title
+	newRow.appendChild(type0);//type
+
+
+	newRow.appendChild(tmName0);//trademark name
+	newRow.appendChild(tmImg0);//trademark img
+	newRow.appendChild(tmCount0);// trademark counter
+
+
+  
+  
+  
+  
+	document.getElementById("bodyOftable").appendChild(newRow);
+	
+	  
+ 
+	 
+	console.log('*diffDays '+diffDays);
+	console.log('*offerEnd '+offerEnd);
+	console.log('*offerDetails '+offerDetails);
+	console.log('*offerName '+offerName);
+	console.log('*type '+type);
+
+	console.log('*tmID '+tmID);
+	console.log('*tmName '+tmName);
+	console.log('*tmImg '+tmImg);
+	console.log('*tmCount '+tmCount);
+
+	console.log('offers - tm name: '+tmName);
+			});
+  
+
+
+}
 
 
 
@@ -349,86 +480,65 @@ var curday = function(sp){
     };
     var dateToday=curday('-');//was var
     console.log(dateToday);
-   // console.log(curday('-'));
 
 
-   //______Offers table
+//______Offers table
    firebase.database().ref('Offers').once('value').then(function(snapshot) {
-    var NumOfOffers=0;
+	var NumOfOffers=0;
+	var tmCount=0;
     snapshot.forEach(function(snapshot1) {
 
         NumOfOffers++;
         var offerEnd=snapshot1.child("endDate").val();
-        //var reversedOfferEndDate=offerEnd.split("-").reverse().join("-");
         var reversedOfferEndDate1=offerEnd.split("-").reverse().join("/");
-        //console.log('CurrDate -date 1: '+dateToday);
-        //console.log('EndDate -date 2: '+reversedOfferEndDate+' test'+reversedOfferEndDate1);
-
-        //1) date1 = dateToday
-        //2) date2 = reversedOfferEndDate
-        //console.log('date 1: '+Date.parse(dateToday));
-        //console.log('date 2: '+compareDate(reversedOfferEndDate1));
-
         var diffDays = Math.round((compareDate(reversedOfferEndDate1)-Date.parse(dateToday))/(1000*60*60*24));
-        //console.log(diffDays+' Days');
 
 
+
+        console.log('****************************************** diffDays'+diffDays);
         if(diffDays<=30){
             //هنا العروض قريبة الانتهاء 
-            var tmName;
-            var tmID=snapshot1.child("trademarkID").val();
-            var ref=firebase.database().ref('Trademarks/'+tmID);
-            ref.once("value", function(snapshot) {
-                tmName=snapshot.child("trademarkName").val()
-                //tmNamesArray.push(tmName);
-            console.log('offers - tm name: '+tmName);
-            });
-            //write the trademark name code here...
-            var offerName=snapshot1.child("offerTitle").val(); ;
-            console.log(' عرض قريب الانتهاء - '+offerName+' || '); 
+			var tmID=snapshot1.child("trademarkID").val();
+			tmCount++;
+			var offerName=snapshot1.child("offerTitle").val(); ;
+			var offerDetails=snapshot1.child("offerDetails").val(); ;
+			var type='عرض';
+
+      console.log(' *********************inside the <30 ');
+			Ending_soon_offers(diffDays,offerEnd,offerDetails,offerName,type,tmID,tmCount);
         }
 
     });
 //after_theLoop();
-console.log('Number of offers= '+NumOfOffers); //1)Offers tabel +2)Vouchers table +3)Deals table
+console.log('------------------Number of offers= '+NumOfOffers); //1)Offers tabel +2)Vouchers table +3)Deals table
    });
 
 
 
-   //______Deals table
+
+//______Deals table
    firebase.database().ref('Deals').once('value').then(function(snapshot) {
-    var NumOfDeals=0;
+	var NumOfDeals=0;
+	var tmCount=0;
     snapshot.forEach(function(snapshot1) {
 
         NumOfDeals++;
         var offerEnd=snapshot1.child("endDate").val();
-        //var reversedOfferEndDate=offerEnd.split("-").reverse().join("-");
         var reversedOfferEndDate1=offerEnd.split("-").reverse().join("/");
-        //console.log('CurrDate -date 1: '+dateToday);
-        //console.log('EndDate -date 2: '+reversedOfferEndDate+' test'+reversedOfferEndDate1);
-
-        //1) date1 = dateToday
-        //2) date2 = reversedOfferEndDate
-        //console.log('date 1: '+Date.parse(dateToday));
-        //console.log('date 2: '+compareDate(reversedOfferEndDate1));
-
         var diffDays = Math.round((compareDate(reversedOfferEndDate1)-Date.parse(dateToday))/(1000*60*60*24));
-        //console.log(diffDays+' Days');
+
 
 
         if(diffDays<=30){
             //هنا الصفقات قريبة الانتهاء 
-            var tmName;
-            var tmID=snapshot1.child("trademarkID").val();
-            var ref=firebase.database().ref('Trademarks/'+tmID);
-            ref.once("value", function(snapshot) {
-                tmName=snapshot.child("trademarkName").val()
-                //tmNamesArray.push(tmName);
-            console.log('deals - tm name: '+tmName);
-            });
-            //write the trademark name code here...
-            var offerName=snapshot1.child("offerTitle").val(); ;
-            console.log(' صفقة قريب الانتهاء - '+offerName +' || '); 
+			var tmID=snapshot1.child("trademarkID").val();
+			tmCount++;
+			var offerName=snapshot1.child("offerTitle").val(); ;
+			var offerDetails=snapshot1.child("offerDetails").val(); ;
+			var type='صفقة';
+
+      console.log(' inside the <30 ');
+			Ending_soon_offers(diffDays,offerEnd,offerDetails,offerName,type,tmID,tmCount);
         }
 
     });
@@ -436,40 +546,31 @@ console.log('Number of offers= '+NumOfOffers); //1)Offers tabel +2)Vouchers tabl
 console.log('Number of Deals= '+NumOfDeals); //1)Offers tabel +2)Vouchers table +3)Deals table
    });
 
-   //______Vouchers table
+
+
+//______Vouchers table
    firebase.database().ref('Vouchers').once('value').then(function(snapshot) {
-    var NumOfVouchers=0;
+	var NumOfVouchers=0;
+	var tmCount=0;
     snapshot.forEach(function(snapshot1) {
 
         NumOfVouchers++;
         var offerEnd=snapshot1.child("endDate").val();
-        //var reversedOfferEndDate=offerEnd.split("-").reverse().join("-");
         var reversedOfferEndDate1=offerEnd.split("-").reverse().join("/");
-        //console.log('CurrDate -date 1: '+dateToday);
-        //console.log('EndDate -date 2: '+reversedOfferEndDate+' test'+reversedOfferEndDate1);
-
-        //1) date1 = dateToday
-        //2) date2 = reversedOfferEndDate
-        //console.log('date 1: '+Date.parse(dateToday));
-        //console.log('date 2: '+compareDate(reversedOfferEndDate1));
-
         var diffDays = Math.round((compareDate(reversedOfferEndDate1)-Date.parse(dateToday))/(1000*60*60*24));
-        //console.log(diffDays+' Days');
+
 
 
         if(diffDays<=30){
-            //هنا الصفقات قريبة الانتهاء 
-            var tmName;
-            var tmID=snapshot1.child("trademarkID").val();
-            var ref=firebase.database().ref('Trademarks/'+tmID);
-            ref.once("value", function(snapshot) {
-                tmName=snapshot.child("trademarkName").val()
-                //tmNamesArray.push(tmName);
-            console.log('Vouchers - tm name: '+tmName);
-            });
-            //write the trademark name code here...
-            var offerName=snapshot1.child("offerTitle").val(); ;
-            console.log(' قسيمة قريبة الإنتهاء قريب الانتهاء - '+offerName+' || '); 
+            //هنا القسائم قريبة الانتهاء 
+			var tmID=snapshot1.child("trademarkID").val();
+			tmCount++;
+			var offerName=snapshot1.child("offerTitle").val(); ;
+			var offerDetails=snapshot1.child("offerDetails").val(); ;
+			var type='قسيمة';
+
+      console.log(' inside the <30 ');
+			Ending_soon_offers(diffDays,offerEnd,offerDetails,offerName,type,tmID,tmCount);
         }
 
     });
@@ -484,67 +585,194 @@ console.log('Number of Vouchers= '+NumOfVouchers); //1)Offers tabel +2)Vouchers 
 
 
 
-/*firebase.database().ref('Offers').once('value').then(function(snapshot) {
-    var NumOfOffers=0;
-    snapshot.forEach(function(snapshot1) {
-
-        NumOfOffers++;
-        var offerEnd=snapshot1.child("endDate").val();// const not working
-        //offerEnd = offerEnd.split("-").reverse().join("-");
-        var newDate=offerEnd.split("-").reverse().join("-");
-        var newNew=new Date(newDate);
-        //const endOfferReversed=reverseString(offerEnd);
-
-
-        //var date = "2016-10-15";
-        //date = date.split("-").reverse().join("-");
-        //console.log(date);
-        
-        //Subtract date todat - offer end date !
-var date1 = dateToday;
-console.log('date1 '+date1);
-var date2 = new Date(newDate);//new Date('12-15-2010');
-console.log('date2 '+date2);
-
-
-var diffTime = Math.abs(date2 - date1);
-var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); //if days <= 30 --if the diffrence is less that or equal to 30 "month" then it's عروض قريبة الإنتهاء
-//console.log(diffTime + " milliseconds");
-console.log(diffDays + " days");
 
 
 
-
-        //console.log('The offers end date: '+offerEnd); 
-        console.log('offerEnd= '+offerEnd);
-        console.log('endOfferReversed= '+newDate);
-        console.log('dateToday= '+dateToday);
-        var diffTime = Math.abs(newNew - dateToday);
-        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        console.log(diffTime + " milliseconds");
-        console.log(diffDays + " days");
-        if(diffDays<=30){
-            //هنا العروض قريبة الانتهاء 
-            var tmName;
-            var offerName=snapshot1.child("endDate").val(); ;
-            console.log(' عرض قريب الانتهاء - '+offerTitle);
-        }
-
-    });
-//after_theLoop();
-//console.log('The offers end date: '+offerEnd);
-console.log('Number of offers= '+NumOfOffers);
-   });*/
+//----------------------------------------------------------------------------------------------------THE REGIONS SECTION
 
 
+//function REGIONS(){
+     //var RegionsArray=[];
+     var RegionsArray=["الكل","الحدود الشمالية","المنطقة الشرقية","منطقة الباحة","منطقة الجوف","منطقة الرياض","منطقة القصيم","منطقة المدينة المنورة","منطقة تبوك","منطقة جازان","منطقة حائل","منطقة عسير","منطقة مكة المكرمة","منطقة نجران"];
+     var NumOfUsersArray=[];
+
+//console.log('tmNamesArray: '+tmNamesArray);
+//console.log('avgRateArray: '+avgRateArray);
+
+firebase.database().ref('Users').once('value').then(function(snapshot) {
+ var userCount=0;
+
+ var AllCount=0;
+ var NorthernCount=0;
+ var EasternCount=0;
+ var AlBahah=0;
+ var AlJouf=0;
+ var Riyadh=0;
+ var Alqassim=0;
+ var Almadina=0;
+ var Tabuk=0;
+ var Jazan=0;
+ var Hail=0;
+ var Assir=0;
+ var Makkah=0;
+ var Najran=0;
 
 
 
+ snapshot.forEach(function(snapshot1) {
+
+     //totalUsers=0;
+     //rateCount=0;
+     userCount++;
+     var userKey=snapshot1.key;
+     var userRegion=snapshot1.child("region").val(); ;
+     console.log('user Counter: '+userCount+' user Region: '+userRegion);
+
+     switch (userRegion) {
+        case "الكل":
+            AllCount++;
+          break;
+        case  "الحدود الشمالية":
+            NorthernCount++;
+          break;
+        case "المنطقة الشرقية":
+            EasternCount++;
+          break;
+        case "منطقة الباحة":
+            AlBahah++;
+          break;
+        case "منطقة الجوف":
+            AlJouf++;
+          break;
+        case "منطقة الرياض":
+            Riyadh++;
+          break;
+        case "منطقة القصيم":
+            Alqassim++;
+          break;
+
+          case  "منطقة المدينة المنورة":
+            Almadina++;
+            break;
+
+          case "منطقة تبوك":
+            Tabuk++;
+            break;
+
+          case "منطقة جازان":
+            Jazan++;
+            break;
+
+          case "منطقة حائل":
+            Hail++;
+            break;
+
+          case "منطقة عسير":
+            Assir++;
+            break;
+
+          case "منطقة مكة المكرمة":
+            Makkah++;
+            break;
+
+          case "منطقة نجران":
+            Najran++;
+            break;
+
+      }
 
 
+});
+console.log('AllCount: '+AllCount+'\n NorthernCount: '+NorthernCount+'\n EasternCount: '+EasternCount+'\n AlBahah: '+AlBahah+'\n AlJouf: '+AlJouf+'\n Riyadh: '+Riyadh+'\n Alqassim: '+Alqassim+'\n Almadina: '+Almadina+'\n Tabuk: '+Tabuk+'\n Jazan: '+Jazan+'\n Hail: '+Hail+'\n Assir: '+Assir+'\n Makkah: '+Makkah+'\n Najran: '+Najran);
+//RegionsArray=["الكل","الحدود الشمالية","المنطقة الشرقية","منطقة الباحة","منطقة الجوف","منطقة الرياض","منطقة القصيم","منطقة المدينة المنورة","منطقة تبوك","منطقة جازان","منطقة حائل","منطقة عسير","منطقة مكة المكرمة","منطقة نجران"];
+NumOfUsersArray=[AllCount, NorthernCount, EasternCount, AlBahah, AlJouf, Riyadh, Alqassim, Almadina, Tabuk, Jazan, Hail, Assir, Makkah, Najran]; 
+console.log('RegionsArray: \n'+RegionsArray);
+console.log('NumOfUsersArray: \n'+NumOfUsersArray);    
+
+ });
+
+//}
+//REGIONS();
+console.log('NumOfUsersArray: after calling the function \n'+NumOfUsersArray);    
+ //--------------------------------------------------------------------------------------------*/
 
 
+//--the regions chart---
+let myChart2 = document.getElementById('myChart2').getContext('2d');
 
+// Global Options
+//Chart.defaults.global.defaultFontFamily = 'Lato';
+//Chart.defaults.global.defaultFontSize = 18;
+//Chart.defaults.global.defaultFontColor = '#777';
+
+//console.log('befeor chart ***');
+let barChart2 = new Chart(myChart2,{
+    type:'pie', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    data:{
+labels: RegionsArray,
+//['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],//labels= tm names
+datasets:[{
+  label:' عدد المستخدمين',
+  data: NumOfUsersArray,//data = avg rate avgRateArray
+  
+  //[617594,181045,153060,106519,105162,95072],
+  //backgroundColor:'green',
+  backgroundColor:[
+    /*'rgba(255, 99, 132, 0.6)',
+    'rgba(54, 162, 235, 0.6)',
+    'rgba(255, 206, 86, 0.6)',
+    'rgba(75, 192, 192, 0.6)',
+    'rgba(153, 102, 255, 0.6)',
+    'rgba(255, 159, 64, 0.6)',
+    'rgba(255, 99, 132)',
+    'rgba(255, 99, 132, 0.6)',
+    'rgba(255, 99, 132, 0.5)',
+    'rgba(255, 99, 132, 0.7)',*/
+    //'rgba(85.5,26.7,32.5)' bad as fuck
+    //'rgb(216,51,74, 0.7)',
+    'rgb(237,85,101, 0.8)',
+    'rgb(252,110,81, 0.8)',
+    'rgb(255,206,84, 0.8)',
+    'rgb(232,206,77, 0.8)',
+
+    'rgb(160,212,104, 0.8)',
+    'rgb(72,207,173, 0.8)',
+    'rgb(160,206,203, 0.8)',
+    'rgb(79,193,233, 0.8)',
+    'rgb(93,156,236, 0.8)',
+
+    'rgb(128,103,183, 0.8)',
+    'rgb(172,146,236, 0.8)',
+    'rgb(236,135,192, 0.8)',
+    'rgb(245,247,250, 0.8)',
+    'rgb(204,209,217, 0.8)'
+
+
+  ],
+  borderWidth:1,
+  borderColor:'#777',
+  hoverBorderWidth:3,
+  hoverBorderColor:'#000'
+}]
+},
+options:{
+title:{
+  display:true,
+  text:'المناطق الأكثر إستخداما',
+  fontSize:25
+},
+legend:{
+  display:true,
+  position:'right',
+  labels:{
+    fontColor:'#000'
+  }
+},
+animation:{
+  animateScale: true
+}}
+
+});
 
 
 
@@ -600,6 +828,27 @@ function parseDate(str) {
 }
 
 alert(datediff(parseDate(first.value), parseDate(second.value)));*/
+
+function updateChart(){
+
+
+  barChart.data.labels=tmNamesArray;
+  barChart.data.datasets[0].data=avgRateArray;
+  barChart.update();
+
+  barChart2.data.labels=RegionsArray;
+  barChart2.data.datasets[0].data=NumOfUsersArray;
+  barChart2.update();
+
+
+  //console.log('RegionsArray: \n'+RegionsArray);
+  //console.log('NumOfUsersArray: \n'+NumOfUsersArray); 
+  console.log('inside update chart'); 
+
+  //barChart
+  //barChart2
+
+}
 
 //---4
 function compareDate(str1){
