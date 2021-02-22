@@ -457,6 +457,17 @@ function compareDate(str1){
  var date1 = new Date(yr1, mon1-1, dt1);
  return date1;
  }
+//  function hi(){
+//   firebase.database().ref('Trademarks').once('value').then(function(snapshot) {
+//     snapshot.forEach(function(snapshot1) {
+//    firebase.database().ref('Categories/'+snapshot1.child('category').val()+'/Trademarks/'+snapshot1.key).set(true);
+// console.log(snapshot1.child('category').val()+snapshot1.key);
+
+//     });
+//   });
+
+
+//  }
 
 
 
