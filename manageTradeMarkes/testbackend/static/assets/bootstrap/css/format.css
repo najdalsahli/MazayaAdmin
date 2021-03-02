@@ -1,0 +1,202 @@
+
+
+.pragraphs {
+    width: 100px;
+    margin: 10px;
+    margin-top: 10px;
+    text-align: center;
+    border-color: rgb(56,56,58);
+    color: rgb(58,59,64);
+    font-size: 20px;
+    font-family: Frutiger LT Arabic;
+}
+.images{
+
+    width: 100px;
+    margin: 10px;
+    display:flex!important;
+ justify-content:flex-end!important;
+
+}
+
+.dives{
+    text-align: right;
+    width: 120px;
+    text-align:right!important;
+}
+.buttons{
+    background: rgb(56,160,137); 
+    margin-right: 19px;
+ 
+    text-align:center!important;
+    border:1px solid #e3e6f0!important;
+    border-radius:.35rem!important;
+    float:right!important;
+    display:flex!important;
+  
+  font-family: Frutiger LT Arabic;
+
+}
+.deletecel{
+    width: 115px;
+    font-family: Frutiger LT Arabic;
+}
+
+.cells{
+    text-align: center;
+    font-family: Frutiger LT Arabic;
+}
+/* #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid  rgb(56,160,137);
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  } */
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+ 
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+  .cards {
+    width: 111.5px;
+    height: 141.5px;
+    color: #094056;
+    padding-top: 90px;
+   
+    margin-left: 70px;
+    margin-right: -30px;
+    border-color: #75e5ce;
+    border-top-color: #75e5ce;
+    border-right-color: #75e5ce;
+    border-bottom-color: #75e5ce;
+    border-left-color: #75e5ce;
+  }
+  .deletebtn{
+    background-color: #ffffff;
+
+    
+    width: 100px;
+   height: 47px;
+    margin-top: 2px;
+    
+    color: #aa262e;
+    font-weight: bold;
+    border-top-width: 2px;
+    border-top-color: #aa262e;
+    border-right-width: 2px;
+    border-right-color: #aa262e;
+    border-bottom-width: 2px;
+    border-bottom-color: #aa262e;
+    border-left-width: 2px;
+    border-left-color: #aa262e;
+    font-family: Frutiger LT Arabic;
+   
+   
+    
+  }
+  .deleteIcon{
+    margin-top: -5px;
+    font-size: 20px;
+    margin-left: 12px;
+    color: #aa262e;
+  }
+  .btncel{
+    text-align: center;
+  }
+  .editbtn{
+    height: 47px;
+    width: 100px;
+    margin-top: 2px;
+    font-family: Frutiger LT Arabic;
+    background: rgb(255,255,255);
+    color: #f3bd48;
+    font-weight: bold;
+    border-top-width: 2px;
+    border-top-color: #f3bd48;
+    border-right-width: 2px;
+    border-right-color: #f3bd48;
+    border-bottom-width: 2px;
+    border-bottom-color: #f3bd48;
+    border-left-width: 2px;
+    border-left-color: #f3bd48;
+    
+  }
+  .editIcon{
+   
+    margin-top: -5px;
+    margin-left: 12px;
+    font-size: 20px;
+    border-left-color: #f3bd48;
+  }
+  .viewbtn{
+    width: 100px; 
+    height: 47px;
+    
+    background: rgb(255,255,255);
+    color: #2cb1c6;
+    font-weight: bold;
+    border-top-width: 2px;
+    border-top-color: #2cb1c6;
+    border-right-width: 2px;
+    border-right-color: #2cb1c6;
+    border-bottom-width: 2px;
+    border-bottom-color: #2cb1c6;
+    border-left-width: 2px;
+    border-left-color: #2cb1c6;
+    font-family: Frutiger LT Arabic;
+    
+  }
+  .viewIcon{
+    margin-left: 8px;
+  
+    font-size: 20px;
+  }
+  .infocel{
+    text-align: center;
+    font-size: 20px;
+    font-family: Frutiger LT Arabic;
+  
+  }
+  .map {
+    height: 100%;
+  }
+  .imageTrade{
+    margin-left: 5px;
+    height: 40px;
+    width: 40px;
+  }
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+  
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }
+
+ 

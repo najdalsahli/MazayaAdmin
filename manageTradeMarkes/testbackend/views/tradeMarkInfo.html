@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>معلومات التاجر</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/line-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/typicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
+    <link rel="stylesheet" href="assets/css/untitled.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/format.css">
+</head>
+
+<body id="page-top" >
+    <div id="wrapper" style="background: #00524d;">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#00524d 0%, #38a089 100%); margin-top: 70px;filter: grayscale(0%) sepia(0%);">
+            <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: 9px;">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="dashboard.html" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="typcn typcn-th-small-outline" style="margin-left: 0px;margin-right: 71px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">الصفحة الرئيسية</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="manageEmployees.html" style="text-align: center;padding: 24px;"><i class="fa fa-user" style="margin-left: 0px;margin-right: 81px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة الموظفين</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageTradeMarksHome.html" style="text-align: center;margin-bottom: 6px;"><i class="fa fa-trademark" style="margin-right: 41px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة العلامات التجارية</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Suggestion.html" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="la la-comment-o" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">أقتراحات</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="manageBannersHome.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-tag" style="margin-left: 0px;margin-right: 80px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الشريط الإعلاني</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="Notification.html" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-bell" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الاشعارات</span></a></li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-dark shadow mb-4 topbar static-top" style="background: linear-gradient(#00524d, #00524d);">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+<li
+                            class="nav-item" style="text-align: left;">
+                            <a class="nav-link" href="/" style="text-align: center;margin-left: 28px;padding: 13px;padding-top: 15px;padding-right: 24px;font-family: Frutiger LT Arabic;font-weight: bold;"><span style="margin-right: 9px;margin-left: -26px;">تسجيل الخروج</span></a></li>
+
+                    <div class="d-none d-sm-block topbar-divider"></div>
+                    <li class="nav-item dropdown no-arrow">
+                        <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><img src="assets/img/Logo.png" style="width: 46px;height: 40.5px;"></a>
+                        </div>
+                    </li>
+                    </ul>
+            </div>
+            </nav>
+            
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <h1 style="text-align: right;color: #38a089;font-family: Frutiger LT Arabic;">إدارة العلامات التجارية<i class="fa fa-minus" style="margin-left: 21px;color: #00524d;"></i></h1>
+                                </div>
+                            </div><img src="assets/img/Pagination.png" style="height: 98px;margin: 35px;margin-top: 33px;margin-bottom: 28px;margin-left: 200px;"></div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-xl-8" style="text-align: center;margin-left: 171px;">
+                    <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 21px;">
+                        <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;">
+                            <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
+                                    <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a></div>
+                            </div>
+                            <h6 style="color: #ffffff;font-size: 25px;font-family: Frutiger LT Arabic;">معلومات العلامة التجارية</h6>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col" style="margin-top: -3px;"><label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">مواقع التواصل الاجتماعي</label>
+                                        <div class="form-row">
+                                            <div class="col" style="margin-top: 0px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;" >انستقرام</label></div>
+                                                <input
+                                                placeholder=" مثال : https://www.instagram.com/mazaya/"  id="inst" class="form-control" type="text"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col" style="margin-top: 19px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">تويتر</label></div>
+                                                <input
+                                                placeholder="مثال : https://www.twitter.com/mazaya/"    id="twi" class="form-control" type="text" style="margin-top: 7px;"></div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col" style="margin-top: 21px;">
+                                                <div class="form-check" style="text-align: right;margin-right: 25px;"><label class="form-check-label" for="formCheck-1" style="font-family: Frutiger LT Arabic;">سناب تشات</label></div>
+                                                <input
+
+                                                placeholder=""  id="snap" class="form-control" type="text"></div>
+                                        </div><label style="margin-top: 18px;margin-right: -110px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">نوع نشاط العلامة التجارية</label><select id="trademarkType" class="form-control d-table d-xl-flex" style="margin-top: -1px;font-family: Frutiger LT Arabic;padding-top: 0px;text-align: right;">
+                                            <option value="12" selected="">يرجى اختيار</option>
+                                            <option value="13" >أونلاين</option>
+                                            <option value="14">محلي</option>
+                                            <option value="15">الكل</option></select>
+                                        <label
+                                            style="margin-top: 18px;margin-right: -212px;margin-left: 21px;font-weight: bold;color: #38a089;font-family: Frutiger LT Arabic;">اختيار الفئة</label><select id="categoryType" class="form-control" style="font-family: Frutiger LT Arabic;padding-top: 0px;">
+                                                <option value="12" selected="">يرجى اختيار الفئة</option>
+                                                <option value="13" >مطاعم</option>
+                                                <option value="14" >مقاهي</option>
+                                                <option value="15">حلويات</option>
+                                                <option value="16">أغذية صحية</option>
+                                                <option value="17">تسوق</option>
+                                                <option value="18">خدمات</option>
+                                                <option value="19">تعليم</option>
+                                                <option value="20">صحة ولياقة</option>
+                                                <option value="21">سفر وسياحة</option>
+                                                <option value="22">جمال وسبا</option>
+                                                <option value="23">ترفيه</option>
+                                                <option value="24">إلكترونيات</option>
+                                                <option value="25">سيارات</option>
+                                            </select></div>
+                                    <div
+                                        class="col">
+                                        <div class="form-group"><label for="email" style="font-family: Frutiger LT Arabic;margin-left: 218px;color: #38a089;"><strong>الاسم التجاري</strong><br></label><input class="form-control" type="email" id="name" placeholder="مثال : باتشي" name="brandname"
+                                                style="text-align: right;margin-top: 21px;font-family: Frutiger LT Arabic;"></div>
+                                        <div class="form-group"><label for="last_name" style="margin-left: 260px;font-family: Frutiger LT Arabic;color: #38a089;"><strong>الوصف&nbsp;</strong><br></label><input class="form-control" type="text"  id="description" placeholder="مثال : شركة شوكلاته"
+                                                name="last_name" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
+                                        <div class="form-group"><label  style="margin-left: 218px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>رقم التواصل</strong></label><input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" type="tel"  id="contactnum" placeholder="05xxxxxxxx" name="PhoneNumber"
+                                                style="text-align: right;"></div>
+                                        <div class="form-group"><label  style="margin-right: -208px;color: #38a089;font-family: Frutiger LT Arabic;"><strong>البريد الالكتروني</strong></label><input class="form-control" type="email"  id="mail" placeholder="example@example.com"
+                                                name="email" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
+                                        <div class="form-group"><label  style="margin-right: -175px;color: #38a089;font-family: Frutiger LT Arabic;margin-left: -24px;"><strong>رابط الموقع الالكتروني</strong><br></label><input class="form-control" type="url" id="maillink" placeholder="Batchi.com"
+                                                name="URL" style="text-align: right;font-family: Frutiger LT Arabic;"></div>
+                                </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group" style="text-align: center;">
+                                                    <div class="form-check" style="text-align: right;margin-right: 29px;margin-top: 18px;">
+                                                        <input class="form-check-input" type="checkbox" id="isFeatured" style="margin-left: 186px;margin-top: 7px;"><label class="form-check-label" for="formCheck-5" style="font-weight: bold;color: rgb(179,17,46);font-size: 20px;font-family: Frutiger LT Arabic;">العلامة التجارية مميزة&nbsp;</label></div>
+
+
+                                                </div>
+                                                <!---->
+                                                <!-- <progress value="0" max="100" id="uploader">0%</progress> -->
+                                                <input type="file" value="upload" id="fileButton" required accept="image/*">  
+                                                <!-- <input class="btn btn-primary" type="file" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;"> <i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"> -->
+                                                <label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">اختيار الصورة</label>
+                                                <br>
+                                                
+                                                <!-- <progress value="0" max="100" id="uploader1">0%</progress> -->
+                                                <input type="file" value="upload" id="fileButton1" required accept="image/*"> 
+                                                <!-- <input class="btn btn-primary" type="file" style="margin-top: 15px;margin-left: 40px;width: 180px;background: linear-gradient(#ffffff, #e4f1ee), #dbe1e1;color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;font-family: Frutiger LT Arabic;"><i class="fas fa-upload" style="margin-left: 11px;color: #38a089;"> -->
+                                                <label style="margin-right: -164px;font-family: Frutiger LT Arabic;font-weight: bold;color: #38a089;">اختيار الخلفية</label>
+                                      
+                                                <a name='uid'style="display:none;" id='link'></a>
+
+                                                <!---->
+        
+                                                 </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="card-body" style="margin-top: 52px;"><button class="btn btn-primary btn-sm" id='next'type="button"  onclick="nextTradeMarkInfo()" style="margin-right: -4px;margin-left: 33px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic; ">حفظ</button>
+                        <button id="Branchpage"  onclick="change_page()" class="btn btn-primary btn-sm" style="margin-right: 75px;margin-left: 88px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;display: none;">التالي</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright"><span>وزارة التجارة © 2020</span></div>
+        </div>
+    </footer>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+      <script src="tradeMarkInfo.js"></script>
+</body>
+
+</html>

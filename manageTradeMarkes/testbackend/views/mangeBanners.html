@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-storage.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>الشريط الإعلاني</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/line-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/Social-Icons.css">
+    <link rel="stylesheet" href="assets/css/untitled.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/typicons.min.css">
+    <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
+      <link rel="stylesheet" href="assets/css/popup.css">
+      
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper" style="background: #00524d;">
+
+
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(#00524d 0%, #38a089 100%);margin-top: 70px;filter: grayscale(0%) sepia(0%);">
+            <div class="container-fluid d-flex flex-column p-0"><img src="assets/img/Logo.png" style="width: 118px;height: 103.5px;margin-right: 30px;margin-bottom: 30px;margin-left: 3px;margin-top: 9px;">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="/dashboard" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="typcn typcn-th-small-outline" style="margin-left: 0px;margin-right: 71px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">الصفحة الرئيسية</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manageEmployees" style="text-align: center;padding: 24px;"><i class="fa fa-user" style="margin-left: 0px;margin-right: 81px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة الموظفين</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="/manageTradeMarksHome" style="text-align: center;margin-bottom: 6px;"><i class="fa fa-trademark" style="margin-right: 41px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65;">إدارة العلامات التجارية</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="/Suggestion" style="text-align: center;font-family: FrutigerLTArabic-65;"><i class="la la-comment-o" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">أقتراحات</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="/manageBannersHome" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-tag" style="margin-left: 0px;margin-right: 80px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الشريط الإعلاني</span></a></li>
+                    <li class="nav-item" style="text-align: left;"><a class="nav-link" href="/Notification" style="text-align: center;font-family: FrutigerLTArabic-65;"> <i  class="fas fa-bell" style="margin-left: 0px;margin-right: 100px;font-size: 20px;"></i><span style="font-family: FrutigerLTArabic-65; ">الاشعارات</span></a></li>
+
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-dark shadow mb-4 topbar static-top" style="background: linear-gradient(#00524d, #00524d);">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+<li
+                            class="nav-item" style="text-align: left;">
+                            <a class="nav-link" href="/" style="text-align: center;margin-left: 28px;padding: 13px;padding-top: 15px;padding-right: 24px;font-family: Frutiger LT Arabic;font-weight: bold;"><span style="margin-right: 9px;margin-left: -26px;">تسجيل الخروج</span></a></li>
+
+                    <div class="d-none d-sm-block topbar-divider"></div>
+                    <li class="nav-item dropdown no-arrow">
+                        <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><img src="assets/img/Logo.png" style="width: 46px;height: 40.5px;"></a>
+                        </div>
+                    </li>
+                    </ul>
+            </div>
+            </nav>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <h1 style="text-align: right;color: #38a089;font-family: Frutiger LT Arabic;">الشريط الاعلاني<i class="typcn typcn-minus" style="margin-left: 21px;color: #00524d;"></i></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id='Info'>
+                    <div id='moreInfo' s class="col-sm-6 col-md-5 col-lg-4 item" style="margin-top: 81px;margin-left: 94px;background: linear-gradient(#ffffff, #e4f1ee);width: 100px;">
+                        <div class="box">
+                            <h3 class="name" style="text-align: center;margin-top: 75px;margin-bottom: 19px;font-family: Frutiger LT Arabic;color: #00524d;">العروض الموسمية</h3>
+                            <p class="description" style="text-align: center;font-family: Frutiger LT Arabic;">هي عروض مؤقتة يتم الحصول عليها في مواسم معينة خلال السنة ، ويمكن إضافتها اكثر من مرة</p>
+                        </div>
+                        <button onclick='sesonal()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 175px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إضافة</button>
+                    </div> 
+                    <div id='moreInfo2' class="col-sm-6 col-md-5 col-lg-4 item" style="margin-left: 163px;margin-top: 81px;background: linear-gradient(#ffffff, #e4f1ee);">
+                        <div class="box" style="height: 103px;border-top-color: #858796;">
+                            <h3 class="name" style="text-align: center;margin-top: 82px;margin-bottom: 19px;font-family: Frutiger LT Arabic;color: #00524d;">العروض المثبتة</h3>
+                            <p class="description" style="text-align: center;margin-top: 20px;margin-bottom: 11px;font-family: Frutiger LT Arabic;">هي عروض ثابتة في الشريط الإعلاني، ويمكن إضافتها مره واحده فقط</p>
+                            <button onclick='pinned()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 175px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">إضافة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id='divMain'class="col-lg-7 col-xl-8" style="display: none; text-align: center;margin-left: 225px;margin-top: 37px ;">
+                    <div class="card shadow mb-4" style="width: 680px;margin-left: -26px;margin-top: 30px;">
+                        <div class="card-header d-flex justify-content-between align-items-center" style="background: #00524d;">
+                            <h1 id='header'style="font-family: Frutiger LT Arabic;font-size: 25px;color: #ffffff;margin-left: 450px;">  الشريط الإعلاني-الموسمية   </h1>
+                            <!-- <button class="popup" onclick="myFunction()"  type="button"  >
+                                <img src="assets/img/exclamation-mark-in-a-circle (1).png" style="background-color: #00524d;">
+                                <span class="popuptext" id="myPopup"><strong>: العروض الموسمية</strong>
+                                    <br>هي عروض مؤقتة يتم الحصول عليها في مواسم معينة خلال السنة ، ويمكن إضافتها اكثر من مرة
+                                <br>
+                                <strong>:  العروض المثبتة</strong><br>
+                                هي عروض ثابتة في الشريط الإعلاني، ويمكن إضافتها مره واحده فقط
+                            </span>
+                            </button> -->
+                        </div>
+                        <div  style="display:none;" class='loader' id="loader"></div>
+                        <div  id="myDiv" class="card shadow animate-bottom ">
+
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col" style="margin-top: 4px;">
+                                        <label style="margin-right: -132px;font-family: Frutiger LT Arabic;font-style: normal;font-weight: 55;color: #38a089;">العروض</label>
+                                        <div class="form-row">
+                                            <div class="col">
+                    
+                                           <div id="seasnoal" class="dropdown-check-list" tabindex="100" style='display: none;'>
+                                            <span class="anchor"style="text-align: right;font-family: Frutiger LT Arabic;height: 46px;">يرجى اختيار العرض</span>
+                                            <ul id='list'class="items">
+                                              <!-- <li><input type="checkbox" />Apple </li>
+                                              <li><input type="checkbox" />Orange</li>
+                                              <li><input type="checkbox" />Grapes </li>
+                                              <li><input type="checkbox" />Berry </li>
+                                              <li><input type="checkbox" />Mango </li>
+                                              <li><input type="checkbox" />Banana </li>
+                                              <li><input type="checkbox" />Tomato</li> -->
+                                            </ul>
+                                        </div>  
+
+                                        <select id="pinned"class="form-control" style="font-family: Frutiger LT Arabic;height: 43px; display: none;">
+                                            <option value="10" selected="">يرجى اختيار العرض</option></select>
+                            
+                                          </div>
+                                        </div>
+                                    
+                                      
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group"><label for="email" style="font-family: Frutiger LT Arabic;color: #38a089;font-weight: 55;margin-right: -147px;">عنوان الشريط الاعلاني<br></label>
+                                            <input id='title' class="form-control" type="email" placeholder="مثال: تخفيض" name="brandname" style="text-align: right;font-family: Frutiger LT Arabic;height: 43px;"></div>
+                                        <!-- <div class="form-group">
+                                            <label  for="last_name" style="margin-left: 180px;color: #38a089;font-family: Frutiger LT Arabic;font-weight: 55;margin-top: -35px;margin-bottom: 4px;">نوع الشريط الاعلاني<br>
+                                        </label></div>
+                                        <select id='typeOfBnnaers' class="form-control" style="font-family: Frutiger LT Arabic;height: 43px;margin-top: -15px;">
+                                            <option value="12" selected="">يرجى اختيار النوع</option>
+                                            <option value="13">موسمي</option>
+                                            <option value="14">مثبتة</option>
+                                        </select> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                
+                                                <tr>
+                                                    <th></th>
+                                                    <td style="font-family: Frutiger LT Arabic;color: #38a089;">تاريخ انتهاء</td>
+                                                    <td style="width: 95px;color: #38a089;font-family: Frutiger LT Arabic;padding-right:4px;padding-bottom: 12px;padding-left: 151px;">تاريخ البدء</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <input id='endDate' class="form-control" type="date" style="width: 175px;margin-left: 74px;margin-top: -7px;margin-right: 79px;font-family: Frutiger LT Arabic;"></td>
+                                                    <td style="color: #38a089;font-weight: bold;font-size: 15px;font-family: Frutiger LT Arabic;padding-left: 3px;padding-top: 7px;">
+                                                        <input id='startDate'class="form-control" type="date" style="margin-left: 43px;width: 176px;margin-right: 35px;margin-bottom: 15px;"></td>
+                                                </tr>
+                                              
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                
+                                                <tr>
+                                                    <th></th>
+                                              <td style="width: 95px;color: #38a089;font-family: Frutiger LT Arabic;padding-bottom: 12px;padding-left: 401px;">إضافة صورة</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <input value="upload" id="fileButton" required accept="image/*"type="file" style="width: 310px;margin-left: 353px;margin-bottom: 15px;">
+                                                </tr>
+                                          
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- <button class="btn btn-primary" type="button" style="width: 235px;background: linear-gradient(#e4f1ee, #ffffff);color: #00524d;border-top-color: #38a089;border-right-color: #38a089;border-bottom-color: #38a089;border-left-color: #38a089;margin-top: -33px;font-family: Frutiger LT Arabic;margin-left: 8px;margin-right: 2px;">إضافة العرض</button> -->
+                        </div>
+                        <a name='uid'style="display:none;" id='link'></a>
+
+                        <div class="card-body">
+                            <button onclick='save()'class="btn btn-primary btn-sm" type="submit" style="margin-right: 54px;margin-left: 74px;background: linear-gradient(#38a089, #1c5045);padding-right: 41px;text-align: center;padding-left: 41px;border-color: rgba(255,255,255,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-family: Frutiger LT Arabic;margin-top: -1px;">التالي</button>
+                        </div>
+                    </div>
+                </div>
+              
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright"><span>وزارة التجارة © 2020</span></div>
+        </div>
+    </footer>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="manageBanners.js"></script>
+ 
+</body>
+
+</html>
