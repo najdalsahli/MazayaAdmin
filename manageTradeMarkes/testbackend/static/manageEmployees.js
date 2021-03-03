@@ -68,9 +68,9 @@ function displayusers(){
     deletecel.appendChild(deletebtn);
     
       deletebtn.onclick=function(){
-        var conf=confirm("هل أنت متأكد من حدف الموظف وأفراد عائلته إن وجد ؟");
+        var conf=confirm("هل أنت متأكد من حذف الموظف وأفراد عائلته إن وجد ؟");
         var arr=[];
-        flagFam=false;
+        flagFam='false';
         if (conf==true){
     //delete from real data .
   
@@ -83,19 +83,26 @@ function displayusers(){
             var keyOfFamily=snapshot3.key;
             if (snapshot3.child('status').val()=='نشط'){
              activeFamUser=snapshot3.child('userID').val();
-             flagFam=true;
+             flagFam='true';
              arr.push(activeFamUser);
              console.log(activeFamUser);
 
           // Family user-
-         // firebase.database().ref('Users/'+activeFamUser).remove();
+         firebase.database().ref('Users/'+activeFamUser).remove();
 
             }//نشط
                console.log(keyOfFamily);
             //family member
-     //  firebase.database().ref('FamilyMembers/'+keyOfFamily).remove();   
+      firebase.database().ref('FamilyMembers/'+keyOfFamily).remove();   
           }//same emp/user id
-
+        });
+      
+          //2# delete Emp user
+   firebase.database().ref('Users/'+keyOfUser).remove();
+    console.log(keyOfUser);
+    alert('تم الحذف بنجاح');
+    
+console.log(flagFam + arr.length);
       if (flagFam=='true'){
           document.getElementById('fam').val=keyOfUser;
          document.getElementById('fam').href='/DeleteFamily/'+arr+'/EmpPage/'+keyOfUser;
@@ -107,13 +114,10 @@ function displayusers(){
            document.getElementById('fam').click();
         }
           
-        });
-      });
+    });
+     
 
-     //2# delete Emp user
-  //  firebase.database().ref('Users/'+keyOfUser).remove();
-    console.log(keyOfUser);
-     alert('تم الحذف بنجاح');
+ 
   
   
         }
@@ -243,31 +247,43 @@ setTimeout(StartWait,3000);
        deletebtn.appendChild(deleteIcon);
        deletecel.appendChild(deletebtn);
    
-         deletebtn.onclick=function(){
-           var arr=[];
-          var conf=confirm("هل أنت متأكد من حدف الموظف وأفراد عائلته إن وجد ؟");
-          if (conf==true){
-      //delete from real data .
-    
+       deletebtn.onclick=function(){
+        var conf=confirm("هل أنت متأكد من حذف الموظف وأفراد عائلته إن وجد ؟");
+        var arr=[];
+        flagFam='false';
+        if (conf==true){
+    //delete from real data .
+  
       //1# delete family 
       var keyOfUser=snapshot1.key;
       
       firebase.database().ref('FamilyMembers').once('value').then(function(snapshot2) {
-        snapshot2.forEach(function(snapshot) {
-          if (snapshot.child('employeeID').val()==keyOfUser){
-            var keyOfFamily=snapshot.key;
-            if (snapshot.child('status').val()=='نشط'){
-             activeFamUser=snapshot.child('userID').val();
+        snapshot2.forEach(function(snapshot3) {
+          if (snapshot3.child('employeeID').val()==keyOfUser){
+            var keyOfFamily=snapshot3.key;
+            if (snapshot3.child('status').val()=='نشط'){
+             activeFamUser=snapshot3.child('userID').val();
+             flagFam='true';
              arr.push(activeFamUser);
+             console.log(activeFamUser);
+
           // Family user-
-          firebase.database().ref('Users/'+activeFamUser).remove();
+         firebase.database().ref('Users/'+activeFamUser).remove();
+
             }//نشط
                console.log(keyOfFamily);
             //family member
-       firebase.database().ref('FamilyMembers/'+keyOfFamily).remove();   
+      firebase.database().ref('FamilyMembers/'+keyOfFamily).remove();   
           }//same emp/user id
-
-      if (arr.lenght!=0){
+        });
+      
+          //2# delete Emp user
+   firebase.database().ref('Users/'+keyOfUser).remove();
+    console.log(keyOfUser);
+    alert('تم الحذف بنجاح');
+    
+console.log(flagFam + arr.length);
+      if (flagFam=='true'){
           document.getElementById('fam').val=keyOfUser;
          document.getElementById('fam').href='/DeleteFamily/'+arr+'/EmpPage/'+keyOfUser;
           document.getElementById('fam').click();
@@ -278,17 +294,13 @@ setTimeout(StartWait,3000);
            document.getElementById('fam').click();
         }
           
-        });
-      });
-
-     //2# delete user
-    firebase.database().ref('Users/'+keyOfUser).remove();
-    console.log(keyOfUser);
-     alert('تم الحذف بنجاح');
-  
-          }    
-             };
+    });
      
+
+  
+        }
+
+      };
      
       
      

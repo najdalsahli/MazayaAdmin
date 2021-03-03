@@ -139,14 +139,17 @@ app.get("/DeleteFamily/:uid/:page/:empID", function (req, res) {
  const page=req.params.page;
  const empID=req.params.empID;
  var arr=[];
-
-console.log('lenght is :'+ uid.length);
- if(uid.length>3){
-  console.log(uid);
+ arr = uid.split(',');
+ 
+console.log('lenght is :'+ arr.length);
+console.log(arr);
+ if(arr.length!=0){
+  console.log(arr);
   admin
   .auth()
-  .deleteUsers(uid)
+  .deleteUsers(arr)
   .then((deleteUsersResult) => {
+     
     console.log(`Successfully deleted ${deleteUsersResult.successCount} users`);
     console.log(`Failed to delete ${deleteUsersResult.failureCount} users`);
     deleteUsersResult.errors.forEach((err) => {
@@ -166,11 +169,8 @@ console.log('lenght is :'+ uid.length);
 
 
  app.get("/DeleteUser/:uid/:page", function (req, res) {
-  const uid='al5lTRmwcCN1LxEHY0TUJXy31bY2';
-  //req.params.uid;
+  const uid=req.params.uid;
   const page=req.params.page;
-
-  //   /DeleteUser/al5lTRmwcCN1LxEHY0TUJXy31bY2/FamPage
   // delete from  auth data .
       admin.auth().deleteUser(uid)
      .then(function() {
