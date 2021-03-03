@@ -285,7 +285,7 @@ setTimeout(StartWait,3000);
 console.log(flagFam + arr.length);
       if (flagFam=='true'){
           document.getElementById('fam').val=keyOfUser;
-         document.getElementById('fam').href='/DeleteFamily/'+arr+'/EmpPage/'+keyOfUser;
+         document.getElementById('fam').href='/DeleteFamily/'+سarr+'/EmpPage/'+keyOfUser;
           document.getElementById('fam').click();
         }
         else{
