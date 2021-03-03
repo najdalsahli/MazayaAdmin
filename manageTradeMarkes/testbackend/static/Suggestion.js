@@ -31,6 +31,24 @@ function suggestion ()
       list.removeChild(list.firstChild);
     }
     firebase.database().ref('Suggestion').once('value').then(function(snapshot) {
+        if(snapshot.numChildren()==0){
+          flag=true;
+
+          createElement('td');
+      noResult.style.color='#F51B46';
+      noResult.style.textAlign='center';
+      noResult.style.font='font-family';
+      noResult.style.weight='bold';
+      noResult.textContent="لا توجد اقتراحات";
+      var newRow = document.createElement('tr');
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+      newRow.appendChild(document.createElement('td'));
+       newRow.appendChild(noResult);
+      document.getElementById("tableBody").appendChild(newRow);
+        }
+        else{
         
       snapshot.forEach(function(snapshot1) {
       flag=true;
@@ -39,32 +57,34 @@ function suggestion ()
 //delete sugg
 
 var deletecel = document.createElement('td');
-deletecel.className='delcell';
-var deletebtn = document.createElement('button');
-deletebtn.className='btnDelete';
-deletebtn.textContent='حذف';
-var deleteIcon = document.createElement('i');
-deleteIcon.className='far fa-trash-alt deleteIcon';
-deletebtn.appendChild(deleteIcon);
-deletecel.appendChild(deletebtn);
-deletebtn.onclick=function(){
+    deletecel.className='btncel';
+  
+    var deletebtn = document.createElement('button');
+    deletebtn.className='btn deletebtn';
+    deletebtn.textContent='حذف';
+  
+    var deleteIcon = document.createElement('i');
+    deleteIcon.className='far fa-trash-alt deleteIcon';
+    deletebtn.appendChild(deleteIcon);
+    deletecel.appendChild(deletebtn);
+    deletebtn.onclick= function (){
   deleteSugg(snapshot1.key);
  };
 
 //view sugg
 var showcel= document.createElement('td');
-showcel.className='btncel';
+    showcel.className='btncel';
+  
+    var showbtn=document.createElement('button');
+    var showIcon= document.createElement('i');
+    showIcon.className='viewIcon icon ion-ios-eye';
 
-var showbtn=document.createElement('button');
-var showIcon= document.createElement('i');
-showIcon.className='viewIcon icon ion-ios-eye';
+    showbtn.textContent='عرض';
 
-showbtn.textContent='عرض';
-
-showbtn.className='btn viewbtn ';
-showbtn.appendChild(showIcon);
-showcel.appendChild(showbtn);
-showbtn.onclick=function(){
+    showbtn.className='btn viewbtn ';
+    showbtn.appendChild(showIcon);
+    showcel.appendChild(showbtn);
+    showbtn.onclick=function(){
  viewSugg(snapshot1.child("employeeNotes").val());
 };
 
@@ -107,12 +127,12 @@ showbtn.onclick=function(){
     document.getElementById('tableBody').appendChild(newrow);
 
    });
-  
+        }
 });
 document.getElementById("dataTable").deleteRow(1);
-
+    
   setTimeout(wait,5000);
-
+    
   }//end sugg
 
   function deleteSugg(uid){
@@ -141,8 +161,9 @@ document.getElementById("dataTable").deleteRow(1);
    alert(uid);
   }
 function wait(){
-    document.getElementById("loader").style.display = "none";
-    document.getElementById("myDiv").style.display = "block";
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+
     if(!flag){
       
    }else{

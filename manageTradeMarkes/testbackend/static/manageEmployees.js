@@ -58,16 +58,17 @@ function displayusers(){
 
 
     var deletecel = document.createElement('td');
-    deletecel.className='delcell';
+    deletecel.className='btncel';
+  
     var deletebtn = document.createElement('button');
-    deletebtn.className='btnDelete';
+    deletebtn.className='btn deletebtn';
     deletebtn.textContent='حذف';
+  
     var deleteIcon = document.createElement('i');
     deleteIcon.className='far fa-trash-alt deleteIcon';
     deletebtn.appendChild(deleteIcon);
     deletecel.appendChild(deletebtn);
-    
-      deletebtn.onclick=function(){
+    deletebtn.onclick= function (){
         var conf=confirm("هل أنت متأكد من حذف الموظف وأفراد عائلته إن وجد ؟");
         var arr=[];
         flagFam='false';

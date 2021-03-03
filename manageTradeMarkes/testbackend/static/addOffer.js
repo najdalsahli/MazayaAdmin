@@ -53,17 +53,7 @@ const firebaseConfig = {
 
 
 function uploadPage(){
-  //  fill frist branch
-    // var  selectBranch= document.getElementById("branch");
-    // var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
-    // ref.once('value',function(snapshot) {
-    //     snapshot.forEach(function(snapshot1) {
-    //     var option = document.createElement( 'option' );
-    //      option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
-    //      selectBranch.add( option );
-
-    //     });
-    // });
+ 
     var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
      snapshot.forEach(function(snapshot1) {
@@ -94,16 +84,7 @@ ul.appendChild(li);
     div();
 
 
-    // //button otherPage for offer and deal
-    //       var ontherpage=document.getElementById("addOntherOffer");
-    //       ontherpage.onclick=function(){
-    //    addOntherOffer();
-    //   }
-    //   //button otherPage for vouchers
-    //   var ontherpage2=document.getElementById("addOntherV");
-    //   ontherpage2.onclick=function(){
-    //     addOntherVouchres();
-//   }
+  
        
         
        
@@ -112,16 +93,7 @@ ul.appendChild(li);
 
 
 function branchMenu2(){
-    // var  selectBranch= document.getElementById("branch2");
-    // var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
-    // ref.once('value',function(snapshot) {
-    //     snapshot.forEach(function(snapshot1) {
-    //     var option = document.createElement( 'option' );
-    //      option.value = option.text = snapshot1.child("branchName").val() +'/' + snapshot1.child("description").val();
-    //      selectBranch.add( option );
 
-    //     });
-    // });
     var ref=firebase.database().ref('Trademarks/'+tid+'/Branches');
     ref.once('value',function(snapshot) {
      snapshot.forEach(function(snapshot1) {
@@ -580,41 +552,6 @@ if(DescOfDeals==''){
 
  }
 
-//  function addOntherOffer(){
-//     var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة عرض آخر ؟");
-//     if (conf==true){
-//         //save
-//     if(nextOffersAndDeals(' الحالي '))
-//    clear();   
-//     }  
-//  }
-
-//  function addOntherVouchres(){
-//     var conf= confirm("سيتم حفظ الفرع الحالي ،هل تريد إضافة قسيمة أخرى ؟");
-//     if (conf==true){
-//         //save
-//     if( nextVouchers(' الحالي '))
-//         clear();   
-//     }  
-//  }
-//  function clear (){
-//     document.getElementById("offerName").value='';
-//     document.getElementById("Desc").value='';
-//    document.getElementById("code").value='';
-//     document.getElementById("branch").value='10';
-//     document.getElementById("srartDate").value='';
-//     document.getElementById("endDate").value='';
-//     //vouchres
-//     document.getElementById("titleV").value='';
-//     document.getElementById("DescV").value='';
-//    document.getElementById("code2").value='';
-//     document.getElementById("pointNum").value='';
-//     document.getElementById("vourchesNum").value='';
-//     document.getElementById("branch2").value='10';
-//     document.getElementById("startV").value='';
-//      document.getElementById("endV").value='';
-
-//  }
 
  function goHome(){
 

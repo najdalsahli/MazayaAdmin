@@ -20,50 +20,50 @@ var flag=false;
 
 
 
-function viewTradeMarks(){
+// function viewTradeMarks(){
 
 
 
- var count=0;
- var newrow;
+//  var count=0;
+//  var newrow;
 
 
-    firebase.database().ref('Categories').once('value').then(function(snapshot) {
+//     firebase.database().ref('Categories').once('value').then(function(snapshot) {
         
-        snapshot.forEach(function(snapshot1) {
+//         snapshot.forEach(function(snapshot1) {
 
-            snapshot1.child("TradeMarks").forEach(function(snapshot2) {
-                if(count == 5){
-                    count=0;
-                }
-                if(count==0){
-                     newrow = document.createElement('tr');
-                    document.getElementById('table').appendChild(newrow);
-                }
+//             snapshot1.child("TradeMarks").forEach(function(snapshot2) {
+//                 if(count == 5){
+//                     count=0;
+//                 }
+//                 if(count==0){
+//                      newrow = document.createElement('tr');
+//                     document.getElementById('table').appendChild(newrow);
+//                 }
               
                
-                 var newcell = document.createElement('td');
-                var Divforcell = document.createElement('div');
-                var image = document.createElement("img");
-                var pragraph = document.createElement("p");
+//                  var newcell = document.createElement('td');
+//                 var Divforcell = document.createElement('div');
+//                 var image = document.createElement("img");
+//                 var pragraph = document.createElement("p");
                
-                Divforcell.className="Dives";
-                image.className="images";
-                pragraph.className="pragraphs";
-                count=count+1;
-                image.src=snapshot2.child("BrandImage").val();
-                pragraph.textContent=snapshot2.child("BrandName").val();
+//                 Divforcell.className="Dives";
+//                 image.className="images";
+//                 pragraph.className="pragraphs";
+//                 count=count+1;
+//                 image.src=snapshot2.child("BrandImage").val();
+//                 pragraph.textContent=snapshot2.child("BrandName").val();
 
-                newrow.appendChild(newcell);
-                newcell.appendChild(Divforcell);
-                Divforcell.appendChild(image);
-                Divforcell.appendChild(pragraph);
+//                 newrow.appendChild(newcell);
+//                 newcell.appendChild(Divforcell);
+//                 Divforcell.appendChild(image);
+//                 Divforcell.appendChild(pragraph);
             
-            })
-        })
-    });
+//             })
+//         })
+//     });
  
-  }
+//   }
 
 
 

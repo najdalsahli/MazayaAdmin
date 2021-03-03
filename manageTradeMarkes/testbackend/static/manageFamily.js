@@ -64,11 +64,11 @@ while (list.hasChildNodes()) {
     firebase.database().ref('Users/'+snapshot.child('userID').val()).once('value').then(function(snapshot1) {
         var newrow = document.createElement('tr');
         
-
+      
        var deletecel = document.createElement('td');
        deletecel.className='delcell';
        var deletebtn = document.createElement('button');
-       deletebtn.className='btnDelete';
+       deletebtn.className='btn deletebtn';
        deletebtn.textContent='حذف';
        var deleteIcon = document.createElement('i');
        deleteIcon.className='far fa-trash-alt deleteIcon';
@@ -242,7 +242,7 @@ while (list.hasChildNodes()) {
        var deletecel = document.createElement('td');
        deletecel.className='delcell';
        var deletebtn = document.createElement('button');
-       deletebtn.className='btnDelete';
+       deletebtn.className='btn deletebtn';
        deletebtn.textContent=' حذف ';
        var deleteIcon = document.createElement('i');
        deleteIcon.className='far fa-trash-alt deleteIcon';

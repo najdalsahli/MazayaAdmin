@@ -73,6 +73,7 @@ function load(){
 
       //#1
       document.getElementById("imgSrc").src=snapshot.child("imgURL").val();
+      document.getElementById("imgSrc").style.borderColor='#00524d';
       console.log('img url '+snapshot.child("imgURL").val());
 
       //#2-trademark_Name
