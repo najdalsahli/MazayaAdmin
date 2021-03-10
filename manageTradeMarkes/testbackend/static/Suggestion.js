@@ -15,7 +15,7 @@ const firebaseConfig = {
   
   const auth=firebase.auth();
 
-
+var hi=''
 var flag=false;
 
 function suggestion ()
